@@ -1,0 +1,14 @@
+{
+  "originHash" : "fc1ce599392ed96887ebc57098d9cffc822cdcea7639c50faa0f01b6d578dd16",
+  "pins" : [
+    {
+      "identity" : "pixelkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tiagoafp/PixelKit",
+      "state" : {
+        "revision" : "7d45219d4d7c273b53011fba7ae3aeec65b3a014"
+      }
+    }
+  ],
+  "version" : 3
+}
