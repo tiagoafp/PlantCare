@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B42B0C6D2DE25889005B1181 /* PixelKit in Frameworks */ = {isa = PBXBuildFile; productRef = B42B0C6C2DE25889005B1181 /* PixelKit */; };
+		B4B8B89A2DF8A78100578705 /* PixelKit in Frameworks */ = {isa = PBXBuildFile; productRef = B4B8B8992DF8A78100578705 /* PixelKit */; };
+		B4BDC6092DF5F00100301EFC /* Mockable in Frameworks */ = {isa = PBXBuildFile; productRef = B4BDC6082DF5F00100301EFC /* Mockable */; };
+		B4BDC60C2DF5F00E00301EFC /* Mockable in Frameworks */ = {isa = PBXBuildFile; productRef = B4BDC60B2DF5F00E00301EFC /* Mockable */; };
 		B4C546442DD7A18600FA55BE /* PixelKit in Frameworks */ = {isa = PBXBuildFile; productRef = B4C546432DD7A18600FA55BE /* PixelKit */; };
 /* End PBXBuildFile section */
 
@@ -57,8 +59,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B42B0C6D2DE25889005B1181 /* PixelKit in Frameworks */,
+				B4B8B89A2DF8A78100578705 /* PixelKit in Frameworks */,
 				B4C546442DD7A18600FA55BE /* PixelKit in Frameworks */,
+				B4BDC6092DF5F00100301EFC /* Mockable in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4BDC60C2DF5F00E00301EFC /* Mockable in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,7 +124,8 @@
 			name = PlantCare;
 			packageProductDependencies = (
 				B4C546432DD7A18600FA55BE /* PixelKit */,
-				B42B0C6C2DE25889005B1181 /* PixelKit */,
+				B4BDC6082DF5F00100301EFC /* Mockable */,
+				B4B8B8992DF8A78100578705 /* PixelKit */,
 			);
 			productName = PlantCare;
 			productReference = B4C546162DD7A13F00FA55BE /* PlantCare.app */;
@@ -144,6 +149,7 @@
 			);
 			name = PlantCareTests;
 			packageProductDependencies = (
+				B4BDC60B2DF5F00E00301EFC /* Mockable */,
 			);
 			productName = PlantCareTests;
 			productReference = B4C546252DD7A14100FA55BE /* PlantCareTests.xctest */;
@@ -199,13 +205,14 @@
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				en,
 			);
 			mainGroup = B4C5460D2DD7A13F00FA55BE;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				B42B0C6B2DE25889005B1181 /* XCRemoteSwiftPackageReference "PixelKit" */,
+				B4BDC6072DF5F00100301EFC /* XCRemoteSwiftPackageReference "Mockable" */,
+				B4B8B8982DF8A78100578705 /* XCLocalSwiftPackageReference "../PixelKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B4C546172DD7A13F00FA55BE /* Products */;
@@ -340,6 +347,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -396,6 +404,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -419,10 +428,12 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = tiago.pereira.PlantCare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited) MOCKING";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -448,8 +459,8 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = tiago.pereira.PlantCare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -465,6 +476,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = tiago.pereira.PlantCareTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited) MOCKING";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -563,22 +575,38 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		B4B8B8982DF8A78100578705 /* XCLocalSwiftPackageReference "../PixelKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../PixelKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
-		B42B0C6B2DE25889005B1181 /* XCRemoteSwiftPackageReference "PixelKit" */ = {
+		B4BDC6072DF5F00100301EFC /* XCRemoteSwiftPackageReference "Mockable" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/tiagoafp/PixelKit";
+			repositoryURL = "https://github.com/Kolos65/Mockable";
 			requirement = {
-				kind = revision;
-				revision = 7d45219d4d7c273b53011fba7ae3aeec65b3a014;
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.3.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B42B0C6C2DE25889005B1181 /* PixelKit */ = {
+		B4B8B8992DF8A78100578705 /* PixelKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B42B0C6B2DE25889005B1181 /* XCRemoteSwiftPackageReference "PixelKit" */;
 			productName = PixelKit;
+		};
+		B4BDC6082DF5F00100301EFC /* Mockable */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B4BDC6072DF5F00100301EFC /* XCRemoteSwiftPackageReference "Mockable" */;
+			productName = Mockable;
+		};
+		B4BDC60B2DF5F00E00301EFC /* Mockable */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B4BDC6072DF5F00100301EFC /* XCRemoteSwiftPackageReference "Mockable" */;
+			productName = Mockable;
 		};
 		B4C546432DD7A18600FA55BE /* PixelKit */ = {
 			isa = XCSwiftPackageProductDependency;

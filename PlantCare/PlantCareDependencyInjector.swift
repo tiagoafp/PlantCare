@@ -7,14 +7,20 @@
 import SwiftData
 import SwiftUI
 
-protocol PlantCareDependencyInjectorProtocol {
-    var db: ModelContainer { get } 
+protocol PlantCareDependencyInjectorProtocol: ObservableObject {
+    var db: ModelContainer { get }
+    @MainActor
+    var plantTypeRepo: PlantTypeRepositoryProtocol { get }
 }
 
-class PlantCareDependencyInjector: PlantCareDependencyInjectorProtocol, ObservableObject {
-    @Published var db: ModelContainer
+class PlantCareDependencyInjector: PlantCareDependencyInjectorProtocol {
+    var db: ModelContainer
     
     init() throws {
         self.db = try ModelContainer(for: PlantCareModel.self)
+    }
+    
+    var plantTypeRepo: PlantTypeRepositoryProtocol {
+        PlantTypeRepository(context: db.mainContext)
     }
 }

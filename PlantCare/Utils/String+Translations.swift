@@ -11,3 +11,13 @@ extension Text {
         return Text(translation.translation)
     }
 }
+
+extension String {
+    static func translation(_ translation: Translations) -> String {
+        return translation.translation
+    }
+    
+    static func plural(_ translation: PluralTranslations) -> String {
+        return translation.translation
+    }
+}

@@ -10,7 +10,7 @@ import SwiftData
 
 @main
 struct PlantCareApp: App {
-    @ObservedObject var injector: PlantCareDependencyInjector
+    var injector: PlantCareDependencyInjector
     @State var navPath = NavigationPath()
     @StateObject var config = PlantCareConfigurations()
     
@@ -25,9 +25,10 @@ struct PlantCareApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack(path: $navPath) {
-                DashboardRootView(navigationPath: $navPath)
+                DashboardRootView(navigationPath: $navPath, depInjector: injector)
                     .preferredColorScheme(config.colorScheme)
                     .environmentObject(config)
+                    .environmentObject(injector)
             }
         }
     }

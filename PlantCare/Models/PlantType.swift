@@ -11,12 +11,15 @@ import Foundation
 public class PlantType {
     @Attribute(.unique) public var id: UUID
     var name: String
+    @Relationship
     var plants: [Plant]
+    var createdAt: Date
     
     public init(name: String) {
         self.id = UUID()
         self.name = name
         self.plants = []
+        self.createdAt = Date()
     }
     
     public func addPlant(plant: Plant) {

@@ -8,6 +8,8 @@
 import Testing
 @testable import PlantCare
 
+extension StorageProtocol: Mock {}
+
 struct PlantCareTests {
 
     @Test func example() async throws {
