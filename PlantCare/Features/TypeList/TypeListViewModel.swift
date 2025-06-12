@@ -13,7 +13,6 @@ protocol TypeListViewModelProtocol: ObservableObject {
     var editing: PlantType? { get set }
     var mode: TypeListMode { get }
     
-    func onAppear()
     func isSelected(type: PlantType) -> Bool
     func onDeleteType(type: PlantType)
     func onSelectType(type: PlantType)
@@ -31,15 +30,15 @@ class TypeListViewModel: TypeListViewModelProtocol {
     @Published var types: [PlantType] = []
     @Published var mode: TypeListMode
     @Published var editing: PlantType?
+    @Published var selected: Binding<PlantType?>
     
     let input: Input
     
     init(input: Input) {
         self.input = input
-        self.mode = input.mode
-    }
-    
-    func onAppear() {
+        self.selected = input.selected
+        self.mode = input.selected.wrappedValue != nil ? .selection : .normal
+        
         reloadTypes()
     }
     
@@ -91,22 +90,12 @@ class TypeListViewModel: TypeListViewModelProtocol {
         }
     }
     
-    func onSelectType(type: PlantType) {
-        switch mode {
-        case .selection(let plant):
-            plant.type = type
-        default:
-            break
-        }
+    func isSelected(type: PlantType) -> Bool {
+        type == selected.wrappedValue
     }
     
-    func isSelected(type: PlantType) -> Bool {
-        switch mode {
-        case .selection(let plant):
-            return plant.type == type
-        default:
-            return false
-        }
+    func onSelectType(type: PlantType) {
+        selected.wrappedValue = type
     }
     
     func onDone() {
@@ -121,15 +110,15 @@ class TypeListViewModel: TypeListViewModelProtocol {
         do {
             self.editing = nil
             try self.input.repo.save()
-            self.mode = input.mode
+            self.mode = .edit
         } catch {}
     }
 }
 
 extension TypeListViewModel {
     public struct Input {
-        let mode: TypeListMode
         let navigation: TypeListNavigationProtocol
         let repo: PlantTypeRepositoryProtocol
+        let selected: Binding<PlantType?>
     }
 }

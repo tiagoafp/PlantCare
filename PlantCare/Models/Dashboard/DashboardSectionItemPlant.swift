@@ -18,7 +18,7 @@ struct DashboardSectionItemPlant {
 extension DashboardSectionItemPlant: DashboardSectionItemProtocol {
     var name: String { plant.name }
     var image: ImageView.Variant? { nil }
-    var subtitle: String { plant.type.name }
+    var subtitle: String { plant.type?.name ?? "" }
     var subtitleType: CellSubtitle.Variant { .default }
     var disclosure: Bool { true }
 }

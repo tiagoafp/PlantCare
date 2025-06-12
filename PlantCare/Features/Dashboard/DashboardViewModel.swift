@@ -23,7 +23,7 @@ class DashboardViewModel: DashboardViewModelProtocol {
     @Published var plantsSection: DashboardSection<DashboardSectionItemPlant>
     @Published var types: DashboardSection<DashboardSectionItemPlantType>
     
-    let input: Input
+    var input: Input
     
     init (input: Input) {
         self.input = input
@@ -73,7 +73,7 @@ class DashboardViewModel: DashboardViewModelProtocol {
 
 extension DashboardViewModel {
     public struct Input {
-        let router: DashboardRouterProtocol
+        var router: DashboardRouterProtocol
         let plantTypeRepo: PlantTypeRepositoryProtocol
         let storage: Storage
     }

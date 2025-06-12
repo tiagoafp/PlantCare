@@ -7,39 +7,52 @@
 import SwiftUI
 import SwiftData
 
+@MainActor
 protocol DashboardRouterProtocol {
-    var navPath: Binding<NavigationPath> { get }
-    
     func openWater()
     func openPlants(plant: PersistentIdentifier?)
     func openTypes()
+    func updateNavigator(navigator: any ViewNavigatorProtocol)
 }
 
-class DashboardRouter: DashboardRouterProtocol {
-    var navPath: Binding<NavigationPath>
+class DashboardRouter: DashboardRouterProtocol{
+    var navigator: (any ViewNavigatorProtocol)?
     
-    init(navPath: Binding<NavigationPath>) {
-        self.navPath = navPath
+    init() {}
+    
+    func updateNavigator(navigator: any ViewNavigatorProtocol) {
+        self.navigator = navigator
     }
     
     func openWater() {
-        navPath.wrappedValue.append(Destinations.water)
+        navigator?.push(view: Destinations.water)
     }
     
     func openPlants(plant: PersistentIdentifier?) {
-        navPath.wrappedValue.append(Destinations.plants(plant))
+        navigator?.push(view: Destinations.plants(plant))
     }
     
     func openTypes() {
-        navPath.wrappedValue.append(Destinations.types)
+        navigator?.push(view: Destinations.types)
     }
 }
 
 
 extension DashboardRouter {
-    enum Destinations: Hashable {
+    enum Destinations: DestinationsProtocol {
         case water
         case plants(PersistentIdentifier?)
         case types
+        
+        var id: String {
+            switch self {
+            case .water:
+                return "water"
+            case .plants:
+                return "plants"
+            case .types:
+                return "types"
+            }
+        }
     }
 }

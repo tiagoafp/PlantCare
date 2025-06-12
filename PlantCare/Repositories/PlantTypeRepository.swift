@@ -3,6 +3,7 @@
 // PlantCare
 // Created by: tiago.pereira on 8/6/25
 //
+
 import SwiftData
 import Foundation
 
@@ -49,6 +50,4 @@ class PlantTypeRepository: PlantTypeRepositoryProtocol {
     func save() throws {
         try context.save()
     }
-    
-    
 }

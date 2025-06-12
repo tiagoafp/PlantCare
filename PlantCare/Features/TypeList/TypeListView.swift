@@ -17,35 +17,27 @@ struct TypeListView<ViewModel: TypeListViewModelProtocol>: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            
-            ScrollView {
-                GrouppedSectionView(nil) {
-                    ForEach($viewModel.types) { $item in
-                        switch viewModel.mode {
-                        case .edit:
-                            editCell(item: $item)
-                        case .normal:
-                            DisplayCell(
-                                .labels(.title(item.name)),
-                                disclosure: false,
-                                separator: !viewModel.isTheLast(type: item)
-                            )
-                        case .selection:
-                            SelectableCell(
-                                text: item.name,
-                                isSelected: viewModel.isSelected(type: item),
-                                separator: !viewModel.isTheLast(type: item),
-                                onSelect: {
-                                    viewModel.onSelectType(type: item)
-                                }
-                            )
+            Rectangle()
+                .foregroundStyle(PixelKit.shared.theme.background)
+                .onTapGesture {
+                    viewModel.addNewPlant()
+                }
+            if $viewModel.types.isEmpty {
+                Text("Empty list")
+            } else {
+                ScrollView {
+                    GrouppedSectionView(nil) {
+                        ForEach($viewModel.types) { $item in
+                            switch viewModel.mode {
+                            case .edit:
+                                editCell(item: $item)
+                            case .selection, .normal:
+                                selectionCell(item: item)
+                            }
                         }
                     }
+                    .padding(.top, 16)
                 }
-                .padding(.top, 16)
-            }
-            .onTapGesture {
-                viewModel.addNewPlant()
             }
             if viewModel.mode == .edit {
                 FooterActionView([
@@ -57,19 +49,12 @@ struct TypeListView<ViewModel: TypeListViewModelProtocol>: View {
                 ])
             }
         }
-        .background(
-            Rectangle()
-                .foregroundStyle(PixelKit.shared.theme.background)
-        )
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(action: viewModel.onToolbar) {
                     Text(toolbarModeString(mode: viewModel.mode))
                 }
             }
-        }
-        .task {
-            viewModel.onAppear()
         }
         .navigationTitle(.translation(.types))
         .ignoresSafeArea(edges: .bottom)
@@ -86,6 +71,18 @@ struct TypeListView<ViewModel: TypeListViewModelProtocol>: View {
 }
 
 extension TypeListView {
+    @ViewBuilder
+    func selectionCell(item: PlantType) -> some View {
+        SelectableCell(
+            text: item.name,
+            isSelected: viewModel.isSelected(type: item),
+            separator: !viewModel.isTheLast(type: item),
+            onSelect: {
+                viewModel.onSelectType(type: item)
+            }
+        )
+    }
+    
     @ViewBuilder
     func editCell(item: Binding<PlantType>) -> some View {
         EditableCell<PlantType>(

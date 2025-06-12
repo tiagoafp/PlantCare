@@ -9,29 +9,31 @@ import SwiftUI
 import SwiftData
 
 public struct PlantFormRootView: View {
-    let navigation: PlantFormNavigationProtocol
-    let plant: PersistentIdentifier?
+    let navigationPath: Binding<NavigationPath>
     let diInjector: any PlantCareDependencyInjectorProtocol
+    @ObservedObject var viewModel: PlantFormViewModel
     
     init(
-        navigationPath: Binding<NavigationPath>,
         plant: PersistentIdentifier?,
+        navigationPath: Binding<NavigationPath>,
         diInjector: any PlantCareDependencyInjectorProtocol
     ) {
-        self.navigation = PlantFormNavigation(navPath: navigationPath)
-        self.plant = plant
+        self.navigationPath = navigationPath
         self.diInjector = diInjector
+        
+        viewModel = .init(
+            input: .init(
+                plant: plant,
+                navigation: PlantFormNavigation(navPath: navigationPath),
+                repo: diInjector.plantRepo,
+                imagesRepo: diInjector.imagesRepo
+            )
+        )
     }
     
     public var body: some View {
         PlantFormView(
-            viewModel: PlantFormViewModel(
-                input: .init(
-                    plant: plant,
-                    navigation: navigation,
-                    storage: Storage(db: diInjector.db)
-                )
-            )
+            viewModel: viewModel
         )
         .navigationDestination(
             for: PlantFormNavigation.Destinations.self,
@@ -43,6 +45,19 @@ public struct PlantFormRootView: View {
 extension PlantFormRootView {
     @ViewBuilder
     func navigateTo(destination: PlantFormNavigation.Destinations) -> some View {
-        EmptyView()
+        switch destination {
+        case .plantType:
+            TypeListRootView(
+                navigationPath: navigationPath,
+                selected: $viewModel.plant.type,
+                dpInjector: diInjector
+            )
+        case .waterSchedule:
+            WaterScheduleSelectorRootView(
+                navigationPath: navigationPath,
+                depInjector: diInjector,
+                plant: $viewModel.plant
+            )
+        }
     }
 }

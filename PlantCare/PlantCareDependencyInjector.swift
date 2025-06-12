@@ -7,10 +7,12 @@
 import SwiftData
 import SwiftUI
 
+@MainActor
 protocol PlantCareDependencyInjectorProtocol: ObservableObject {
     var db: ModelContainer { get }
-    @MainActor
     var plantTypeRepo: PlantTypeRepositoryProtocol { get }
+    var plantRepo: PlantRepositoryProtocol { get }
+    var imagesRepo: ImagesRepositoryProtocol { get }
 }
 
 class PlantCareDependencyInjector: PlantCareDependencyInjectorProtocol {
@@ -22,5 +24,13 @@ class PlantCareDependencyInjector: PlantCareDependencyInjectorProtocol {
     
     var plantTypeRepo: PlantTypeRepositoryProtocol {
         PlantTypeRepository(context: db.mainContext)
+    }
+    
+    var plantRepo: any PlantRepositoryProtocol {
+        PlantRepository(context: db.mainContext)
+    }
+    
+    var imagesRepo: ImagesRepositoryProtocol {
+        ImagesRepository()
     }
 }

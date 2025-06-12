@@ -8,58 +8,63 @@
 import SwiftUI
 import SwiftData
 
+@MainActor
 protocol PlantFormViewModelProtocol: ObservableObject {
-    var formaData: PlantFormData { get set }
-    @MainActor
-    func onAppear()
+    var plant: Plant { get set }
     
-    @MainActor
+    func onAppear()
+    func onTypePress()
+    func onWaterSchedule()
     func addPlant()
+    func onAddImage(image: UIImage)
+    func onChangeImage()
+    func onDeleteImage()
 }
+
 
 class PlantFormViewModel: PlantFormViewModelProtocol {
     let input: Input
-    @Published var formaData: PlantFormData
+    @Published var plant: Plant
     
-    @MainActor
     init (input: Input) {
         self.input = input
-        if let plantId = input.plant {
-            self.formaData = .init(
-                plant: try? input
-                    .storage
-                    .fetchElement(id: plantId)
-            )
-        } else {
-            self.formaData = .init(plant: nil)
-        }
         
+        self.plant = input.repo.fetch(id: input.plant) ?? Plant()
     }
     
-    @MainActor
     func onAppear() {
         
     }
     
-    @MainActor
-    func addPlant() {
-        let plant = Plant(
-            name: formaData.name,
-            type: .init(name: "Abc")
-        )
-        
-        do {
-            try input.storage.save(model: plant)
-        } catch {
-            print(error.localizedDescription)
-        }
+    func onTypePress() {
+        input.navigation.plantType()
     }
+    
+    func onWaterSchedule() {
+        input.navigation.waterSchedule()
+    }
+    
+    func addPlant() {
+    }
+    
+    func onAddImage(image: UIImage) {
+        guard let path = try? input.imagesRepo.saveImage(plant: plant, image: image) else {
+            return
+        }
+        
+        self.plant.images.append(path)
+        self.plant.cover = path
+    }
+    
+    func onChangeImage() {}
+    func onDeleteImage() {}
 }
 
 extension PlantFormViewModel {
     public struct Input {
         let plant: PersistentIdentifier?
         let navigation: PlantFormNavigationProtocol
-        let storage: StorageProtocol
+        let repo: PlantRepositoryProtocol
+        let imagesRepo: ImagesRepositoryProtocol
     }
 }

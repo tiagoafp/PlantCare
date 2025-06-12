@@ -13,15 +13,15 @@ public struct TypeListRootView: View {
     
     init(
         navigationPath: Binding<NavigationPath>,
-        mode: TypeListMode,
+        selected: Binding<PlantType?>,
         dpInjector: any PlantCareDependencyInjectorProtocol
     ) {
         navigation = TypeListNavigation(navPath: navigationPath)
         viewModel = .init(
             input: .init(
-                mode: mode,
                 navigation: navigation,
-                repo: dpInjector.plantTypeRepo
+                repo: dpInjector.plantTypeRepo,
+                selected: selected
             )
         )
     }

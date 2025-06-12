@@ -7,6 +7,6 @@
 
 enum TypeListMode: Hashable {
     case normal
-    case selection(Plant)
+    case selection
     case edit
 }

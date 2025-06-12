@@ -35,6 +35,28 @@
         }
       }
     },
+    "change" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change"
+          }
+        }
+      }
+    },
+    "delete" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        }
+      }
+    },
     "details" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -57,6 +79,28 @@
         }
       }
     },
+    "name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        }
+      }
+    },
+    "optional" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Optional"
+          }
+        }
+      }
+    },
     "plant_care" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -64,6 +108,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Plant Care"
+          }
+        }
+      }
+    },
+    "planted_at" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Planted at"
           }
         }
       }
@@ -119,6 +174,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Water plants"
+          }
+        }
+      }
+    },
+    "water_register" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Water Register"
           }
         }
       }

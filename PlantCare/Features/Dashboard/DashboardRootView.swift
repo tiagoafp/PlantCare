@@ -8,21 +8,19 @@ import SwiftUI
 
 public struct DashboardRootView: View {
     @ObservedObject var viewModel: DashboardViewModel
-    let router: DashboardRouterProtocol
     let depInjector: any PlantCareDependencyInjectorProtocol
-    let navigationPath: Binding<NavigationPath>
+    @ObservedObject var navigation: ViewNavigator<DashboardRouter.Destinations>
     
     init(
         navigationPath: Binding<NavigationPath>,
         depInjector: any PlantCareDependencyInjectorProtocol
     ) {
-        self.router = DashboardRouter(navPath: navigationPath)
         self.depInjector = depInjector
-        self.navigationPath = navigationPath
+        self.navigation = .init(navPath: navigationPath)
         
         viewModel = .init(input:
                 .init(
-                    router: router,
+                    router: DashboardRouter(),
                     plantTypeRepo: depInjector.plantTypeRepo,
                     storage: Storage(db: depInjector.db)
                 )
@@ -33,10 +31,11 @@ public struct DashboardRootView: View {
         DashboardView(
             viewModel: viewModel
         )
-        .navigationDestination(
-            for: DashboardRouter.Destinations.self,
-            destination: navigateTo
-        )
+        .task {
+            viewModel.input.router.updateNavigator(navigator: navigation)
+        }
+        .sheet(item: $navigation.sheet , content: navigateTo)
+        .navigationDestination(for: navigation.type, destination: navigateTo)
     }
 }
 
@@ -48,14 +47,14 @@ extension DashboardRootView {
             EmptyView()
         case .plants(let plant):
             PlantFormRootView(
-                navigationPath: router.navPath,
                 plant: plant,
+                navigationPath: navigation.navPath,
                 diInjector: depInjector
             )
         case .types:
             TypeListRootView(
-                navigationPath: navigationPath,
-                mode: .normal,
+                navigationPath: navigation.navPath,
+                selected: .constant(nil),
                 dpInjector: depInjector
             )
         }

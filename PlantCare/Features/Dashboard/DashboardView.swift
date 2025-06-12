@@ -71,7 +71,7 @@ extension DashboardView {
                 ),
                 cells: {
                     ForEach(items, id: \.self) { item in
-                        Cell(item: item)
+                        Cell(item: item, lastItem: items.last)
                     }
                 }
             )
@@ -79,7 +79,7 @@ extension DashboardView {
     }
     
     @ViewBuilder
-    func Cell<Item: DashboardSectionItemProtocol>(item: Item) -> AnyView {
+    func Cell<Item: DashboardSectionItemProtocol>(item: Item, lastItem: Item?) -> AnyView {
         AnyView(
             DisplayCell(
                 .labels(
@@ -90,7 +90,11 @@ extension DashboardView {
                     )
                 ),
                 image: image(item: item),
-                disclosure: item is DashboardSectionItemPlant
+                disclosure: item is DashboardSectionItemPlant,
+                separator: item != lastItem,
+                onPress: {
+                    
+                }
             )
         )
     }

@@ -18,6 +18,12 @@ enum Translations: String {
     case add
     case save
     case number_of_plants
+    case name
+    case optional
+    case planted_at
+    case water_register
+    case delete
+    case change
 }
 
 extension Translations: TranslationsProtocol {
