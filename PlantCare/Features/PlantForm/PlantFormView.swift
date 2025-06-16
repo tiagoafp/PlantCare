@@ -64,7 +64,7 @@ struct PlantFormView<ViewModel: PlantFormViewModelProtocol>: View {
             }
             
             FooterActionView([
-                .init(title: .translation(.save), action: viewModel.addPlant)
+                .init(title: .translation(.save), action: viewModel.onSave)
             ])
         }
         .background(
@@ -96,9 +96,7 @@ struct PlantFormView<ViewModel: PlantFormViewModelProtocol>: View {
             options.append(
                 .change(
                     localization: .translation(.change),
-                    action: { _ in
-                        
-                    }
+                    action: viewModel.onChangeImage
                 )
             )
         } else {

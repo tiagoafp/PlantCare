@@ -58,6 +58,12 @@ extension PlantFormRootView {
                 depInjector: diInjector,
                 plant: $viewModel.plant
             )
+        case .imagesGallery:
+            PlantImagesGalleryRootView(
+                navigationPath: navigationPath,
+                depInjector: diInjector,
+                plant: $viewModel.plant
+            )
         }
     }
 }

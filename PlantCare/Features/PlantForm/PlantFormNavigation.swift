@@ -28,6 +28,10 @@ class PlantFormNavigation: PlantFormNavigationProtocol {
     func waterSchedule() {
         self.navPath.wrappedValue.append(Destinations.waterSchedule)
     }
+    
+    func openImagesGallery() {
+        self.navPath.wrappedValue.append(Destinations.imagesGallery)
+    }
 }
 
 
@@ -35,5 +39,6 @@ extension PlantFormNavigation {
     enum Destinations: Hashable {
         case plantType
         case waterSchedule
+        case imagesGallery
     }
 }

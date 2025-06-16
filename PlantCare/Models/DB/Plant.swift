@@ -15,10 +15,10 @@ public class Plant: Identifiable {
     var type: PlantType?
     var waterSchedule: WaterSchedule
     var notes: String
-    var images: [String]
     var cover: String?
     @Relationship
     var waterRegisters: [WaterRegister]
+    var images: [ImageRegistration]
     
     public init() {
         self.id = UUID()

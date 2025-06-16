@@ -15,9 +15,9 @@ protocol PlantFormViewModelProtocol: ObservableObject {
     func onAppear()
     func onTypePress()
     func onWaterSchedule()
-    func addPlant()
+    func onSave()
     func onAddImage(image: UIImage)
-    func onChangeImage()
+    func onChangeImage(image: UIImage)
     func onDeleteImage()
 }
 
@@ -25,6 +25,7 @@ protocol PlantFormViewModelProtocol: ObservableObject {
 class PlantFormViewModel: PlantFormViewModelProtocol {
     let input: Input
     @Published var plant: Plant
+    public var coverImage: String?
     
     init (input: Input) {
         self.input = input
@@ -44,20 +45,40 @@ class PlantFormViewModel: PlantFormViewModelProtocol {
         input.navigation.waterSchedule()
     }
     
-    func addPlant() {
-    }
-    
-    func onAddImage(image: UIImage) {
-        guard let path = try? input.imagesRepo.saveImage(plant: plant, image: image) else {
+    func onSave() {
+        guard let saved = try? input.imagesRepo.saveToDocs(plant: plant, image: plant.cover) else {
             return
         }
         
-        self.plant.images.append(path)
+        plant.cover = saved
+        input.repo.insert(type: plant)
+        
+        do {
+            try input.imagesRepo.cleanCache()
+        } catch { }
+    }
+    
+    func onAddImage(image: UIImage) {
+        guard let path = try? input.imagesRepo.saveImage(plant: plant, image: image, type: .cache) else {
+            return
+        }
+        
+        self.coverImage = path
         self.plant.cover = path
     }
     
-    func onChangeImage() {}
-    func onDeleteImage() {}
+    func onChangeImage(image: UIImage) {
+        do {
+            try input.imagesRepo.cleanImage(image: coverImage)
+            let path = try input.imagesRepo.saveImage(plant: plant, image: image, type: .cache)
+            self.coverImage = path
+            self.plant.cover = path
+        } catch {}
+    }
+    
+    func onDeleteImage() {
+        
+    }
 }
 
 extension PlantFormViewModel {
