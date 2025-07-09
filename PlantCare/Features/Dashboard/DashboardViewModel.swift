@@ -24,12 +24,17 @@ class DashboardViewModel: DashboardViewModelProtocol {
     @Published var types: DashboardSection<DashboardSectionItemPlantType>
     
     var input: Input
+    weak var router: ViewRouter<DashboardRoute>?
     
     init (input: Input) {
         self.input = input
         waterSection = .init(type: .water)
         plantsSection = .init(type: .plants)
         types = .init(type: .type)
+    }
+    
+    func inject(router: ViewRouter<DashboardRoute>) {
+        self.router = router
     }
     
     func onAppear() {
@@ -50,22 +55,22 @@ class DashboardViewModel: DashboardViewModelProtocol {
     func onSectionPress(section: any DashboardSectionProtocol) {
         switch section.type {
         case .water:
-            input.router.openWater()
+            router?.push(.water)
         case .plants:
-            input.router.openPlants(plant: nil)
+            router?.push(.plants)
         case .type:
-            input.router.openTypes()
+            router?.push(.types)
         }
     }
     
     func onItemPressed(item: any DashboardSectionItemProtocol) {
         if let plantItem = item as? DashboardSectionItemPlant {
-            input.router.openPlants(plant: plantItem.plant.persistentModelID)
+            router?.push(.plant(plantItem.plant.persistentModelID))
             return
         }
         
-        if let platTypeItem = item as? DashboardSectionItemPlant {
-            input.router.openTypes()
+        if item is DashboardSectionItemPlantType {
+            router?.push(.types)
             return
         }
     }
@@ -73,7 +78,6 @@ class DashboardViewModel: DashboardViewModelProtocol {
 
 extension DashboardViewModel {
     public struct Input {
-        var router: DashboardRouterProtocol
         let plantTypeRepo: PlantTypeRepositoryProtocol
         let storage: Storage
     }

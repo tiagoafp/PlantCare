@@ -18,6 +18,7 @@ protocol TypeListViewModelProtocol: ObservableObject {
     func onSelectType(type: PlantType)
     func onEditDone(type: PlantType)
     
+    func reloadTypes()
     func onToolbar()
     func onDone()
     func onSave()
@@ -26,7 +27,7 @@ protocol TypeListViewModelProtocol: ObservableObject {
     func isTheLast(type: PlantType) -> Bool
 }
 
-class TypeListViewModel: TypeListViewModelProtocol {
+class TypeListViewModel: ViewModelRouter<TypeListRoute>, TypeListViewModelProtocol {
     @Published var types: [PlantType] = []
     @Published var mode: TypeListMode
     @Published var editing: PlantType?
@@ -38,8 +39,6 @@ class TypeListViewModel: TypeListViewModelProtocol {
         self.input = input
         self.selected = input.selected
         self.mode = input.selected.wrappedValue != nil ? .selection : .normal
-        
-        reloadTypes()
     }
     
     func reloadTypes() {
@@ -110,14 +109,13 @@ class TypeListViewModel: TypeListViewModelProtocol {
         do {
             self.editing = nil
             try self.input.repo.save()
-            self.mode = .edit
+            self.mode = .normal
         } catch {}
     }
 }
 
 extension TypeListViewModel {
     public struct Input {
-        let navigation: TypeListNavigationProtocol
         let repo: PlantTypeRepositoryProtocol
         let selected: Binding<PlantType?>
     }

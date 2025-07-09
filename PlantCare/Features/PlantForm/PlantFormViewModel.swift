@@ -12,7 +12,7 @@ import SwiftData
 protocol PlantFormViewModelProtocol: ObservableObject {
     var plant: Plant { get set }
     
-    func onAppear()
+    func deletePlant()
     func onTypePress()
     func onWaterSchedule()
     func onSave()
@@ -22,7 +22,7 @@ protocol PlantFormViewModelProtocol: ObservableObject {
 }
 
 
-class PlantFormViewModel: PlantFormViewModelProtocol {
+class PlantFormViewModel: ViewModelRouter<PlantFormRoute>, PlantFormViewModelProtocol {
     let input: Input
     @Published var plant: Plant
     public var coverImage: String?
@@ -33,16 +33,12 @@ class PlantFormViewModel: PlantFormViewModelProtocol {
         self.plant = input.repo.fetch(id: input.plant) ?? Plant()
     }
     
-    func onAppear() {
-        
-    }
-    
     func onTypePress() {
-        input.navigation.plantType()
+        push(.plantType)
     }
     
     func onWaterSchedule() {
-        input.navigation.waterSchedule()
+        push(.waterSchedule)
     }
     
     func onSave() {
@@ -55,6 +51,7 @@ class PlantFormViewModel: PlantFormViewModelProtocol {
         
         do {
             try input.imagesRepo.cleanCache()
+            close()
         } catch { }
     }
     
@@ -76,16 +73,36 @@ class PlantFormViewModel: PlantFormViewModelProtocol {
         } catch {}
     }
     
+    func deletePlant() {
+        input.repo.delete(type: plant)
+        close()
+    }
+    
     func onDeleteImage() {
-        
+        do {
+            try input.imagesRepo.cleanImage(image: coverImage)
+            self.coverImage = nil
+            self.plant.cover = nil
+        } catch {
+            
+        }
+    }
+    
+    func close() {
+        switch input.origin {
+        case .list:
+            router?.dismiss()
+        case .detail:
+            router?.popToRoot()
+        }
     }
 }
 
 extension PlantFormViewModel {
     public struct Input {
         let plant: PersistentIdentifier?
-        let navigation: PlantFormNavigationProtocol
         let repo: PlantRepositoryProtocol
         let imagesRepo: ImagesRepositoryProtocol
+        let origin: PlantFormOrigin
     }
 }

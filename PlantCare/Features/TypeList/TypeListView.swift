@@ -42,7 +42,7 @@ struct TypeListView<ViewModel: TypeListViewModelProtocol>: View {
             if viewModel.mode == .edit {
                 FooterActionView([
                     .init(
-                        title: .translation(.save),
+                        title: .localized(.save),
                         action: {
                             viewModel.onSave()
                         })
@@ -56,16 +56,19 @@ struct TypeListView<ViewModel: TypeListViewModelProtocol>: View {
                 }
             }
         }
-        .navigationTitle(.translation(.types))
+        .navigationTitle(.localized(.types))
         .ignoresSafeArea(edges: .bottom)
+        .task {
+            viewModel.reloadTypes()
+        }
     }
     
     func toolbarModeString(mode: TypeListMode) -> String {
         switch mode {
         case .normal, .selection:
-            return .translation(.edit)
+            return .localized(.edit)
         case .edit:
-            return .translation(.add)
+            return .localized(.add)
         }
     }
 }

@@ -25,12 +25,10 @@ struct PlantCareApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationStack(path: $navPath) {
                 DashboardRootView(navigationPath: $navPath, depInjector: injector)
                     .preferredColorScheme(config.colorScheme)
                     .environmentObject(config)
                     .environmentObject(injector)
             }
-        }
     }
 }

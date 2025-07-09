@@ -18,7 +18,6 @@ public class Plant: Identifiable {
     var cover: String?
     @Relationship
     var waterRegisters: [WaterRegister]
-    var images: [ImageRegistration]
     
     public init() {
         self.id = UUID()
@@ -27,7 +26,6 @@ public class Plant: Identifiable {
         self.plantedAt = .now
         self.waterSchedule = .init(schedule: .weekly)
         self.notes = ""
-        self.images = []
         self.waterRegisters = []
     }
 }

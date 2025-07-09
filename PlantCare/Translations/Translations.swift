@@ -24,6 +24,13 @@ enum Translations: String {
     case water_register
     case delete
     case change
+    case notes
+    case delete_confirmation_title
+    case delete_confirmation_message
+    case cancel
+    case added_at
+    case water_history
+    case add_plant
 }
 
 extension Translations: TranslationsProtocol {

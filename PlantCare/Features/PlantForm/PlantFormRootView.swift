@@ -7,60 +7,82 @@
 
 import SwiftUI
 import SwiftData
+import PixelKit
 
 public struct PlantFormRootView: View {
-    let navigationPath: Binding<NavigationPath>
     let diInjector: any PlantCareDependencyInjectorProtocol
-    @ObservedObject var viewModel: PlantFormViewModel
+    @StateObject var viewModel: PlantFormViewModel
+    @State var confirmDelete: Bool = false
     
     init(
         plant: PersistentIdentifier?,
-        navigationPath: Binding<NavigationPath>,
-        diInjector: any PlantCareDependencyInjectorProtocol
+        diInjector: any PlantCareDependencyInjectorProtocol,
+        origin: PlantFormOrigin
     ) {
-        self.navigationPath = navigationPath
         self.diInjector = diInjector
         
-        viewModel = .init(
-            input: .init(
-                plant: plant,
-                navigation: PlantFormNavigation(navPath: navigationPath),
-                repo: diInjector.plantRepo,
-                imagesRepo: diInjector.imagesRepo
-            )
+        _viewModel = StateObject(wrappedValue:
+                .init(
+                    input: .init(
+                        plant: plant,
+                        repo: diInjector.plantRepo,
+                        imagesRepo: diInjector.imagesRepo,
+                        origin: origin
+                    )
+                )
         )
     }
     
     public var body: some View {
-        PlantFormView(
-            viewModel: viewModel
-        )
-        .navigationDestination(
-            for: PlantFormNavigation.Destinations.self,
+        StackNavigator(
+            root: viewModel.input.origin == .list ? true : false,
             destination: navigateTo
-        )
+        ) { route in
+            PlantFormView(
+                viewModel: viewModel
+            )
+            .task {
+                viewModel.inject(router: route)
+            }
+            .toolbar {
+                if viewModel.input.plant != nil {
+                    Button(String.localized(.delete)) {
+                        confirmDelete.toggle()
+                    }
+                    .foregroundStyle(PixelKit.shared.theme.negative)
+                }
+            }
+            .alert(
+                .localized(.delete_confirmation_title),
+                isPresented: $confirmDelete,
+                actions: {
+                    Button(String.localized(.cancel)) {
+                        confirmDelete.toggle()
+                    }
+                    
+                    Button(String.localized(.delete)) {
+                        viewModel.deletePlant()
+                    }
+                },
+                message: {
+                    Text(String.localized(.delete_confirmation_message))
+                }
+            )
+        }
     }
 }
 
 extension PlantFormRootView {
     @ViewBuilder
-    func navigateTo(destination: PlantFormNavigation.Destinations) -> some View {
+    func navigateTo(destination: PlantFormRoute) -> some View {
         switch destination {
         case .plantType:
             TypeListRootView(
-                navigationPath: navigationPath,
                 selected: $viewModel.plant.type,
                 dpInjector: diInjector
             )
         case .waterSchedule:
             WaterScheduleSelectorRootView(
-                navigationPath: navigationPath,
-                depInjector: diInjector,
-                plant: $viewModel.plant
-            )
-        case .imagesGallery:
-            PlantImagesGalleryRootView(
-                navigationPath: navigationPath,
                 depInjector: diInjector,
                 plant: $viewModel.plant
             )

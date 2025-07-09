@@ -9,6 +9,7 @@ import SwiftUI
 import PixelKit
 
 struct PlantFormView<ViewModel: PlantFormViewModelProtocol>: View {
+    @StateObject var keyboard = KeyboardResponder()
     @ObservedObject var viewModel: ViewModel
     
     init(viewModel: ViewModel) {
@@ -25,16 +26,16 @@ struct PlantFormView<ViewModel: PlantFormViewModelProtocol>: View {
                 
                 GrouppedSectionView(nil) {
                     InputTextCell(
-                        .labels(.title(.translation(.name))),
+                        title: .localized(.name),
                         text: $viewModel.plant.name,
                         separator: false
                     )
                 }
                 
-                GrouppedSectionView(.title(.translation(.optional))) {
+                GrouppedSectionView(.title(.localized(.optional))) {
                     VStack(spacing: 0) {
                         DisplayCell(
-                            .labels(title: .translation(.types), .subtitle(viewModel.plant.type?.name ?? "")),
+                            .labels(title: .localized(.types), .subtitle(viewModel.plant.type?.name ?? "")),
                             disclosure: true,
                             onPress: {
                                 viewModel.onTypePress()
@@ -44,7 +45,7 @@ struct PlantFormView<ViewModel: PlantFormViewModelProtocol>: View {
                         InputDateCell(
                             .labels(
                                 .title(
-                                    .translation(.planted_at)
+                                    .localized(.planted_at)
                                 )
                             ),
                             date: $viewModel.plant.plantedAt
@@ -52,25 +53,32 @@ struct PlantFormView<ViewModel: PlantFormViewModelProtocol>: View {
                         
                         DisplayCell(
                             .labels(
-                                title: .translation(.water_register), .subtitle(viewModel.plant.waterSchedule.type)
+                                title: .localized(.water_register), .subtitle(viewModel.plant.waterSchedule.type)
                             ),
                             disclosure: true,
                             onPress: {
                                 viewModel.onWaterSchedule()
                             }
                         )
+                        
+                        InputTextCell(
+                            title: .localized(.notes),
+                            text: $viewModel.plant.notes
+                        )
                     }
                 }
             }
             
             FooterActionView([
-                .init(title: .translation(.save), action: viewModel.onSave)
+                .init(title: .localized(.save), action: viewModel.onSave)
             ])
+            .offset(x: 0, y: keyboard.keyboardHeight)
         }
         .background(
             Rectangle()
                 .foregroundStyle(PixelKit.shared.theme.background)
         )
+        .ignoresSafeArea(.container, edges: .bottom)
     }
     
     func headerImage() -> ImageView {
@@ -88,21 +96,21 @@ struct PlantFormView<ViewModel: PlantFormViewModelProtocol>: View {
         if viewModel.plant.cover != nil {
             options.append(
                 .delete(
-                    localization: .translation(.delete),
+                    localization: .localized(.delete),
                     action: viewModel.onDeleteImage
                 )
             )
             
             options.append(
                 .change(
-                    localization: .translation(.change),
+                    localization: .localized(.change),
                     action: viewModel.onChangeImage
                 )
             )
         } else {
             options.append(
                 .add(
-                    localization: .translation(.add),
+                    localization: .localized(.add),
                     action: viewModel.onAddImage
                 )
             )

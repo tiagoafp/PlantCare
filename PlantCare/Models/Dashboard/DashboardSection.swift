@@ -25,22 +25,22 @@ extension DashboardSection: DashboardSectionProtocol {
     var title: String {
         switch type {
         case .water:
-            return .translation(.water)
+            return .localized(.water)
         case .plants:
-            return .translation(.plants)
+            return .localized(.plants)
         case .type:
-            return .translation(.types)
+            return .localized(.types)
         }
     }
     
     var actionString: String {
         switch type {
         case .water:
-            return .translation(.water_plants)
+            return .localized(.water_plants)
         case .plants:
-            return .translation(.details)
+            return .localized(.details)
         case .type:
-            return .translation(.details)
+            return .localized(.details)
         }
     }
     

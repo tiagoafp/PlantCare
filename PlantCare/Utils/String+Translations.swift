@@ -7,13 +7,13 @@
 import SwiftUI
 
 extension Text {
-    static func translation(_ translation: Translations) -> Text {
+    static func localized(_ translation: Translations) -> Text {
         return Text(translation.translation)
     }
 }
 
 extension String {
-    static func translation(_ translation: Translations) -> String {
+    static func localized(_ translation: Translations) -> String {
         return translation.translation
     }
     

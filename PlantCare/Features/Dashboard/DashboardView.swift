@@ -39,17 +39,6 @@ struct DashboardView<ViewModel: DashboardViewModelProtocol>: View {
             Rectangle()
                 .foregroundStyle(PixelKit.shared.theme.background)
         )
-        .navigationTitle(.translation(.plant_care))
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button(action: {
-                    config.swipeTheme()
-                }) {
-                    Image(systemName: "gear")
-                }
-            }
-        }
     }
 }
 
@@ -93,7 +82,7 @@ extension DashboardView {
                 disclosure: item is DashboardSectionItemPlant,
                 separator: item != lastItem,
                 onPress: {
-                    
+                    viewModel.onItemPressed(item: item)
                 }
             )
         )

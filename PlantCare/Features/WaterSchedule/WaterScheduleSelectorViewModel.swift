@@ -8,13 +8,14 @@
 import SwiftUI
 import SwiftData
 
+@MainActor
 protocol WaterScheduleSelectorViewModelProtocol: ObservableObject {
     var allSchedules: [WaterScheduleType] { get }
     func isSelected(_ schedule: WaterScheduleType) -> Bool
     func select(_ schedule: WaterScheduleType)
 }
 
-class WaterScheduleSelectorViewModel: WaterScheduleSelectorViewModelProtocol {
+class WaterScheduleSelectorViewModel: ViewModelRouter<WaterScheduleRoute>, WaterScheduleSelectorViewModelProtocol {
     var input: Input
     @Published var allSchedules: [WaterScheduleType]
     
@@ -39,7 +40,6 @@ class WaterScheduleSelectorViewModel: WaterScheduleSelectorViewModelProtocol {
 
 extension WaterScheduleSelectorViewModel {
     public struct Input {
-        var navigation: WaterScheduleSelectorNavigationProtocol
         var plant: Binding<Plant>
     }
 }

@@ -8,42 +8,38 @@
 import SwiftUI
 
 public struct WaterScheduleSelectorRootView: View {
-    @ObservedObject var viewModel: WaterScheduleSelectorViewModel
+    @StateObject var viewModel: WaterScheduleSelectorViewModel
     let depInjector: any PlantCareDependencyInjectorProtocol
-    @ObservedObject var navigatior: ViewNavigator<WaterScheduleSelectorNavigation.Destinations>
     
     init(
-        navigationPath: Binding<NavigationPath>,
         depInjector: any PlantCareDependencyInjectorProtocol,
         plant: Binding<Plant>
     ) {
         self.depInjector = depInjector
-        self.navigatior = .init(navPath: navigationPath)
         
-        viewModel = .init(
-            input:
+        _viewModel = StateObject(wrappedValue:
                 .init(
-                    navigation: WaterScheduleSelectorNavigation(),
-                    plant: plant
-            )
+                    input:
+                            .init(
+                                plant: plant
+                            )
+                )
         )
     }
     
     public var body: some View {
-        WaterScheduleSelectorView(
-            viewModel: viewModel
-        )
-        .task {
-            viewModel.input.navigation.updateNavigator(navigator: navigatior)
+        StackNavigator(destination: navigateTo) { router in
+            WaterScheduleSelectorView(
+                viewModel: viewModel
+            )
+            .task {
+                viewModel.inject(router: router)
+            }
         }
-        .sheet(item: $navigatior.sheet , content: navigateTo)
-        .navigationDestination(for: navigatior.type, destination: navigateTo)
     }
 }
 
 extension WaterScheduleSelectorRootView {
     @ViewBuilder
-    func navigateTo(destination: WaterScheduleSelectorNavigation.Destinations) -> some View {
-        EmptyView()
-    }
+    func navigateTo(destination: WaterScheduleRoute) -> some View {}
 }
