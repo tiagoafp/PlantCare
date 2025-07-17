@@ -39,6 +39,12 @@ class DashboardViewModel: DashboardViewModelProtocol {
     
     func onAppear() {
         do {
+            if let plants: [Plant] = try? input.plantRepo.fetchOrderedByWater() {
+                waterSection.update(
+                    items: plants.map({ .init(plant: $0)})
+                )
+            }
+            
             types.update(
                 items: try input.plantTypeRepo.fetchTypesByPlantsNumber()
                     .map { .init(plantType: $0) }
@@ -68,16 +74,12 @@ class DashboardViewModel: DashboardViewModelProtocol {
             router?.push(.plant(plantItem.plant.persistentModelID))
             return
         }
-        
-        if item is DashboardSectionItemPlantType {
-            router?.push(.types)
-            return
-        }
     }
 }
 
 extension DashboardViewModel {
     public struct Input {
+        let plantRepo: PlantRepositoryProtocol
         let plantTypeRepo: PlantTypeRepositoryProtocol
         let storage: Storage
     }

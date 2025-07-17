@@ -37,7 +37,7 @@ class PlantListViewModel: PlantListViewModelProtocol {
     }
     
     func onPlantPress(plant: Plant) {
-        
+        router?.push(.detail(plant.persistentModelID))
     }
     
     func onAdd() {

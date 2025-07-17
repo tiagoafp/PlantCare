@@ -39,6 +39,7 @@ struct DashboardView<ViewModel: DashboardViewModelProtocol>: View {
             Rectangle()
                 .foregroundStyle(PixelKit.shared.theme.background)
         )
+        .ignoresSafeArea(edges: .bottom)
     }
 }
 
@@ -68,15 +69,36 @@ extension DashboardView {
     }
     
     @ViewBuilder
-    func Cell<Item: DashboardSectionItemProtocol>(item: Item, lastItem: Item?) -> AnyView {
+    func SectionView<Section: DashboardSectionProtocol, Item: DashboardPlantProtocol> (
+        section: Section, items: [Item]
+    ) -> AnyView {
+        AnyView(
+           GrouppedSectionView(
+                .title(
+                    section.title,
+                    action: .default(
+                        section.actionString,
+                        action: {
+                            viewModel.onSectionPress(section: section)
+                        }
+                    )
+                ),
+                cells: {
+                    ForEach(items, id: \.self) { item in
+                        PlantCell(item: item, lastItem: items.last)
+                    }
+                }
+            )
+        )
+    }
+    
+    @ViewBuilder
+    func PlantCell<Item: DashboardPlantProtocol>(item: Item, lastItem: Item?) -> AnyView {
         AnyView(
             DisplayCell(
                 .labels(
-                    .title(item.name),
-                    .subtitle(
-                        item.subtitle,
-                        variant: item.subtitleType
-                    )
+                    .title(item.title),
+                    item.subtitle
                 ),
                 image: image(item: item),
                 disclosure: item is DashboardSectionItemPlant,
@@ -89,9 +111,7 @@ extension DashboardView {
     }
     
     @ViewBuilder
-    func image(item: any DashboardSectionItemProtocol) -> CellImage? {
-        if let imageType = item.image {
-            CellImage(.rounded(.variant(imageType)))
-        }
+    func image<Item: DashboardPlantProtocol>(item: Item) -> CellImage? {
+        CellImage(.rounded(.variant(item.image)))
     }
 }

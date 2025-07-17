@@ -19,13 +19,13 @@ public class Plant: Identifiable {
     @Relationship
     var waterRegisters: [WaterRegister]
     
-    public init() {
+    public init(name: String = "", waterRegisters: [WaterRegister] = [] ) {
         self.id = UUID()
-        self.name = ""
+        self.name = name
         self.createdAt = .now
         self.plantedAt = .now
         self.waterSchedule = .init(schedule: .weekly)
         self.notes = ""
-        self.waterRegisters = []
+        self.waterRegisters = waterRegisters
     }
 }

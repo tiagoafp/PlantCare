@@ -19,6 +19,7 @@ public struct DashboardRootView: View {
         _viewModel = StateObject(
             wrappedValue: .init(input:
                     .init(
+                        plantRepo: depInjector.plantRepo,
                         plantTypeRepo: depInjector.plantTypeRepo,
                         storage: Storage(db: depInjector.db)
                     )

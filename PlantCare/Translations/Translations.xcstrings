@@ -1,6 +1,29 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%lld missing_water" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "No watered for %lld day"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "No watered for %lld days"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld number_of_plants" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -133,6 +156,9 @@
           }
         }
       }
+    },
+    "Key" : {
+      "extractionState" : "manual"
     },
     "name" : {
       "extractionState" : "manual",

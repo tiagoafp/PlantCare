@@ -15,7 +15,7 @@ struct PlantListView<ViewModel: PlantListViewModelProtocol>: View {
     }
     
     var body: some View {
-        ZStack(alignment: .top) {
+        ZStack(alignment: .bottom) {
             Rectangle().foregroundStyle(PixelKit.shared.theme.background)
             VStack {
                 if viewModel.plants.isEmpty {
@@ -25,8 +25,8 @@ struct PlantListView<ViewModel: PlantListViewModelProtocol>: View {
                 } else {
                     ScrollView {
                         GrouppedSectionView(nil) {
-                            ForEach(viewModel.plants) { plant in
-                                VStack(spacing: 0) {
+                            VStack(spacing: 0) {
+                                ForEach(viewModel.plants) { plant in
                                     DisplayCell(
                                         .labels(
                                             .title(plant.name),
@@ -51,5 +51,4 @@ struct PlantListView<ViewModel: PlantListViewModelProtocol>: View {
             viewModel.fetchPlants()
         }
     }
-}
 }

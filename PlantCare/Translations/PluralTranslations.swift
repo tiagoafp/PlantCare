@@ -9,6 +9,7 @@ import SwiftUI
 
 enum PluralTranslations{
     case number_of_plants(Int)
+    case missing_water(Int)
 }
 
 extension PluralTranslations: TranslationsProtocol {
@@ -16,6 +17,8 @@ extension PluralTranslations: TranslationsProtocol {
         switch self {
         case .number_of_plants(let count):
             return "\(count) number_of_plants"
+        case .missing_water(let count):
+            return "\(count) missing_water"
         }
     }
     
