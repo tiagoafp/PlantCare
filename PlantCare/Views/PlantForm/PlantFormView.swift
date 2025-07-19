@@ -24,7 +24,7 @@ struct PlantFormView<ViewModel: PlantFormViewModelProtocol>: View {
                     options: headerImageOptions()
                 )
                 
-                GrouppedSectionView(nil) {
+                GrouppedSectionView {
                     InputTextCell(
                         title: .localized(.name),
                         text: $viewModel.plant.name,
@@ -32,7 +32,9 @@ struct PlantFormView<ViewModel: PlantFormViewModelProtocol>: View {
                     )
                 }
                 
-                GrouppedSectionView(.title(.localized(.optional))) {
+                GrouppedSectionView(
+                    title: .localized(.optional)
+                ) {
                     VStack(spacing: 0) {
                         DisplayCell(
                             .labels(title: .localized(.types), .subtitle(viewModel.plant.type?.name ?? "")),

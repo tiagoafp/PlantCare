@@ -26,7 +26,7 @@ struct TypeListView<ViewModel: TypeListViewModelProtocol>: View {
                 Text("Empty list")
             } else {
                 ScrollView {
-                    GrouppedSectionView(nil) {
+                    GrouppedSectionView {
                         ForEach($viewModel.types) { $item in
                             switch viewModel.mode {
                             case .edit:

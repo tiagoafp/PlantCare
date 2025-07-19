@@ -21,7 +21,7 @@ struct WaterScheduleSelectorView<ViewModel: WaterScheduleSelectorViewModelProtoc
                 .foregroundStyle(PixelKit.shared.theme.background)
             
             ScrollView {
-                GrouppedSectionView(nil) {
+                GrouppedSectionView {
                     VStack(spacing: 0) {
                         ForEach(viewModel.allSchedules, id: \.self) { schedule in
                             SelectableCell(

@@ -21,7 +21,8 @@ public struct DashboardRootView: View {
                     .init(
                         plantRepo: depInjector.plantRepo,
                         plantTypeRepo: depInjector.plantTypeRepo,
-                        storage: Storage(db: depInjector.db)
+                        storage: Storage(db: depInjector.db),
+                        itemsBuilder: StaticDashboardItemBuilder()
                     )
             )
         )

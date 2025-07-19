@@ -32,7 +32,7 @@ struct PlantDetailView<ViewModel: PlantDetailViewModelProtocol>: View {
             VStack {
                 ImageHeaderView(.local(plant.cover ?? ""))
                 
-                GrouppedSectionView(nil, cells: {
+                GrouppedSectionView {
                     VStack(spacing: 0) {
                         DisplayCell(
                             .labels(
@@ -96,7 +96,7 @@ struct PlantDetailView<ViewModel: PlantDetailViewModelProtocol>: View {
                             onPress: viewModel.onWaterHistory
                         )
                     }
-                })
+                }
             }
         }
     }

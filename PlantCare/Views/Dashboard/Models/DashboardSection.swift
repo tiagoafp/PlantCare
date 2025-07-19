@@ -6,35 +6,38 @@
 
 import SwiftUI
 
-struct DashboardPlantsSection<Item: DashboardSectionItemProtocol> {
+struct DashboardSection: Hashable {
     var type: SectionType
-    var items: [Item]
+    var items: [DashboardItem]
     
-    init(type: SectionType, items: [Item] = []) {
+    init(type: SectionType, items: [DashboardItem] = []) {
         self.type = type
         self.items = items
     }
     
-    mutating func update(items: [Item]) {
+    mutating func update(items: [DashboardItem]) {
         self.items = items
     }
 }
 
-extension DashboardPlantsSection {
+extension DashboardSection {
     enum SectionType {
         case water
         case plants
+        case types
     }
 }
 
 
-extension DashboardPlantsSection {
+extension DashboardSection {
     var title: String {
         switch type {
         case .water:
             return .localized(.water)
         case .plants:
             return .localized(.plants)
+        case .types:
+            return .localized(.types)
         }
     }
     
@@ -43,6 +46,8 @@ extension DashboardPlantsSection {
         case .water:
             return .localized(.water_plants)
         case .plants:
+            return .localized(.details)
+        case .types:
             return .localized(.details)
         }
     }

@@ -1,5 +1,5 @@
 {
-  "originHash" : "9265bbf479c8a252a74c8642939d20b3faa91d2e0caca0c50bf5a11c339a2264",
+  "originHash" : "7576195608ac051a969dbef5a008603a4b161afea638fa46dbbb4a423bc2662d",
   "pins" : [
     {
       "identity" : "mockable",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "118a0b8934e585b80952586db30bcb72aef45a74",
         "version" : "0.3.2"
+      }
+    },
+    {
+      "identity" : "pixelkit",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:tiagoafp/PixelKit.git",
+      "state" : {
+        "branch" : "init",
+        "revision" : "8c204dd9d22cf9024031d0597040a787327e8fb5"
       }
     },
     {

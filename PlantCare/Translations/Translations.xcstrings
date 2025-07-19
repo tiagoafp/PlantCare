@@ -80,6 +80,17 @@
         }
       }
     },
+    "all_good" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All good"
+          }
+        }
+      }
+    },
     "cancel" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -157,8 +168,27 @@
         }
       }
     },
-    "Key" : {
-      "extractionState" : "manual"
+    "irregular_water" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Irregular water"
+          }
+        }
+      }
+    },
+    "missing_water" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Missing water"
+          }
+        }
+      }
     },
     "name" : {
       "extractionState" : "manual",

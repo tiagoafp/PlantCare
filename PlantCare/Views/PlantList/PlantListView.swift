@@ -24,7 +24,7 @@ struct PlantListView<ViewModel: PlantListViewModelProtocol>: View {
                     Spacer()
                 } else {
                     ScrollView {
-                        GrouppedSectionView(nil) {
+                        GrouppedSectionView {
                             VStack(spacing: 0) {
                                 ForEach(viewModel.plants) { plant in
                                     DisplayCell(

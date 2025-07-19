@@ -212,7 +212,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				B4BDC6072DF5F00100301EFC /* XCRemoteSwiftPackageReference "Mockable" */,
-				B4B8B8982DF8A78100578705 /* XCLocalSwiftPackageReference "../PixelKit" */,
+				152D31112E2BB2DF003A1599 /* XCRemoteSwiftPackageReference "PixelKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B4C546172DD7A13F00FA55BE /* Products */;
@@ -416,6 +416,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to the camera to take photos from your plants";
@@ -447,6 +448,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to the camera to take photos from your plants";
@@ -579,14 +581,15 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		B4B8B8982DF8A78100578705 /* XCLocalSwiftPackageReference "../PixelKit" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../PixelKit;
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
+		152D31112E2BB2DF003A1599 /* XCRemoteSwiftPackageReference "PixelKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:tiagoafp/PixelKit.git";
+			requirement = {
+				branch = init;
+				kind = branch;
+			};
+		};
 		B4BDC6072DF5F00100301EFC /* XCRemoteSwiftPackageReference "Mockable" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Kolos65/Mockable";

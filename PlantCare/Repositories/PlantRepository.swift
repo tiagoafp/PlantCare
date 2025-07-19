@@ -9,6 +9,7 @@ import Foundation
 
 protocol PlantRepositoryProtocol {
     func fetchOrderedByWater() throws -> [Plant]
+    func fetchOrderedByNewAdded() throws -> [Plant]
     func fetchAll() throws -> [Plant]
     func fetch(id: PersistentIdentifier?) -> Plant?
     func insert(type: Plant)
@@ -29,6 +30,14 @@ class PlantRepository: PlantRepositoryProtocol {
                 let scoreA = PlantWaterCalculator(plant: plantA)
                 let scoreB = PlantWaterCalculator(plant: plantB)
                 return scoreA.numberDaysWatering > scoreB.numberDaysWatering
+            }).prefix(5)
+        )
+    }
+    
+    func fetchOrderedByNewAdded() throws -> [Plant] {
+        return Array(
+            try fetchAll().sorted(by: { plantA, plantB -> Bool in
+                return plantA.createdAt > plantB.createdAt
             }).prefix(5)
         )
     }
