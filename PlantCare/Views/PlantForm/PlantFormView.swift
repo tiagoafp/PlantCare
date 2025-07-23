@@ -37,7 +37,8 @@ struct PlantFormView<ViewModel: PlantFormViewModelProtocol>: View {
                 ) {
                     VStack(spacing: 0) {
                         DisplayCell(
-                            .labels(title: .localized(.types), .subtitle(viewModel.plant.type?.name ?? "")),
+                            title: .localized(.types),
+                            subtitle: viewModel.plant.type?.name ?? "",
                             disclosure: true,
                             onPress: {
                                 viewModel.onTypePress()
@@ -54,9 +55,8 @@ struct PlantFormView<ViewModel: PlantFormViewModelProtocol>: View {
                         )
                         
                         DisplayCell(
-                            .labels(
-                                title: .localized(.water_register), .subtitle(viewModel.plant.waterSchedule.type)
-                            ),
+                            title: .localized(.water_register),
+                            subtitle: viewModel.plant.waterSchedule.type,
                             disclosure: true,
                             onPress: {
                                 viewModel.onWaterSchedule()
@@ -84,11 +84,11 @@ struct PlantFormView<ViewModel: PlantFormViewModelProtocol>: View {
     }
     
     func headerImage() -> ImageView {
-        guard let mainImage = viewModel.plant.cover else {
+        guard let mainImage = viewModel.coverImage else {
             return .placeholder(.icon(.imagePlaceholder))
         }
         
-        return .url(mainImage)
+        return .image(Image(uiImage: mainImage))
     }
     
     func headerImageOptions() -> [ImageHeaderView.Option] {

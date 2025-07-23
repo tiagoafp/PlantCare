@@ -43,15 +43,6 @@ class PlantRepository: PlantRepositoryProtocol {
     }
     
     func fetchAll() throws -> [Plant] {
-        var register: WaterRegister = .init(prev: nil, waterSchedule: .init(schedule: .weekly))
-        register.correctDate = Calendar.current.date(byAdding: .day, value: -20, to: register.wateredAt)
-        
-        return [
-            Plant(name: "PlantA", waterRegisters: [register]),
-            Plant(name: "PlantB", waterRegisters: [register]),
-            Plant(name: "PlantC", waterRegisters: [register])
-        ]
-        
         let descriptor = FetchDescriptor<Plant>(
             sortBy: [SortDescriptor(\.createdAt, order: .forward)]
         )

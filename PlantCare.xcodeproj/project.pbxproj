@@ -36,9 +36,22 @@
 		B4C5462F2DD7A14100FA55BE /* PlantCareUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlantCareUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		15F98BBB2E315E2A00C03882 /* Exceptions for "PlantCare" folder in "PlantCare" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Builders/DisplayItemBuilder/Untitled.swift,
+			);
+			target = B4C546152DD7A13F00FA55BE /* PlantCare */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		B4C546182DD7A13F00FA55BE /* PlantCare */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				15F98BBB2E315E2A00C03882 /* Exceptions for "PlantCare" folder in "PlantCare" target */,
+			);
 			path = PlantCare;
 			sourceTree = "<group>";
 		};

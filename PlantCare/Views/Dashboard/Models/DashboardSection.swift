@@ -6,32 +6,13 @@
 
 import SwiftUI
 
-struct DashboardSection: Hashable {
-    var type: SectionType
-    var items: [DashboardItem]
+enum DashboardSection: Hashable {
+    case water
+    case plants
+    case types
     
-    init(type: SectionType, items: [DashboardItem] = []) {
-        self.type = type
-        self.items = items
-    }
-    
-    mutating func update(items: [DashboardItem]) {
-        self.items = items
-    }
-}
-
-extension DashboardSection {
-    enum SectionType {
-        case water
-        case plants
-        case types
-    }
-}
-
-
-extension DashboardSection {
     var title: String {
-        switch type {
+        switch self {
         case .water:
             return .localized(.water)
         case .plants:
@@ -42,7 +23,7 @@ extension DashboardSection {
     }
     
     var actionString: String {
-        switch type {
+        switch self {
         case .water:
             return .localized(.water_plants)
         case .plants:

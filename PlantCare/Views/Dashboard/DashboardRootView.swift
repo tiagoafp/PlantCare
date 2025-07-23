@@ -22,7 +22,8 @@ public struct DashboardRootView: View {
                         plantRepo: depInjector.plantRepo,
                         plantTypeRepo: depInjector.plantTypeRepo,
                         storage: Storage(db: depInjector.db),
-                        itemsBuilder: StaticDashboardItemBuilder()
+                        itemsBuilder: StaticDisplayItemsBuilder(),
+                        plantsBuilder: StaticPlantsDisplayItemsBuilder()
                     )
             )
         )

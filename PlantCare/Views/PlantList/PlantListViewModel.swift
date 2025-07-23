@@ -9,7 +9,7 @@ import SwiftUI
 
 @MainActor
 protocol PlantListViewModelProtocol: ObservableObject {
-    var plants: [Plant] { get }
+    var items: [DisplayItem<Plant>] { get }
     
     func fetchPlants()
     func onPlantPress(plant: Plant)
@@ -19,7 +19,7 @@ protocol PlantListViewModelProtocol: ObservableObject {
 class PlantListViewModel: PlantListViewModelProtocol {
     weak var router: ViewRouter<PlantListRoute>?
     
-    @Published var plants: [Plant] = []
+    @Published var items: [DisplayItem<Plant>] = []
     var input: Input
     
     init(input: Input) {
@@ -32,7 +32,8 @@ class PlantListViewModel: PlantListViewModelProtocol {
     
     func fetchPlants() {
         do {
-            self.plants = try input.repo.fetchAll()
+            let plants = try input.repo.fetchAll()
+            self.items = input.itemsBuilder.build(plants: plants, waterDetail: false)
         } catch {}
     }
     
@@ -48,6 +49,7 @@ class PlantListViewModel: PlantListViewModelProtocol {
 extension PlantListViewModel {
     struct Input {
         let repo: PlantRepositoryProtocol
+        let itemsBuilder: PlantsDisplayItemsBuilder
     }
 }
 

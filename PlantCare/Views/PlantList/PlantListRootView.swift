@@ -16,7 +16,8 @@ struct PlantListRootView: View {
         _viewModel = StateObject(
             wrappedValue: PlantListViewModel(
                 input: .init(
-                    repo: depInjector.plantRepo
+                    repo: depInjector.plantRepo,
+                    itemsBuilder: StaticPlantsDisplayItemsBuilder()
                 )
             )
         )

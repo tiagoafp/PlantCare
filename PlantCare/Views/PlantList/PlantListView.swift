@@ -18,7 +18,7 @@ struct PlantListView<ViewModel: PlantListViewModelProtocol>: View {
         ZStack(alignment: .bottom) {
             Rectangle().foregroundStyle(PixelKit.shared.theme.background)
             VStack {
-                if viewModel.plants.isEmpty {
+                if viewModel.items.isEmpty {
                     Spacer()
                     Text("No plants")
                     Spacer()
@@ -26,15 +26,14 @@ struct PlantListView<ViewModel: PlantListViewModelProtocol>: View {
                     ScrollView {
                         GrouppedSectionView {
                             VStack(spacing: 0) {
-                                ForEach(viewModel.plants) { plant in
+                                ForEach(viewModel.items, id: \.self) { item in
                                     DisplayCell(
-                                        .labels(
-                                            .title(plant.name),
-                                            .subtitle("No tregister")),
-                                        disclosure: true,
-                                        onPress: {
-                                            viewModel.onPlantPress(plant: plant)
-                                        }
+                                        title: item.title,
+                                        subtitle: item.subtitle,
+                                        subtitleVariant: item.subtitleVariant.casted, image: item.cellImage,
+                                        disclosure: item.disclosure,
+                                        separator: item.separator,
+                                        onPress: {  }
                                     )
                                 }
                             }

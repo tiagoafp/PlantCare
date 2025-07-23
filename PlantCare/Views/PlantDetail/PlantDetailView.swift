@@ -35,63 +35,49 @@ struct PlantDetailView<ViewModel: PlantDetailViewModelProtocol>: View {
                 GrouppedSectionView {
                     VStack(spacing: 0) {
                         DisplayCell(
-                            .labels(
-                                .title(.localized(.name)),
-                                .subtitle(plant.name)
-                            ),
+                            title: .localized(.name),
+                            subtitle: plant.name,
                             disclosure: false,
                             onPress: {}
                         )
                         
                         DisplayCell(
-                            .labels(
-                                .title(.localized(.types)),
-                                .subtitle(plant.type?.name ?? "")
-                            ),
+                            title: .localized(.types),
+                            subtitle: plant.type?.name ?? "",
                             disclosure: false,
                             onPress: {}
                         )
                         
                         DisplayCell(
-                            .labels(
-                                .title(.localized(.added_at)),
-                                .subtitle(viewModel.addedAt(plant: plant))
-                            ),
+                            title: .localized(.added_at),
+                            subtitle: viewModel.addedAt(plant: plant),
                             disclosure: false,
                             onPress: {}
                         )
                         
                         DisplayCell(
-                            .labels(
-                                .title(.localized(.planted_at)),
-                                .subtitle(viewModel.plantedAt(plant: plant))
-                            ),
+                            title: .localized(.planted_at),
+                            subtitle: viewModel.plantedAt(plant: plant),
                             disclosure: false,
                             onPress: {}
                         )
                         
                         DisplayCell(
-                            .labels(
-                                .title(.localized(.water_register)),
-                                .subtitle(plant.waterSchedule.type)
-                            ),
+                            title: .localized(.water_register),
+                            subtitle: plant.waterSchedule.type,
                             disclosure: false,
                             onPress: {}
                         )
                         
                         DisplayCell(
-                            .labels(
-                                .title(.localized(.notes)),
-                                .subtitle(plant.notes)
-                            ),
+                            title:.localized(.notes),
+                            subtitle: plant.notes,
                             disclosure: false,
                             onPress: {}
                         )
                         
                         DisplayCell(
-                            .labels(
-                                .title(.localized(.water_register))
-                            ),
+                            title: .localized(.water_register),
                             disclosure: true,
                             onPress: viewModel.onWaterHistory
                         )

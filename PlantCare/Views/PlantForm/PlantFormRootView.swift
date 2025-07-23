@@ -26,7 +26,7 @@ public struct PlantFormRootView: View {
                     input: .init(
                         plant: plant,
                         repo: diInjector.plantRepo,
-                        imagesRepo: diInjector.imagesRepo,
+                        imagesWritter: DocsImagesStorageService(),
                         origin: origin
                     )
                 )

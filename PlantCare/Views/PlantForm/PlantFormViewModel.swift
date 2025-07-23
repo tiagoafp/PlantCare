@@ -11,6 +11,7 @@ import SwiftData
 @MainActor
 protocol PlantFormViewModelProtocol: ObservableObject {
     var plant: Plant { get set }
+    var coverImage: UIImage? { get }
     
     func deletePlant()
     func onTypePress()
@@ -25,7 +26,7 @@ protocol PlantFormViewModelProtocol: ObservableObject {
 class PlantFormViewModel: ViewModelRouter<PlantFormRoute>, PlantFormViewModelProtocol {
     let input: Input
     @Published var plant: Plant
-    public var coverImage: String?
+    @Published var coverImage: UIImage?
     
     init (input: Input) {
         self.input = input
@@ -42,35 +43,17 @@ class PlantFormViewModel: ViewModelRouter<PlantFormRoute>, PlantFormViewModelPro
     }
     
     func onSave() {
-        guard let saved = try? input.imagesRepo.saveToDocs(plant: plant, image: plant.cover) else {
-            return
-        }
-        
-        plant.cover = saved
+        plant.cover = input.imagesWritter.saveCover(image: coverImage, plant: plant)
         input.repo.insert(type: plant)
-        
-        do {
-            try input.imagesRepo.cleanCache()
-            close()
-        } catch { }
+        close()
     }
     
     func onAddImage(image: UIImage) {
-        guard let path = try? input.imagesRepo.saveImage(plant: plant, image: image, type: .cache) else {
-            return
-        }
-        
-        self.coverImage = path
-        self.plant.cover = path
+        self.coverImage = image
     }
     
     func onChangeImage(image: UIImage) {
-        do {
-            try input.imagesRepo.cleanImage(image: coverImage)
-            let path = try input.imagesRepo.saveImage(plant: plant, image: image, type: .cache)
-            self.coverImage = path
-            self.plant.cover = path
-        } catch {}
+        self.coverImage = image
     }
     
     func deletePlant() {
@@ -79,13 +62,13 @@ class PlantFormViewModel: ViewModelRouter<PlantFormRoute>, PlantFormViewModelPro
     }
     
     func onDeleteImage() {
-        do {
-            try input.imagesRepo.cleanImage(image: coverImage)
+        /*do {
+            try input.imagesService.cleanImage(image: coverImage)
             self.coverImage = nil
             self.plant.cover = nil
         } catch {
             
-        }
+        }*/
     }
     
     func close() {
@@ -102,7 +85,7 @@ extension PlantFormViewModel {
     public struct Input {
         let plant: PersistentIdentifier?
         let repo: PlantRepositoryProtocol
-        let imagesRepo: ImagesRepositoryProtocol
+        let imagesWritter: ImagesStorageWritterService
         let origin: PlantFormOrigin
     }
 }

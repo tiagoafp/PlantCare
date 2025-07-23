@@ -10,20 +10,31 @@ import SwiftData
 @MainActor
 protocol DashboardViewModelProtocol: ObservableObject {
     var sections: [DashboardSection] { get }
+    var water: [DisplayItem<Plant>] { get }
+    var plants: [DisplayItem<Plant>] { get }
+    var plantTypes: [DisplayItem<PlantType>] { get }
     
+    func onPlantPress(item: DisplayItem<Plant>)
+    func onPlantTypePress(item: DisplayItem<PlantType>)
     func onSectionPress(section: DashboardSection)
     func onAppear()
 }
 
 class DashboardViewModel: DashboardViewModelProtocol {
     @Published var sections: [DashboardSection]
+    @Published var water: [DisplayItem<Plant>]
+    @Published var plants: [DisplayItem<Plant>]
+    @Published var plantTypes: [DisplayItem<PlantType>]
     
     var input: Input
     weak var router: ViewRouter<DashboardRoute>?
     
     init (input: Input) {
         self.input = input
-        self.sections = []
+        self.sections = [.water, .plants, .types]
+        water = []
+        plants = []
+        plantTypes = []
     }
     
     func inject(router: ViewRouter<DashboardRoute>) {
@@ -31,41 +42,46 @@ class DashboardViewModel: DashboardViewModelProtocol {
     }
     
     func onAppear() {
-        sections.append(contentsOf: [
-            waterSection(),
-            plantSection(),
-            plantTypesSection()
-        ])
+        waterSection()
+        plantSection()
+        plantTypesSection()
     }
     
-    func waterSection() -> DashboardSection {
+    func waterSection() {
         let plants = try? input.plantRepo.fetchOrderedByWater()
         
-        return .init(
-            type: .water,
-            items: input.itemsBuilder.buildWater(plants: plants ?? [])
-        )
+        self.water = input.plantsBuilder.build(plants: plants ?? [], waterDetail: true)
     }
     
-    func plantSection() -> DashboardSection {
+    func plantSection() {
         let plants = try? input.plantRepo.fetchOrderedByNewAdded()
         
-        return .init(
-            type: .plants,
-            items: input.itemsBuilder.buildPlants(plants: plants ?? [])
-        )
+        self.plants = input.plantsBuilder.build(plants: plants ?? [], waterDetail: false)
     }
     
-    func plantTypesSection() -> DashboardSection {
+    func plantTypesSection() {
         let types = try? input.plantTypeRepo.fetchTypesByPlantsNumber()
         
-        return .init(
-            type: .plants,
-            items: input.itemsBuilder.buildTypes(types: types ?? [])
-        )
+        self.plantTypes = input.itemsBuilder.buildTypes(types: types ?? [])
+    }
+    
+    func onPlantPress(item: DisplayItem<Plant>) {
+        
+    }
+    
+    func onPlantTypePress(item: DisplayItem<PlantType>) {
+        
     }
     
     func onSectionPress(section: DashboardSection) {
+        switch section {
+        case .water:
+            self.router?.push(.water)
+        case .plants:
+            self.router?.push(.plants)
+        case .types:
+            self.router?.push(.types)
+        }
     }
 }
 
@@ -74,6 +90,7 @@ extension DashboardViewModel {
         let plantRepo: PlantRepositoryProtocol
         let plantTypeRepo: PlantTypeRepositoryProtocol
         let storage: Storage
-        let itemsBuilder: DashboardItemsBuilder
+        let itemsBuilder: DisplayItemsBuilder
+        let plantsBuilder: PlantsDisplayItemsBuilder
     }
 }

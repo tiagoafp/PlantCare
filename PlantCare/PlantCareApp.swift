@@ -17,7 +17,6 @@ struct PlantCareApp: App {
     public init() {
         do {
             injector = try PlantCareDependencyInjector()
-            try injector.imagesRepo.cleanCache()
         } catch {
             fatalError("Failed to create ModelContainer for Movie.")
         }
