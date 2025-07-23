@@ -8,13 +8,29 @@ import SwiftUI
 import Mockable
 import PixelKit
 
-protocol DisplayItem: Hashable {
-    var image: UIImage? { get }
-    var title: String { get }
-    var subtitle: String { get }
-    var subtitleVariant: DisplayItemSubtitleVariante { get }
-    var separator: Bool { get }
-    var disclosure: Bool { get }
+struct DisplayItem: Hashable {
+    var image: UIImage?
+    var title: String
+    var subtitle: DisplayItemSubtitle
+    var separator: Bool
+    var disclosure: Bool
+    var type: ItemType
+    
+    init(
+        image: UIImage? = nil,
+        title: String,
+        subtitle: DisplayItemSubtitle,
+        separator: Bool,
+        disclosure: Bool,
+        type: ItemType
+    ) {
+        self.image = image
+        self.title = title
+        self.subtitle = subtitle
+        self.separator = separator
+        self.disclosure = disclosure
+        self.type = type
+    }
 }
 
 extension DisplayItem {
@@ -26,23 +42,9 @@ extension DisplayItem {
     }
 }
 
-enum DisplayItemSubtitleVariante: Hashable {
-    case positive
-    case negative
-    case warning
-    case neutral
-    
-    var casted: CellSubtitle.Variant {
-        switch self {
-        case .positive:
-            return .positive
-        case .negative:
-            return .negative
-        case .warning:
-            return .warning
-        case .neutral:
-            return .default
-        }
+extension DisplayItem {
+    enum ItemType: Hashable {
+        case plant(Plant)
+        case plantType(PlantType)
     }
-
 }

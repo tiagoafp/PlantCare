@@ -8,7 +8,7 @@ import SwiftData
 import Foundation
 
 @Model
-public class PlantType {
+public class PlantType: Hashable {
     @Attribute(.unique) public var id: UUID
     var name: String
     @Relationship

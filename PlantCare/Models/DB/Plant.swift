@@ -7,7 +7,7 @@ import SwiftData
 import Foundation
 
 @Model
-public class Plant: Identifiable {
+public class Plant: Identifiable, Hashable {
     @Attribute(.unique) public var id: UUID
     var name: String
     var createdAt: Date

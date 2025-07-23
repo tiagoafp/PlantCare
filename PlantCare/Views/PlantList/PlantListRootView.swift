@@ -17,7 +17,9 @@ struct PlantListRootView: View {
             wrappedValue: PlantListViewModel(
                 input: .init(
                     repo: depInjector.plantRepo,
-                    itemsBuilder: StaticPlantsDisplayItemsBuilder()
+                    itemsBuilder: AppPlantItemsBuilder(
+                        subtitleBuilder: PlantDisplaySubtitleBuilder()
+                    )
                 )
             )
         )

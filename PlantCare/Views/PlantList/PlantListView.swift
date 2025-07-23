@@ -29,8 +29,9 @@ struct PlantListView<ViewModel: PlantListViewModelProtocol>: View {
                                 ForEach(viewModel.items, id: \.self) { item in
                                     DisplayCell(
                                         title: item.title,
-                                        subtitle: item.subtitle,
-                                        subtitleVariant: item.subtitleVariant.casted, image: item.cellImage,
+                                        subtitle: item.subtitle.text,
+                                        subtitleVariant: item.subtitle.casted,
+                                        image: item.cellImage,
                                         disclosure: item.disclosure,
                                         separator: item.separator,
                                         onPress: {  }

@@ -10,21 +10,20 @@ import SwiftData
 @MainActor
 protocol DashboardViewModelProtocol: ObservableObject {
     var sections: [DashboardSection] { get }
-    var water: [DisplayItem<Plant>] { get }
-    var plants: [DisplayItem<Plant>] { get }
-    var plantTypes: [DisplayItem<PlantType>] { get }
+    var water: [DisplayItem] { get }
+    var plants: [DisplayItem] { get }
+    var plantTypes: [DisplayItem] { get }
     
-    func onPlantPress(item: DisplayItem<Plant>)
-    func onPlantTypePress(item: DisplayItem<PlantType>)
+    func onItemPressed(item: DisplayItem)
     func onSectionPress(section: DashboardSection)
     func onAppear()
 }
 
 class DashboardViewModel: DashboardViewModelProtocol {
     @Published var sections: [DashboardSection]
-    @Published var water: [DisplayItem<Plant>]
-    @Published var plants: [DisplayItem<Plant>]
-    @Published var plantTypes: [DisplayItem<PlantType>]
+    @Published var water: [DisplayItem]
+    @Published var plants: [DisplayItem]
+    @Published var plantTypes: [DisplayItem]
     
     var input: Input
     weak var router: ViewRouter<DashboardRoute>?
@@ -50,26 +49,22 @@ class DashboardViewModel: DashboardViewModelProtocol {
     func waterSection() {
         let plants = try? input.plantRepo.fetchOrderedByWater()
         
-        self.water = input.plantsBuilder.build(plants: plants ?? [], waterDetail: true)
+        self.water = input.plantsBuilder.build(plants: plants ?? [])
     }
     
     func plantSection() {
         let plants = try? input.plantRepo.fetchOrderedByNewAdded()
         
-        self.plants = input.plantsBuilder.build(plants: plants ?? [], waterDetail: false)
+        self.plants = input.waterBuilder.build(plants: plants ?? [])
     }
     
     func plantTypesSection() {
         let types = try? input.plantTypeRepo.fetchTypesByPlantsNumber()
         
-        self.plantTypes = input.itemsBuilder.buildTypes(types: types ?? [])
+        self.plantTypes = []
     }
     
-    func onPlantPress(item: DisplayItem<Plant>) {
-        
-    }
-    
-    func onPlantTypePress(item: DisplayItem<PlantType>) {
+    func onItemPressed(item: DisplayItem) {
         
     }
     
@@ -90,7 +85,7 @@ extension DashboardViewModel {
         let plantRepo: PlantRepositoryProtocol
         let plantTypeRepo: PlantTypeRepositoryProtocol
         let storage: Storage
-        let itemsBuilder: DisplayItemsBuilder
-        let plantsBuilder: PlantsDisplayItemsBuilder
+        let plantsBuilder: PlantItemsBuilder
+        let waterBuilder: PlantItemsBuilder
     }
 }
