@@ -58,6 +58,17 @@
         }
       }
     },
+    "add_ago" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(%@ ago)"
+          }
+        }
+      }
+    },
     "add_plant" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -241,6 +252,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Planted at"
+          }
+        }
+      }
+    },
+    "planted_old" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(%@ old)"
           }
         }
       }

@@ -27,7 +27,8 @@ public struct DashboardRootView: View {
                         ),
                         waterBuilder: AppPlantItemsBuilder(
                             subtitleBuilder: WaterDisplaySubtitleBuilder()
-                        )
+                        ),
+                        typesBuilder: AppTypeItemsBuilder()
                     )
             )
         )

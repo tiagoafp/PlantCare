@@ -34,6 +34,7 @@ struct DashboardView<ViewModel: DashboardViewModelProtocol>: View {
                         }
                     }
                 }
+                .padding(.bottom, 40)
             }
         }
         .onAppear(perform: viewModel.onAppear)
@@ -48,22 +49,33 @@ extension DashboardView {
     ) -> some View {
         switch section {
         case .water:
-            listView(items: viewModel.water, onPress: viewModel.onItemPressed)
+            listView(
+                items: viewModel.water,
+                emptyConfig: .plant,
+                onPress: viewModel.onItemPressed
+            )
         case .plants:
-            listView(items: viewModel.plants, onPress: viewModel.onItemPressed)
+            listView(
+                items: viewModel.plants,
+                emptyConfig: .plant,
+                onPress: viewModel.onItemPressed)
         case .types:
-            listView(items: viewModel.plantTypes, onPress: viewModel.onItemPressed)
+            listView(
+                items: viewModel.plantTypes,
+                emptyConfig: .plantType,
+                onPress: viewModel.onItemPressed)
         }
     }
     
     @ViewBuilder
     func listView(
         items: [DisplayItem],
+        emptyConfig: ListEmptyView.Configuration,
         onPress: @escaping (DisplayItem) -> Void
     ) -> some View {
         VStack(spacing: 0) {
             if items.isEmpty {
-                empty()
+                ListEmptyView(configuration: emptyConfig)
             } else {
                 ForEach(items, id: \.self) { item in
                     itemView(item: item, onPress: onPress)
@@ -72,17 +84,6 @@ extension DashboardView {
         }
     }
     
-    @ViewBuilder
-    func empty() -> some View {
-        ZStack(alignment: .center) {
-            Rectangle().frame(height: 0)
-            Image("empty")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 200)
-                .padding(32)
-        }
-    }
     @ViewBuilder
     func itemView(
         item: DisplayItem,

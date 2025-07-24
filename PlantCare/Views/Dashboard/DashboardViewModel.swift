@@ -61,11 +61,16 @@ class DashboardViewModel: DashboardViewModelProtocol {
     func plantTypesSection() {
         let types = try? input.plantTypeRepo.fetchTypesByPlantsNumber()
         
-        self.plantTypes = []
+        self.plantTypes = input.typesBuilder.build(types: types ?? [])
     }
     
     func onItemPressed(item: DisplayItem) {
-        
+        switch item.type {
+        case .plant(let plant):
+            self.router?.push(.plant(plant.persistentModelID))
+        case .plantType(let plantType):
+            break
+        }
     }
     
     func onSectionPress(section: DashboardSection) {
@@ -87,5 +92,6 @@ extension DashboardViewModel {
         let storage: Storage
         let plantsBuilder: PlantItemsBuilder
         let waterBuilder: PlantItemsBuilder
+        let typesBuilder: TypeItemsBuilder
     }
 }

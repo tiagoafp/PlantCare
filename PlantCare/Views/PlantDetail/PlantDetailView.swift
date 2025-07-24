@@ -24,13 +24,14 @@ struct PlantDetailView<ViewModel: PlantDetailViewModelProtocol>: View {
         .task {
             viewModel.onAppear()
         }
+        .ignoresSafeArea(edges: .bottom)
     }
     
     @ViewBuilder
     func plantContainer(plant: Plant) -> some View{
         ScrollView {
             VStack {
-                ImageHeaderView(.local(plant.cover ?? ""))
+                coverImage(plant: plant)
                 
                 GrouppedSectionView {
                     VStack(spacing: 0) {
@@ -79,11 +80,21 @@ struct PlantDetailView<ViewModel: PlantDetailViewModelProtocol>: View {
                         DisplayCell(
                             title: .localized(.water_register),
                             disclosure: true,
+                            separator: false,
                             onPress: viewModel.onWaterHistory
                         )
                     }
                 }
             }
+        }
+    }
+    
+    @ViewBuilder
+    func coverImage(plant: Plant) -> some View {
+        if let image = viewModel.image(plant: plant) {
+            ImageHeaderView(.image(Image(uiImage: image)))
+        } else {
+            ImageHeaderView(.placeholder(.icon(.imagePlaceholder)))
         }
     }
 }

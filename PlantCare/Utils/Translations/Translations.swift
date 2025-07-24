@@ -34,6 +34,8 @@ enum Translations: String {
     case missing_water
     case irregular_water
     case all_good
+    case planted_old
+    case add_ago
 }
 
 extension Translations: TranslationsProtocol {
@@ -45,7 +47,10 @@ extension Translations: TranslationsProtocol {
         String(localized: localized, table: "Translations")
     }
     
-    func plural(_ count: Int) -> String {
-        return String(localized: LocalizedStringResource("\(count) \(self.rawValue)", table: "Translations"))
+    func args(_ args: CVarArg...) -> String {
+        let tmp = translation
+        return withVaList(args) { vaList in
+            NSString(format: tmp, arguments: vaList) as String
+        }
     }
 }

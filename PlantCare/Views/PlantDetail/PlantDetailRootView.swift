@@ -19,7 +19,8 @@ struct PlantDetailRootView: View {
             wrappedValue: .init(
                 input: .init(
                     repo: depInjector.plantRepo,
-                    plantId: plant
+                    plantId: plant,
+                    imageReader: DocsImagesStorageService()
                 )
             )
         )
