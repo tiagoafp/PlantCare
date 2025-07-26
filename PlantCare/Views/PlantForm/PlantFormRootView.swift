@@ -12,7 +12,6 @@ import PixelKit
 public struct PlantFormRootView: View {
     let diInjector: any PlantCareDependencyInjectorProtocol
     @StateObject var viewModel: PlantFormViewModel
-    @State var confirmDelete: Bool = false
     
     init(
         plant: PersistentIdentifier?,
@@ -27,6 +26,7 @@ public struct PlantFormRootView: View {
                         plant: plant,
                         repo: diInjector.plantRepo,
                         imagesWritter: DocsImagesStorageService(),
+                        imagesReader: DocsImagesStorageService(),
                         origin: origin
                     )
                 )
@@ -44,23 +44,23 @@ public struct PlantFormRootView: View {
             .task {
                 viewModel.inject(router: route)
             }
+            .navigationTitle(.localized(.add_plant))
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                if viewModel.input.plant != nil {
-                    Button(String.localized(.delete)) {
-                        confirmDelete.toggle()
-                    }
-                    .foregroundStyle(PixelKit.shared.theme.negative)
+                Button(String.localized(.save)) {
+                    viewModel.onSave()
                 }
             }
             .alert(
                 .localized(.delete_confirmation_title),
-                isPresented: $confirmDelete,
+                isPresented: $viewModel.confirmDelete,
                 actions: {
-                    Button(String.localized(.cancel)) {
-                        confirmDelete.toggle()
+                    
+                    Button(String.localized(.cancel), role: .cancel) {
+                        viewModel.deletePress()
                     }
                     
-                    Button(String.localized(.delete)) {
+                    Button(String.localized(.delete), role: .destructive) {
                         viewModel.deletePlant()
                     }
                 },

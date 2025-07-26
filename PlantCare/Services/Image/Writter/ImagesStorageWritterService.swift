@@ -10,8 +10,12 @@ protocol ImagesStorageWritterService {
 }
 
 extension ImagesStorageWritterService {
+    func plantURL(for plant: Plant) -> URL? {
+        return rootURL?.appending(path: plant.id.uuidString)
+    }
+    
     func buildFolder(for plant: Plant) -> URL? {
-        guard let plantURL = rootURL?.appending(path: plant.id.uuidString) else { return nil }
+        guard let plantURL = plantURL(for: plant) else { return nil }
         
         if !FileManager.default.fileExists(atPath: plantURL.path) {
             try? FileManager.default.createDirectory(at: plantURL, withIntermediateDirectories: true, attributes: nil)
@@ -22,7 +26,7 @@ extension ImagesStorageWritterService {
     }
     
     func clean(plant: Plant) throws {
-        guard let url = buildFolder(for: plant) else { return }
+        guard let url = plantURL(for: plant) else { return }
         
         let contents = try fileManager.contentsOfDirectory(
             at: url,
@@ -32,6 +36,8 @@ extension ImagesStorageWritterService {
         try contents.forEach { content in
             try fileManager.removeItem(at: content)
         }
+        
+        try fileManager.removeItem(at: url)
     }
     
     func saveCover(image: UIImage?, plant: Plant) -> String? {

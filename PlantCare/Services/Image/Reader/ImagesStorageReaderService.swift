@@ -10,15 +10,8 @@ protocol ImagesStorageReaderService {
 }
 
 extension ImagesStorageReaderService {
-    func buildFolder(for plant: Plant) -> URL? {
-        guard let plantURL = rootURL?.appending(path: plant.id.uuidString) else { return nil }
-        
-        if !FileManager.default.fileExists(atPath: plantURL.path) {
-            try? FileManager.default.createDirectory(at: plantURL, withIntermediateDirectories: true, attributes: nil)
-            return plantURL
-        } else {
-            return plantURL
-        }
+    func plantURL(for plant: Plant) -> URL? {
+        return rootURL?.appending(path: plant.id.uuidString)
     }
     
     private func imageFromURL(url: URL) -> UIImage? {
@@ -28,7 +21,7 @@ extension ImagesStorageReaderService {
     }
     
     func getCover(plant: Plant) -> UIImage? {
-        guard let plantURL = buildFolder(for: plant),
+        guard let plantURL = plantURL(for: plant),
               let cover = plant.cover else {
             return nil
         }
@@ -39,7 +32,7 @@ extension ImagesStorageReaderService {
     }
     
     func getCell(plant: Plant) -> UIImage? {
-        guard let plantURL = buildFolder(for: plant)else {
+        guard let plantURL = plantURL(for: plant)else {
             return nil
         }
         

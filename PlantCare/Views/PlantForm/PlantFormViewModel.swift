@@ -13,6 +13,9 @@ protocol PlantFormViewModelProtocol: ObservableObject {
     var plant: Plant { get set }
     var coverImage: UIImage? { get }
     
+    var allowDelete: Bool { get }
+    
+    func deletePress()
     func deletePlant()
     func onTypePress()
     func onWaterSchedule()
@@ -20,19 +23,25 @@ protocol PlantFormViewModelProtocol: ObservableObject {
     func onAddImage(image: UIImage)
     func onChangeImage(image: UIImage)
     func onDeleteImage()
+    func cleanNotSave()
 }
-
 
 class PlantFormViewModel: ViewModelRouter<PlantFormRoute>, PlantFormViewModelProtocol {
     let input: Input
     @Published var plant: Plant
     @Published var coverImage: UIImage?
+    @Published var confirmDelete: Bool = false
     
     init (input: Input) {
         self.input = input
         
-        self.plant = input.repo.fetch(id: input.plant) ?? Plant()
+        let plant = input.repo.fetch(id: input.plant) ?? Plant()
+        self.coverImage = input.imagesReader.getCover(plant: plant)
+        self.plant = plant
+        
     }
+    
+    var allowDelete: Bool { input.plant != nil }
     
     func onTypePress() {
         push(.plantType)
@@ -56,9 +65,25 @@ class PlantFormViewModel: ViewModelRouter<PlantFormRoute>, PlantFormViewModelPro
         self.coverImage = image
     }
     
+    func deletePress() {
+        confirmDelete.toggle()
+    }
+    
     func deletePlant() {
-        input.repo.delete(type: plant)
+        print("Deleting \(plant.id)")
+        do {
+            try? input.imagesWritter.clean(plant: plant)
+            input.repo.delete(type: plant)
+        } catch {
+            print("Error \(error.localizedDescription)")
+        }
         close()
+    }
+    
+    func cleanNotSave() {
+        if input.repo.fetch(id: plant.id) == nil {
+            plant.type = nil
+        }
     }
     
     func onDeleteImage() {
@@ -86,6 +111,7 @@ extension PlantFormViewModel {
         let plant: PersistentIdentifier?
         let repo: PlantRepositoryProtocol
         let imagesWritter: ImagesStorageWritterService
+        let imagesReader: ImagesStorageReaderService
         let origin: PlantFormOrigin
     }
 }

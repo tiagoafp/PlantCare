@@ -8,17 +8,23 @@
 import SwiftUI
 
 public struct TypeListRootView: View {
-    @ObservedObject var viewModel: TypeListViewModel
+    @StateObject var viewModel: TypeListViewModel
+    var selected: Binding<PlantType?>
     
     init(
         selected: Binding<PlantType?>,
         dpInjector: any PlantCareDependencyInjectorProtocol
     ) {
-        viewModel = .init(
-            input: .init(
-                repo: dpInjector.plantTypeRepo,
-                selected: selected
-            )
+        self.selected = selected
+        
+        _viewModel = StateObject(
+            wrappedValue:
+                TypeListViewModel(
+                    input: .init(
+                        repo: dpInjector.plantTypeRepo,
+                        selected: selected
+                    )
+                )
         )
     }
     
@@ -27,6 +33,11 @@ public struct TypeListRootView: View {
             TypeListView(
                 viewModel: viewModel
             )
+            .onChange(of: viewModel.selected, perform: { new in
+                if new != selected.wrappedValue {
+                    selected.wrappedValue = new
+                }
+            })
         }
     }
 }

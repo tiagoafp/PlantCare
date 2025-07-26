@@ -63,23 +63,31 @@ struct PlantFormView<ViewModel: PlantFormViewModelProtocol>: View {
                             }
                         )
                         
-                        InputTextCell(
+                        LongTextCell(
                             title: .localized(.notes),
-                            text: $viewModel.plant.notes
+                            text: $viewModel.plant.notes,
+                            separator: false
                         )
                     }
                 }
+                
+                if viewModel.allowDelete {
+                    MainButton(
+                        variant: .delete,
+                        title: .localized(.delete),
+                        action: viewModel.deletePress
+                    )
+                    .padding(.horizontal, 16)
+                    .padding(.top, 16)
+                    .padding(.bottom, 40)
+                }
             }
-            
-            FooterActionView([
-                .init(title: .localized(.save), action: viewModel.onSave)
-            ])
-            .offset(x: 0, y: keyboard.keyboardHeight)
         }
         .background(
             Rectangle()
                 .foregroundStyle(PixelKit.shared.theme.background)
         )
+        .onDisappear(perform: viewModel.cleanNotSave)
         .ignoresSafeArea(.container, edges: .bottom)
     }
     

@@ -31,13 +31,13 @@ class TypeListViewModel: ViewModelRouter<TypeListRoute>, TypeListViewModelProtoc
     @Published var types: [PlantType] = []
     @Published var mode: TypeListMode
     @Published var editing: PlantType?
-    @Published var selected: Binding<PlantType?>
+    @Published var selected: PlantType?
     
     let input: Input
     
     init(input: Input) {
         self.input = input
-        self.selected = input.selected
+        self.selected = input.selected.wrappedValue
         self.mode = input.selected.wrappedValue != nil ? .selection : .normal
     }
     
@@ -90,11 +90,11 @@ class TypeListViewModel: ViewModelRouter<TypeListRoute>, TypeListViewModelProtoc
     }
     
     func isSelected(type: PlantType) -> Bool {
-        type == selected.wrappedValue
+        type == selected
     }
     
     func onSelectType(type: PlantType) {
-        selected.wrappedValue = type
+        selected = type
     }
     
     func onDone() {
