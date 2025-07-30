@@ -68,7 +68,7 @@ class DashboardViewModel: DashboardViewModelProtocol {
         switch item.type {
         case .plant(let plant):
             self.router?.push(.plant(plant.persistentModelID))
-        case .plantType(let plantType):
+        default:
             break
         }
     }

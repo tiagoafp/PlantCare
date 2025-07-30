@@ -34,7 +34,7 @@ struct PlantListView<ViewModel: PlantListViewModelProtocol>: View {
                                         image: item.cellImage,
                                         disclosure: item.disclosure,
                                         separator: item.separator,
-                                        onPress: {  }
+                                        onPress: { viewModel.onPress(item: item) }
                                     )
                                 }
                             }

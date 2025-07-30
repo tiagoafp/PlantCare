@@ -6,6 +6,6 @@ import Foundation
 
 protocol WaterPlantService {
     func waterStatus(plant: Plant) -> PlantStatus
-    func waterStatus(water: WaterRegister) -> PlantStatus
+    func waterState(register: WaterRegister) -> PlantStatus.WaterState
 }
  

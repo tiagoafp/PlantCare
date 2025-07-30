@@ -12,7 +12,7 @@ protocol PlantListViewModelProtocol: ObservableObject {
     var items: [DisplayItem] { get }
     
     func fetchPlants()
-    func onPlantPress(plant: Plant)
+    func onPress(item: DisplayItem)
     func onAdd()
 }
 
@@ -37,8 +37,13 @@ class PlantListViewModel: PlantListViewModelProtocol {
         } catch {}
     }
     
-    func onPlantPress(plant: Plant) {
-        router?.push(.detail(plant.persistentModelID))
+    func onPress(item: DisplayItem) {
+        switch item.type {
+        case .plant(let plant):
+            router?.push(.detail(plant.persistentModelID))
+        default:
+            break
+        }
     }
     
     func onAdd() {

@@ -46,5 +46,6 @@ extension DisplayItem {
     enum ItemType: Hashable {
         case plant(Plant)
         case plantType(PlantType)
+        case waterRegister(WaterRegister)
     }
 }

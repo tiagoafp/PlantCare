@@ -37,6 +37,9 @@ enum Translations: String {
     case planted_old
     case add_ago
     case overwatered
+    case on_time
+    case no_water_register
+    case no_water_register_subtitle
 }
 
 extension Translations: TranslationsProtocol {

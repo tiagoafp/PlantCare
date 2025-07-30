@@ -212,6 +212,28 @@
         }
       }
     },
+    "no_water_register" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing Logged Yet"
+          }
+        }
+      }
+    },
+    "no_water_register_subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start tracking when you water your plants to keep them happy."
+          }
+        }
+      }
+    },
     "notes" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -219,6 +241,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Notes"
+          }
+        }
+      }
+    },
+    "on_time" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On time"
           }
         }
       }

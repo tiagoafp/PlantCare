@@ -80,7 +80,7 @@ class PlantDetailViewModel: PlantDetailViewModelProtocol {
     }
     
     func onWaterHistory() {
-        
+        router?.push(.waterRegister)
     }
 }
 

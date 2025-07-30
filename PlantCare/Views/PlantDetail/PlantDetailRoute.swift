@@ -8,11 +8,14 @@ import PixelKit
 
 enum PlantDetailRoute: ViewRoute {
     case edit
+    case waterRegister
     
     var id: String {
         switch self {
         case .edit:
             return "edit"
+        case .waterRegister:
+            return "waterRegister"
         }
     }
 }

@@ -12,7 +12,7 @@ class DefaultWaterPlantService: WaterPlantService {
     }
     
     func waterStatus(plant: Plant) -> PlantStatus { .init(plant: plant, state: .onTime) }
-    func waterStatus(water: WaterRegister) -> PlantStatus { .init(plant: water.plant, state: .onTime) }
+    func waterState(register: WaterRegister) -> PlantStatus.WaterState { .onTime }
     
 }
     /*func calculateNext(baseOn date: Date? = nil) -> Date {

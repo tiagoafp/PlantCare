@@ -40,6 +40,7 @@ extension ListEmptyView {
     enum Configuration {
         case plant
         case plantType
+        case waterRegister
         
         var title: String {
             switch self {
@@ -47,6 +48,8 @@ extension ListEmptyView {
                 return "No plants yet"
             case .plantType:
                 return "No types yet"
+            case .waterRegister:
+                return .localized(.no_water_register)
             }
         }
         
@@ -56,6 +59,8 @@ extension ListEmptyView {
                 return "Start adding your favorite plants to see them here."
             case .plantType:
                 return "Create some plant types to organize your garden."
+            case .waterRegister:
+                return .localized(.no_water_register_subtitle)
             }
         }
     }

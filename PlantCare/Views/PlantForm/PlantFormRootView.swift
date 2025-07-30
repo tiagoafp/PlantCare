@@ -16,7 +16,8 @@ public struct PlantFormRootView: View {
     init(
         plant: PersistentIdentifier?,
         diInjector: any PlantCareDependencyInjectorProtocol,
-        origin: PlantFormOrigin
+        origin: PlantFormOrigin,
+        onAdd: @escaping () -> Void
     ) {
         self.diInjector = diInjector
         
@@ -27,7 +28,8 @@ public struct PlantFormRootView: View {
                         repo: diInjector.plantRepo,
                         imagesWritter: DocsImagesStorageService(),
                         imagesReader: DocsImagesStorageService(),
-                        origin: origin
+                        origin: origin,
+                        onAdd: onAdd
                     )
                 )
         )

@@ -41,7 +41,7 @@ class PlantRepository: PlantRepositoryProtocol {
     
     func fetchAll() throws -> [PlantStatus] {
         let descriptor = FetchDescriptor<Plant>(
-            sortBy: [SortDescriptor(\.createdAt, order: .forward)]
+            sortBy: [SortDescriptor(\.createdAt, order: .reverse)]
         )
         return try context.fetch(descriptor).map { waterService.waterStatus(plant: $0) }
     }

@@ -54,6 +54,7 @@ class PlantFormViewModel: ViewModelRouter<PlantFormRoute>, PlantFormViewModelPro
     func onSave() {
         plant.cover = input.imagesWritter.saveCover(image: coverImage, plant: plant)
         input.repo.insert(type: plant)
+        input.onAdd()
         close()
     }
     
@@ -77,7 +78,7 @@ class PlantFormViewModel: ViewModelRouter<PlantFormRoute>, PlantFormViewModelPro
         } catch {
             print("Error \(error.localizedDescription)")
         }
-        close()
+        router?.popToRoot()
     }
     
     func cleanNotSave() {
@@ -101,7 +102,7 @@ class PlantFormViewModel: ViewModelRouter<PlantFormRoute>, PlantFormViewModelPro
         case .list:
             router?.dismiss()
         case .detail:
-            router?.popToRoot()
+            router?.pop()
         }
     }
 }
@@ -113,5 +114,6 @@ extension PlantFormViewModel {
         let imagesWritter: ImagesStorageWritterService
         let imagesReader: ImagesStorageReaderService
         let origin: PlantFormOrigin
+        let onAdd: () -> Void
     }
 }

@@ -39,7 +39,7 @@ struct PlantListRootView: View {
     func destination(route: PlantListRoute) -> some View {
         switch route {
         case .add:
-            PlantFormRootView(plant: nil, diInjector: depInjector, origin: .list)
+            PlantFormRootView(plant: nil, diInjector: depInjector, origin: .list, onAdd: viewModel.fetchPlants)
         case .detail(let persistentIdentifier):
             PlantDetailRootView(plant: persistentIdentifier, depInjector: depInjector)
         }

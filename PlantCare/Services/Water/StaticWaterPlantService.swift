@@ -21,9 +21,7 @@ class StaticWaterPlantService: WaterPlantService {
         
         return .init(plant: plant, state: state)
     }
-    func waterStatus(water: WaterRegister) -> PlantStatus {
-        let state = values.randomElement() ?? defaultStatus
-        
-        return .init(plant: water.plant, state: state)
+    func waterState(register: WaterRegister) -> PlantStatus.WaterState {
+        return values.randomElement() ?? defaultStatus
     }
 }

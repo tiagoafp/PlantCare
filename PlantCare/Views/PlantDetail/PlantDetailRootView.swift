@@ -46,7 +46,19 @@ struct PlantDetailRootView: View {
     func destination(_ route: PlantDetailRoute) -> some View {
         switch route {
         case .edit:
-            PlantFormRootView(plant: viewModel.input.plantId, diInjector: depInjector, origin: .detail)
+            PlantFormRootView(
+                plant: viewModel.input.plantId,
+                diInjector: depInjector,
+                origin: .detail,
+                onAdd: viewModel.onAppear
+            )
+        case .waterRegister:
+            if let plant = viewModel.plant {
+                WaterRegisterListRootView(
+                    plant: plant,
+                    dpInjector: depInjector
+                )
+            }
         }
     }
 }
