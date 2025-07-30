@@ -49,13 +49,13 @@ class DashboardViewModel: DashboardViewModelProtocol {
     func waterSection() {
         let plants = try? input.plantRepo.fetchOrderedByWater()
         
-        self.water = input.plantsBuilder.build(plants: plants ?? [])
+        self.water = input.waterBuilder.build(plants: plants ?? [])
     }
     
     func plantSection() {
         let plants = try? input.plantRepo.fetchOrderedByNewAdded()
         
-        self.plants = input.waterBuilder.build(plants: plants ?? [])
+        self.plants = input.plantsBuilder.build(plants: plants ?? [])
     }
     
     func plantTypesSection() {

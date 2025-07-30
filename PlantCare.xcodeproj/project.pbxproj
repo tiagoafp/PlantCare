@@ -36,6 +36,25 @@
 		B4C5462F2DD7A14100FA55BE /* PlantCareUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlantCareUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		15A95C172E380BF40034A2DF /* Exceptions for "PlantCareTests" folder in "PlantCareTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				PlantCareUITests/PlantCareUITests.swift,
+				PlantCareUITests/PlantCareUITestsLaunchTests.swift,
+			);
+			target = B4C546242DD7A14100FA55BE /* PlantCareTests */;
+		};
+		15A95C182E380BF40034A2DF /* Exceptions for "PlantCareTests" folder in "PlantCareUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				PlantCareUITests/PlantCareUITests.swift,
+				PlantCareUITests/PlantCareUITestsLaunchTests.swift,
+			);
+			target = B4C5462E2DD7A14100FA55BE /* PlantCareUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		B4C546182DD7A13F00FA55BE /* PlantCare */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -44,12 +63,11 @@
 		};
 		B4C546282DD7A14100FA55BE /* PlantCareTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				15A95C172E380BF40034A2DF /* Exceptions for "PlantCareTests" folder in "PlantCareTests" target */,
+				15A95C182E380BF40034A2DF /* Exceptions for "PlantCareTests" folder in "PlantCareUITests" target */,
+			);
 			path = PlantCareTests;
-			sourceTree = "<group>";
-		};
-		B4C546322DD7A14100FA55BE /* PlantCareUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = PlantCareUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -88,7 +106,6 @@
 			children = (
 				B4C546182DD7A13F00FA55BE /* PlantCare */,
 				B4C546282DD7A14100FA55BE /* PlantCareTests */,
-				B4C546322DD7A14100FA55BE /* PlantCareUITests */,
 				B4C546172DD7A13F00FA55BE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -167,9 +184,6 @@
 			);
 			dependencies = (
 				B4C546312DD7A14100FA55BE /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				B4C546322DD7A14100FA55BE /* PlantCareUITests */,
 			);
 			name = PlantCareUITests;
 			packageProductDependencies = (

@@ -9,16 +9,17 @@ import Foundation
 
 @Model
 public class WaterRegister {
-    var correctDate: Date?
-    var wateredAt: Date
-    var nextDate: Date?
+    @Attribute(.unique) public var id: UUID
+    @Relationship
+    var plant: Plant
+    var wateredAt: Date      
     
-    init(prev: WaterRegister?, waterSchedule: WaterSchedule) {
-        let now: Date = .now
-        self.wateredAt = now
-        self.correctDate = prev?.nextDate
-        
-        let calculator = WaterScheduleCalculator(waterSchedule: waterSchedule, date: now)
-        nextDate = calculator.calculate()
+    init(
+        plant: Plant,
+        wateredAt: Date = .now
+    ) {
+        self.id = .init()
+        self.plant = plant
+        self.wateredAt = wateredAt
     }
 }

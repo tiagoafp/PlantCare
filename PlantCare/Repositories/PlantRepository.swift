@@ -8,9 +8,9 @@ import SwiftData
 import Foundation
 
 protocol PlantRepositoryProtocol {
-    func fetchOrderedByWater() throws -> [Plant]
-    func fetchOrderedByNewAdded() throws -> [Plant]
-    func fetchAll() throws -> [Plant]
+    func fetchOrderedByWater() throws -> [PlantStatus]
+    func fetchOrderedByNewAdded() throws -> [PlantStatus]
+    func fetchAll() throws -> [PlantStatus]
     func fetch(id: PersistentIdentifier?) -> Plant?
     func insert(type: Plant)
     func delete(type: Plant)
@@ -19,34 +19,31 @@ protocol PlantRepositoryProtocol {
 
 class PlantRepository: PlantRepositoryProtocol {
     let context: ModelContext
+    let waterService: WaterPlantService
     
-    init(context: ModelContext) {
+    init(
+        context: ModelContext,
+        waterService: WaterPlantService
+    ) {
         self.context = context
+        self.waterService = waterService
     }
     
-    func fetchOrderedByWater() throws -> [Plant] {
+    func fetchOrderedByWater() throws -> [PlantStatus] {
+        try fetchAll().sorted { $0 < $1}
+    }
+    
+    func fetchOrderedByNewAdded() throws -> [PlantStatus] {
         return Array(
-            try fetchAll().sorted(by: { plantA, plantB -> Bool in
-                let scoreA = PlantWaterCalculator(plant: plantA)
-                let scoreB = PlantWaterCalculator(plant: plantB)
-                return scoreA.numberDaysWatering > scoreB.numberDaysWatering
-            }).prefix(5)
+            try fetchAll().prefix(5)
         )
     }
     
-    func fetchOrderedByNewAdded() throws -> [Plant] {
-        return Array(
-            try fetchAll().sorted(by: { plantA, plantB -> Bool in
-                return plantA.createdAt > plantB.createdAt
-            }).prefix(5)
-        )
-    }
-    
-    func fetchAll() throws -> [Plant] {
+    func fetchAll() throws -> [PlantStatus] {
         let descriptor = FetchDescriptor<Plant>(
             sortBy: [SortDescriptor(\.createdAt, order: .forward)]
         )
-        return try context.fetch(descriptor)
+        return try context.fetch(descriptor).map { waterService.waterStatus(plant: $0) }
     }
     
     func fetch(id: PersistentIdentifier?) -> Plant? {

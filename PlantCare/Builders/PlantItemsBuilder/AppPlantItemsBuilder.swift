@@ -15,15 +15,15 @@ struct AppPlantItemsBuilder: PlantItemsBuilder {
         self.imageReader = imageReader
     }
     
-    func build(plants: [Plant]) -> [DisplayItem] {
+    func build(plants: [PlantStatus]) -> [DisplayItem] {
         return plants.map { plant -> DisplayItem in
                 .init(
-                    image: imageReader.getCell(plant: plant),
-                    title: plant.name,
+                    image: imageReader.getCell(plant: plant.plant),
+                    title: plant.plant.name,
                     subtitle: subtitleBuilder.build(plant: plant),
                     separator: plant != plants.last,
                     disclosure: true,
-                    type: .plant(plant)
+                    type: .plant(plant.plant)
                 )
         }
     }

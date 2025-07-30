@@ -4,5 +4,5 @@
 
 
 protocol DisplaySubtitleBuilder {
-    func build(plant: Plant) -> DisplayItemSubtitle
+    func build(plant: PlantStatus) -> DisplayItemSubtitle
 }

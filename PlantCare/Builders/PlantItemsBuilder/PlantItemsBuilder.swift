@@ -3,5 +3,5 @@
 // All Rights Reserved.
 
 protocol PlantItemsBuilder {
-    func build(plants: [Plant]) -> [DisplayItem]
+    func build(plants: [PlantStatus]) -> [DisplayItem]
 }

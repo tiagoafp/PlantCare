@@ -234,6 +234,17 @@
         }
       }
     },
+    "overwatered" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overwatered"
+          }
+        }
+      }
+    },
     "plant_care" : {
       "extractionState" : "manual",
       "localizations" : {
