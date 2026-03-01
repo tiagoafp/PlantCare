@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15D3CDD72F547BC20028DBBD /* PixelKit in Frameworks */ = {isa = PBXBuildFile; productRef = 15D3CDD62F547BC20028DBBD /* PixelKit */; };
 		B4B8B89A2DF8A78100578705 /* PixelKit in Frameworks */ = {isa = PBXBuildFile; productRef = B4B8B8992DF8A78100578705 /* PixelKit */; };
 		B4BDC6092DF5F00100301EFC /* Mockable in Frameworks */ = {isa = PBXBuildFile; productRef = B4BDC6082DF5F00100301EFC /* Mockable */; };
 		B4BDC60C2DF5F00E00301EFC /* Mockable in Frameworks */ = {isa = PBXBuildFile; productRef = B4BDC60B2DF5F00E00301EFC /* Mockable */; };
@@ -79,6 +80,7 @@
 			files = (
 				B4B8B89A2DF8A78100578705 /* PixelKit in Frameworks */,
 				B4C546442DD7A18600FA55BE /* PixelKit in Frameworks */,
+				15D3CDD72F547BC20028DBBD /* PixelKit in Frameworks */,
 				B4BDC6092DF5F00100301EFC /* Mockable in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -143,6 +145,7 @@
 				B4C546432DD7A18600FA55BE /* PixelKit */,
 				B4BDC6082DF5F00100301EFC /* Mockable */,
 				B4B8B8992DF8A78100578705 /* PixelKit */,
+				15D3CDD62F547BC20028DBBD /* PixelKit */,
 			);
 			productName = PlantCare;
 			productReference = B4C546162DD7A13F00FA55BE /* PlantCare.app */;
@@ -226,7 +229,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				B4BDC6072DF5F00100301EFC /* XCRemoteSwiftPackageReference "Mockable" */,
-				152D31112E2BB2DF003A1599 /* XCRemoteSwiftPackageReference "PixelKit" */,
+				15D3CDD52F547BC20028DBBD /* XCLocalSwiftPackageReference "../../repos/sage.hr/sage.hr.ios.hub" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B4C546172DD7A13F00FA55BE /* Products */;
@@ -595,15 +598,14 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		152D31112E2BB2DF003A1599 /* XCRemoteSwiftPackageReference "PixelKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:tiagoafp/PixelKit.git";
-			requirement = {
-				branch = init;
-				kind = branch;
-			};
+/* Begin XCLocalSwiftPackageReference section */
+		15D3CDD52F547BC20028DBBD /* XCLocalSwiftPackageReference "../../repos/sage.hr/sage.hr.ios.hub" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../repos/sage.hr/sage.hr.ios.hub;
 		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
 		B4BDC6072DF5F00100301EFC /* XCRemoteSwiftPackageReference "Mockable" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Kolos65/Mockable";
@@ -615,6 +617,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		15D3CDD62F547BC20028DBBD /* PixelKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PixelKit;
+		};
 		B4B8B8992DF8A78100578705 /* PixelKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PixelKit;
