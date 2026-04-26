@@ -1,0 +1,5 @@
+"app.title" = "PlantCare";
+"dashboard.title" = "Dashboard";
+"dashboard.empty.state.title" = "Your garden is waiting";
+"dashboard.empty.state.subtitle" = "Add your first plant to start tracking its growth, watering schedule, and more.";
+"app.add.plant" = "Add Plant";

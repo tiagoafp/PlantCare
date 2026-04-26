@@ -7,12 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		15D3CDD72F547BC20028DBBD /* PixelKit in Frameworks */ = {isa = PBXBuildFile; productRef = 15D3CDD62F547BC20028DBBD /* PixelKit */; };
-		15D3CDDF2F547C680028DBBD /* PixelKit in Frameworks */ = {isa = PBXBuildFile; productRef = 15D3CDDE2F547C680028DBBD /* PixelKit */; };
-		B4B8B89A2DF8A78100578705 /* PixelKit in Frameworks */ = {isa = PBXBuildFile; productRef = B4B8B8992DF8A78100578705 /* PixelKit */; };
+		156300122F9D4F5800AB8DDC /* AtlasCore in Frameworks */ = {isa = PBXBuildFile; productRef = 156300112F9D4F5800AB8DDC /* AtlasCore */; };
+		156300142F9D4F5800AB8DDC /* AtlasNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 156300132F9D4F5800AB8DDC /* AtlasNetwork */; };
+		156300162F9D4F5800AB8DDC /* AtlasUI in Frameworks */ = {isa = PBXBuildFile; productRef = 156300152F9D4F5800AB8DDC /* AtlasUI */; };
 		B4BDC6092DF5F00100301EFC /* Mockable in Frameworks */ = {isa = PBXBuildFile; productRef = B4BDC6082DF5F00100301EFC /* Mockable */; };
 		B4BDC60C2DF5F00E00301EFC /* Mockable in Frameworks */ = {isa = PBXBuildFile; productRef = B4BDC60B2DF5F00E00301EFC /* Mockable */; };
-		B4C546442DD7A18600FA55BE /* PixelKit in Frameworks */ = {isa = PBXBuildFile; productRef = B4C546432DD7A18600FA55BE /* PixelKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		156300072F9D4D2A00AB8DDC /* AtlasKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AtlasKit; path = ../AtlasKit/AtlasKit; sourceTree = SOURCE_ROOT; };
 		B4C546162DD7A13F00FA55BE /* PlantCare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlantCare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4C546252DD7A14100FA55BE /* PlantCareTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlantCareTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4C5462F2DD7A14100FA55BE /* PlantCareUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlantCareUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,11 +56,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B4B8B89A2DF8A78100578705 /* PixelKit in Frameworks */,
-				B4C546442DD7A18600FA55BE /* PixelKit in Frameworks */,
-				15D3CDD72F547BC20028DBBD /* PixelKit in Frameworks */,
+				156300162F9D4F5800AB8DDC /* AtlasUI in Frameworks */,
 				B4BDC6092DF5F00100301EFC /* Mockable in Frameworks */,
-				15D3CDDF2F547C680028DBBD /* PixelKit in Frameworks */,
+				156300122F9D4F5800AB8DDC /* AtlasCore in Frameworks */,
+				156300142F9D4F5800AB8DDC /* AtlasNetwork in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +84,7 @@
 		B4C5460D2DD7A13F00FA55BE = {
 			isa = PBXGroup;
 			children = (
+				156300072F9D4D2A00AB8DDC /* AtlasKit */,
 				B4C546182DD7A13F00FA55BE /* PlantCare */,
 				B4C546282DD7A14100FA55BE /* PlantCareTests */,
 				B4C546172DD7A13F00FA55BE /* Products */,
@@ -121,11 +121,10 @@
 			);
 			name = PlantCare;
 			packageProductDependencies = (
-				B4C546432DD7A18600FA55BE /* PixelKit */,
 				B4BDC6082DF5F00100301EFC /* Mockable */,
-				B4B8B8992DF8A78100578705 /* PixelKit */,
-				15D3CDD62F547BC20028DBBD /* PixelKit */,
-				15D3CDDE2F547C680028DBBD /* PixelKit */,
+				156300112F9D4F5800AB8DDC /* AtlasCore */,
+				156300132F9D4F5800AB8DDC /* AtlasNetwork */,
+				156300152F9D4F5800AB8DDC /* AtlasUI */,
 			);
 			productName = PlantCare;
 			productReference = B4C546162DD7A13F00FA55BE /* PlantCare.app */;
@@ -205,12 +204,12 @@
 			knownRegions = (
 				Base,
 				en,
+				es,
 			);
 			mainGroup = B4C5460D2DD7A13F00FA55BE;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				B4BDC6072DF5F00100301EFC /* XCRemoteSwiftPackageReference "Mockable" */,
-				15D3CDDD2F547C680028DBBD /* XCLocalSwiftPackageReference "../PixelKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B4C546172DD7A13F00FA55BE /* Products */;
@@ -425,6 +424,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -459,6 +459,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -582,13 +583,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		15D3CDDD2F547C680028DBBD /* XCLocalSwiftPackageReference "../PixelKit" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../PixelKit;
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
 		B4BDC6072DF5F00100301EFC /* XCRemoteSwiftPackageReference "Mockable" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -601,17 +595,17 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		15D3CDD62F547BC20028DBBD /* PixelKit */ = {
+		156300112F9D4F5800AB8DDC /* AtlasCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = PixelKit;
+			productName = AtlasCore;
 		};
-		15D3CDDE2F547C680028DBBD /* PixelKit */ = {
+		156300132F9D4F5800AB8DDC /* AtlasNetwork */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = PixelKit;
+			productName = AtlasNetwork;
 		};
-		B4B8B8992DF8A78100578705 /* PixelKit */ = {
+		156300152F9D4F5800AB8DDC /* AtlasUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = PixelKit;
+			productName = AtlasUI;
 		};
 		B4BDC6082DF5F00100301EFC /* Mockable */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -622,10 +616,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B4BDC6072DF5F00100301EFC /* XCRemoteSwiftPackageReference "Mockable" */;
 			productName = Mockable;
-		};
-		B4C546432DD7A18600FA55BE /* PixelKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = PixelKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
