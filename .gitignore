@@ -59,6 +59,7 @@ fastlane/test_output
 .env
 .env.local
 .env.*.local
+Secrets.plist
 
 # Logs
 *.log

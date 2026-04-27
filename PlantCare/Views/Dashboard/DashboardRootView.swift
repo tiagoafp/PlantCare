@@ -3,7 +3,7 @@ import AtlasUI
 
 struct DashboardRootView: View {
     @StateObject var viewModel: DashboardViewModel
-    
+   
     init() {
         _viewModel = .init(
             wrappedValue: DashboardViewModel(
@@ -17,6 +17,14 @@ struct DashboardRootView: View {
             BackgroundView {
                 DashboardView(viewModel: viewModel)
             }
+            .sheet(
+                item: $viewModel.sheet,
+                content: destination
+            )
+            .navigationDestination(
+                for: DashboardDestination.self,
+                destination: destination
+            )
             .ignoresSafeArea(edges: .bottom)
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle(
@@ -36,27 +44,18 @@ struct DashboardRootView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     AtlasToolbarButton(
                         image: .plus,
-                        action: {
-                        }
+                        action: viewModel.addPlant
                     )
                 }
             }
         }
-        .sheet(
-            item: $viewModel.sheet,
-            content: destination
-        )
-        .navigationDestination(
-            for: DashboardDestination.self,
-            destination: destination
-        )
     }
     
     @ViewBuilder
     func destination(destination: DashboardDestination) -> some View {
         switch destination {
         case .addPlant:
-            EmptyView()
+            PlantTypeSelectorRootView()
         }
     }
 }

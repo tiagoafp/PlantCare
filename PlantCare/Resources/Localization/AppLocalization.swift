@@ -20,6 +20,10 @@ enum AppLocalization: String, TranslationProtocol {
     case dashboardEmptySubtitle = "dashboard.empty.state.subtitle"
     case addPlant = "app.add.plant"
     
+    // Select plant
+    case selectPlantTitle = "select.plant.title"
+    case searchPlants
+    
     var format: String {
         NSLocalizedString(self.rawValue, comment: "")
     }

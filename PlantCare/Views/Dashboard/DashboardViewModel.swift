@@ -5,6 +5,8 @@ protocol DashboardViewModelProtocol: ObservableObject {
     var sheet: DashboardDestination? { get set }
     var state: DashboardViewModel.State { get }
     var watering: Bool { get set }
+    
+    func addPlant()
 }
 
 class DashboardViewModel: DashboardViewModelProtocol {
@@ -18,6 +20,10 @@ class DashboardViewModel: DashboardViewModelProtocol {
         self.input = input
         self.state = .empty
         self.path = NavigationPath()
+    }
+    
+    func addPlant() {
+        sheet = DashboardDestination.addPlant
     }
 }
 
