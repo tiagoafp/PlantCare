@@ -4,12 +4,24 @@ import AtlasUI
 
 @main
 struct PlantCareApp: App {
+    private let container: ModelContainer
+
+    init() {
+        do {
+            container = try ModelContainer(for: AppDataBase.self, PlantRecord.self)
+            try AppDataBaseBootstrap.createRootIfNeeded(in: container.mainContext)
+        } catch {
+            fatalError("Unable to create plant database: \(error.localizedDescription)")
+        }
+    }
+
     var body: some Scene {
         WindowGroup {
             PaletteHostView {
                 DashboardRootView()
             }
         }
+        .modelContainer(container)
     }
 }
 

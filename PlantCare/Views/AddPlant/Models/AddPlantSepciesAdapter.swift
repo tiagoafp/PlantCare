@@ -1,0 +1,17 @@
+import AtlasUI
+
+struct AddPlantSepciesAdapter: AtlasDefaultCellDataProtocol {
+    var data: TrefleListResponse.Species
+    
+    init(data: TrefleListResponse.Species) {
+        self.data = data
+    }
+    
+    
+    var image: String? { data.imageUrl }
+    var title: String { data.scientificName }
+    var subtitle: String { data.commonName ?? data.genus ?? "" }
+    var caption: String? { data.family ?? data.familyCommonName }
+    var chevron: Bool { false }
+    var id: Int { data.id }
+}

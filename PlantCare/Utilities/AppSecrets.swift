@@ -4,8 +4,12 @@ enum AppSecrets {
     private static let bundle = Bundle.main
     private static let candidates = ["Secrets"]
 
-    static var perenualAPIKey: String {
-        string(forKey: "PERENUAL_KEY")
+    static var plantnetAPIKey: String {
+        string(forKey: "PLANTNET_KEY")
+    }
+    
+    static var trefleAPIKey: String {
+        string(forKey: "TREFLE_TOKEN")
     }
 
     static func string(forKey key: String) -> String {

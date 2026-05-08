@@ -6,16 +6,22 @@ struct PlantTypeSelectorRootView: View {
     @StateObject var viewModel: PlantTypeSelectorViewModel
     
     init() {
+        let trefleAPI = TrefleAPI().setKey(key: AppSecrets.trefleAPIKey)
+        let planetAPI = PlantnetAPI().setKey(key: AppSecrets.plantnetAPIKey)
         _viewModel = .init(
-            wrappedValue: PlantTypeSelectorViewModel()
+            wrappedValue: PlantTypeSelectorViewModel(
+                input: .init(
+                    trefleAPI: trefleAPI,
+                    plantnetAPI: planetAPI
+                )
+            )
         )
     }
     
     var body: some View {
         NavigationStack(path: $viewModel.path) {
-            BackgroundView {
-                PlantTypeSelectorView(viewModel: viewModel)
-            }
+            PlantTypeSelectorView(viewModel: viewModel)
+            .atlasBackground()
             .navigationTitle(.localized(key: .selectPlantTitle))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -45,8 +51,8 @@ struct PlantTypeSelectorRootView: View {
     @ViewBuilder
     func destination(destination: PlantTypeSelectorDestination) -> some View {
         switch destination {
-        case .example:
-            EmptyView()
+        case .add(let image, let species):
+            AddPlantRootView(image: image, specie: species, navPath: $viewModel.path)
         }
     }
 }

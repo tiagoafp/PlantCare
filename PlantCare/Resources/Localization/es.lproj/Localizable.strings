@@ -1,4 +1,8 @@
 "app.title" = "PlantCare";
 "dashboard.title" = "Panel";
 "dashboard.hello" = "Hola, mundo!";
-
+"app.add.new.plant" = "Agregar nueva planta";
+"app.add.photo" = "Agregar foto";
+"app.nickname" = "Apodo";
+"app.insert.plant.nickname" = "Introduce el apodo de la planta";
+"selected.plant.type" = "Tipo de planta seleccionado";

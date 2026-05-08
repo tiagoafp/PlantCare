@@ -1,15 +1,12 @@
-
-// Copyright © 2026 Sage.
-// All Rights Reserved.
-
+import Foundation
 
 enum PlantTypeSelectorDestination: Hashable, Identifiable {
-    case example
+    case add(Data?, TrefleListResponse.Species)
 
     var id: String {
         switch self {
-        case .example:
-            return "example"
+        case .add:
+            return "add"
         }
     }
 }

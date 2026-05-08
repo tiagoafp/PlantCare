@@ -1,4 +1,4 @@
-import AtlasCore
+import AtlasUI
 import Foundation
 import SwiftUI
 
@@ -19,10 +19,17 @@ enum AppLocalization: String, TranslationProtocol {
     case dashboardEmptyTitle = "dashboard.empty.state.title"
     case dashboardEmptySubtitle = "dashboard.empty.state.subtitle"
     case addPlant = "app.add.plant"
+    case addNewPlant = "app.add.new.plant"
+    case addPhoto = "app.add.photo"
+    case nickname = "app.nickname"
+    case insertPlantNickname = "app.insert.plant.nickname"
     
     // Select plant
     case selectPlantTitle = "select.plant.title"
+    case selectedPlantType = "selected.plant.type"
     case searchPlants
+    case identifyPlant
+    case takePhotoIdentify
     
     var format: String {
         NSLocalizedString(self.rawValue, comment: "")

@@ -14,9 +14,8 @@ struct DashboardRootView: View {
     
     var body: some View {
         NavigationStack(path: $viewModel.path) {
-            BackgroundView {
-                DashboardView(viewModel: viewModel)
-            }
+            DashboardView(viewModel: viewModel)
+            .atlasBackground()
             .sheet(
                 item: $viewModel.sheet,
                 content: destination
