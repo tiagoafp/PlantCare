@@ -28,13 +28,7 @@ public struct AtlasDefaultCell<Data: AtlasDefaultCellDataProtocol>: View {
                 ZStack {
                     HStack(alignment: .center, spacing: 16) {
                         if let image = data.image {
-                            CachedAsyncImage(url: URL(string: image)) { image in
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 64, height: 64)
-                                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                            }
+                            buildImage(image: image)
                         }
                         
                         VStack(alignment: .leading, spacing: 5) {
@@ -77,6 +71,28 @@ public struct AtlasDefaultCell<Data: AtlasDefaultCellDataProtocol>: View {
                 )
             }
             .disabled(self.selection.touchDisable)
+        }
+    }
+}
+
+extension AtlasDefaultCell {
+    @ViewBuilder
+    func buildImage(image: AtlasCellImageType) -> some View {
+        switch image {
+        case .local(let uiImage):
+            Image(uiImage: uiImage)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 64, height: 64)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+        case .remote(let path):
+            CachedAsyncImage(url: URL(string: path)) { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 64, height: 64)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+            }
         }
     }
 }

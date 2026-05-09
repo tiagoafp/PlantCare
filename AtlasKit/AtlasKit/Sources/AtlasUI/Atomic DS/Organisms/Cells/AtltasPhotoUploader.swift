@@ -30,7 +30,6 @@ extension AtltasPhotoUploader {
             imageContainer(image: image)
         } else {
             AtlasImageUploadWrapper(
-                showOptions: $openUploader,
                 onResult: { result in
                     switch result {
                     case .image(let image):
@@ -54,7 +53,6 @@ extension AtltasPhotoUploader {
                 .padding(1)
             
             AtlasImageUploadWrapper(
-                showOptions: $openUploader,
                 onResult: { result in
                     switch result {
                     case .image(let image):
@@ -65,9 +63,7 @@ extension AtltasPhotoUploader {
                     PrimaryButton(
                         image: .pencil,
                         label: Text(translations.change),
-                        action: {
-                            openUploader.toggle()
-                        }
+                        action: {}
                     )
                 }
             )

@@ -12,3 +12,5 @@
 "searchPlants" = "Search plants...";
 "identifyPlant" = "Identify with Photo";
 "takePhotoIdentify" = "Take a photo to automatically identify your plant";
+"plant.details" = "Plant Details";
+"plant.added.on" = "Added on";

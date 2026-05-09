@@ -1,7 +1,9 @@
+import SwiftData
 import SwiftUI
 import AtlasUI
 
 struct AddPlantRootView: View {
+    @Environment(\.modelContext) private var modelContext
     @StateObject var viewModel: AddPlantViewModel
     
     init(
@@ -13,8 +15,9 @@ struct AddPlantRootView: View {
             wrappedValue: AddPlantViewModel(
                 input: .init(
                     navPath: navPath,
-                    image: nil,
-                    type: specie
+                    image: image,
+                    type: specie,
+                    imageStorage: ImageStorageManager.plant
                 )
             )
         )
@@ -26,7 +29,9 @@ struct AddPlantRootView: View {
         .atlasBottomAction {
             AtlasBottomActionButton(
                 title: .localized(key: .addNewPlant),
-                action: { }
+                action: {
+                    viewModel.save(in: modelContext)
+                }
             )
         }
         .navigationTitle(

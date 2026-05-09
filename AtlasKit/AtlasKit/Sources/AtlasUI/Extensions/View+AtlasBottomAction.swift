@@ -6,13 +6,14 @@ private struct AtlasBottomActionModifier<BottomContent: View>: ViewModifier {
     let bottomContent: () -> BottomContent
 
     func body(content: Content) -> some View {
-        content
-            .safeAreaInset(edge: .bottom, spacing: 0) {
-                bottomContent()
-                    .padding(.horizontal, 20)
-                    .padding(.top, 12)
-                    .background(palette.bgSurface)
-            }
+        ZStack(alignment: .bottom){
+            content
+                .padding(.bottom, 60)
+            
+            bottomContent()
+                .padding(.horizontal, 20)
+                .padding(.top, 12)
+        }
     }
 }
 

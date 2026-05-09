@@ -6,3 +6,5 @@
 "app.nickname" = "Apodo";
 "app.insert.plant.nickname" = "Introduce el apodo de la planta";
 "selected.plant.type" = "Tipo de planta seleccionado";
+"plant.details" = "Detalles de la planta";
+"plant.added.on" = "Añadido el";

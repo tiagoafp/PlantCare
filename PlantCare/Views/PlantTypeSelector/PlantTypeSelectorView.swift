@@ -4,8 +4,7 @@ import SwiftUI
 struct PlantTypeSelectorView<ViewModel: PlantTypeSelectorViewModelProtocol>: View {
     @Environment(\.atlasPalette) private var palette
     @ObservedObject var viewModel: ViewModel
-    @State var camera: Bool = false
-
+    
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
     }
@@ -50,24 +49,14 @@ struct PlantTypeSelectorView<ViewModel: PlantTypeSelectorViewModelProtocol>: Vie
             text: $viewModel.search,
             prompt: .localized(key: .searchPlants)
         )
-        .sheet(isPresented: $camera) {
-            ImagePicker(
-                sourceType: .camera,
-                onImagePicked: { image in
-                    Task {
-                        await viewModel.onImage(image: image)
-                    }
-                }
-            )
-        }
     }
 }
 
 extension PlantTypeSelectorView {
     @ViewBuilder
     func takePhotoCard() -> some View {
-        Button(action: {
-            camera = true
+        AtlasImageUploadWrapper(onResult: { _ in
+            
         }) {
             ZStack {
                 HStack(spacing: 16) {
@@ -104,5 +93,5 @@ extension PlantTypeSelectorView {
                 }
             }
         }
+        }
     }
-}

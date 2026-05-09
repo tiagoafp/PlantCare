@@ -3,11 +3,14 @@ import AtlasUI
 
 struct DashboardRootView: View {
     @StateObject var viewModel: DashboardViewModel
+    @Environment(\.modelContext) private var modelContext
    
     init() {
         _viewModel = .init(
             wrappedValue: DashboardViewModel(
-                input: .init()
+                input: .init(
+                    imageManager: ImageStorageManager.plant
+                )
             )
         )
     }
@@ -15,6 +18,9 @@ struct DashboardRootView: View {
     var body: some View {
         NavigationStack(path: $viewModel.path) {
             DashboardView(viewModel: viewModel)
+                .onAppear(perform: {
+                    viewModel.inject(modelContext)
+                })
             .atlasBackground()
             .sheet(
                 item: $viewModel.sheet,
@@ -55,6 +61,8 @@ struct DashboardRootView: View {
         switch destination {
         case .addPlant:
             PlantTypeSelectorRootView()
+        case .detail(let plantID):
+            PlantDetailRootView(plantID: plantID)
         }
     }
 }

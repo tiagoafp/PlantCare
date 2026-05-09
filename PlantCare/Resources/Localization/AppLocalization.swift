@@ -30,6 +30,8 @@ enum AppLocalization: String, TranslationProtocol {
     case searchPlants
     case identifyPlant
     case takePhotoIdentify
+    case plantDetails = "plant.details"
+    case addedOn
     
     var format: String {
         NSLocalizedString(self.rawValue, comment: "")

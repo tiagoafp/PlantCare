@@ -1,4 +1,6 @@
+import SwiftData
 import SwiftUI
+import AtlasUI
 
 protocol AddPlantViewModelProtocol: ObservableObject {
     var type: AddPlantSepciesAdapter { get }
@@ -49,9 +51,31 @@ final class AddPlantViewModel: AddPlantViewModelProtocol {
     }
     
     func calculateSubmit() {
-        if image == nil {
-            canSubmit = false
+        canSubmit = image != nil
+    }
+    
+    @MainActor
+    func save(in context: ModelContext) {
+        guard canSubmit, let image = image else {
             return
+        }
+        guard let photoPath = input.imageStorage.saveImage(image) else {
+            return
+        }
+
+        let record = PlantRecord(
+            photo: photoPath,
+            nickName: nickname,
+            plantType: input.type
+        )
+
+        context.insert(record)
+
+        do {
+            try context.save()
+            input.navPath.wrappedValue.removeLast()
+        } catch {
+            print("Failed to save plant: \(error)")
         }
     }
 }
@@ -65,5 +89,6 @@ extension AddPlantViewModel {
         var navPath: Binding<NavigationPath>
         var image: Data?
         var type: TrefleListResponse.Species
+        var imageStorage: ImageStorageManagerProtocol
     }
 }

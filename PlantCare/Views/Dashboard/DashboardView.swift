@@ -23,6 +23,13 @@ struct DashboardView<ViewModel: DashboardViewModelProtocol>: View {
                     )
                 )
             }
+        case .data(let plants):
+            AtlasListView(
+                items: plants,
+                fetchingMore: false,
+                onSelect: viewModel.selectPlant
+            )
+                .padding(.vertical, 20)
         }
     }
 }
