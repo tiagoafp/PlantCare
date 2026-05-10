@@ -3,7 +3,6 @@ import SwiftUI
 public struct AtltasPhotoUploader: View {
     @Environment(\.translations) private var translations
     @Environment(\.atlasPalette) private var palette
-    @State var openUploader: Bool = false
     
     var title: Text?
     var image: Binding<UIImage?>
@@ -42,7 +41,7 @@ extension AtltasPhotoUploader {
             )
         }
     }
-
+    
     @ViewBuilder
     func imageContainer(image: UIImage) -> some View {
         ZStack(alignment: .bottomTrailing) {
@@ -63,7 +62,7 @@ extension AtltasPhotoUploader {
                     PrimaryButton(
                         image: .pencil,
                         label: Text(translations.change),
-                        action: {}
+                        type: .label
                     )
                 }
             )
@@ -73,53 +72,47 @@ extension AtltasPhotoUploader {
     
     @ViewBuilder
     func buttonContainer() -> some View {
-        Button(action: {
-            openUploader.toggle()
-        }) {
-            ZStack(alignment: .center) {
-                if let image = image.wrappedValue {
-                    ZStack(alignment: .bottomTrailing) {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFill()
-                            .clipShape( RoundedRectangle(cornerRadius: 24))
-                            .padding(1)
-                        
-                        PrimaryButton(
-                            image: .pencil,
-                            label: Text(translations.change),
-                            action: {
-                                openUploader.toggle()
-                            }
-                        )
-                        .padding(20)
-                    }
-                } else {
-                    RoundedRectangle(cornerRadius: 24)
-                        .foregroundStyle(palette.bgSurface)
-                    VStack(spacing: 6) {
-                        Image.photoPlus
-                            .foregroundStyle(palette.actionPrimary)
-                        
-                        Text(translations.tapToUpload)
-                            .font(.subheadline.weight(.regular))
-                            .foregroundStyle(palette.actionPrimary)
-                    }
-                }
-                
-            }
-            .frame(height: 250)
-            .frame(maxWidth: .infinity)
-            .overlay {
-                RoundedRectangle(cornerRadius: 24)
-                    .stroke(
-                        palette.actionPrimary.opacity(0.25),
-                        style: StrokeStyle(
-                            lineWidth: 3,
-                            dash: [8, 6]
-                        )
+        ZStack(alignment: .center) {
+            if let image = image.wrappedValue {
+                ZStack(alignment: .bottomTrailing) {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFill()
+                        .clipShape( RoundedRectangle(cornerRadius: 24))
+                        .padding(1)
+                    
+                    PrimaryButton(
+                        image: .pencil,
+                        label: Text(translations.change),
+                        type: .label
                     )
+                    .padding(20)
+                }
+            } else {
+                RoundedRectangle(cornerRadius: 24)
+                    .foregroundStyle(palette.bgSurface)
+                VStack(spacing: 6) {
+                    Image.photoPlus
+                        .foregroundStyle(palette.actionPrimary)
+                    
+                    Text(translations.tapToUpload)
+                        .font(.subheadline.weight(.regular))
+                        .foregroundStyle(palette.actionPrimary)
+                }
             }
+            
+        }
+        .frame(height: 250)
+        .frame(maxWidth: .infinity)
+        .overlay {
+            RoundedRectangle(cornerRadius: 24)
+                .stroke(
+                    palette.actionPrimary.opacity(0.25),
+                    style: StrokeStyle(
+                        lineWidth: 3,
+                        dash: [8, 6]
+                    )
+                )
         }
     }
 }

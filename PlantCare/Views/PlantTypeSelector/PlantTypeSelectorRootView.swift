@@ -52,7 +52,10 @@ struct PlantTypeSelectorRootView: View {
     func destination(destination: PlantTypeSelectorDestination) -> some View {
         switch destination {
         case .add(let image, let species):
-            AddPlantRootView(image: image, specie: species, navPath: $viewModel.path)
+            PlantFormRootView(
+                formType: .add(image: image, specie: species),
+                navPath: $viewModel.path
+            )
         }
     }
 }

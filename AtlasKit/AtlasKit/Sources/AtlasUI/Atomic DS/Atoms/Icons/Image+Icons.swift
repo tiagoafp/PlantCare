@@ -7,4 +7,6 @@ public extension Image {
     static let camera: Image = Image(systemName: "camera.fill")
     static let photoPlus: Image = Image(systemName: "photo.badge.plus")
     static let pencil: Image = Image(systemName: "pencil")
+    static let delete: Image = Image(systemName: "trash")
+    static let edit: Image = Image(systemName: "square.and.pencil")
 }

@@ -19,7 +19,7 @@ struct DashboardView<ViewModel: DashboardViewModelProtocol>: View {
                     action: PrimaryButton(
                         image: .plus,
                         label: .localized(key: .addPlant),
-                        action: viewModel.addPlant
+                        type: .button(onPress: viewModel.addPlant)
                     )
                 )
             }

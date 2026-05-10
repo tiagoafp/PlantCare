@@ -2,9 +2,14 @@
 "dashboard.title" = "Panel";
 "dashboard.hello" = "Hola, mundo!";
 "app.add.new.plant" = "Agregar nueva planta";
+"app.edit.plant" = "Editar planta";
 "app.add.photo" = "Agregar foto";
 "app.nickname" = "Apodo";
 "app.insert.plant.nickname" = "Introduce el apodo de la planta";
+"app.save" = "Guardar";
+"app.delete" = "Eliminar";
+"app.cancel" = "Cancelar";
+"app.delete.confirmation" = "¿Seguro que quieres eliminar?";
 "selected.plant.type" = "Tipo de planta seleccionado";
 "plant.details" = "Detalles de la planta";
 "plant.added.on" = "Añadido el";

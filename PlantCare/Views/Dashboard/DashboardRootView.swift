@@ -62,7 +62,11 @@ struct DashboardRootView: View {
         case .addPlant:
             PlantTypeSelectorRootView()
         case .detail(let plantID):
-            PlantDetailRootView(plantID: plantID)
+            PlantDetailRootView(
+                plantID: plantID,
+                navPath: $viewModel.path,
+                onDelete: viewModel.onDelete
+            )
         }
     }
 }

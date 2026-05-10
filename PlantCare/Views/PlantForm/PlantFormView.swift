@@ -1,7 +1,7 @@
 import SwiftUI
 import AtlasUI
 
-struct AddPlantView<ViewModel: AddPlantViewModelProtocol>: View {
+struct PlantFormView<ViewModel: PlantFormViewModelProtocol>: View {
     @ObservedObject var viewModel: ViewModel
 
     init(viewModel: ViewModel) {

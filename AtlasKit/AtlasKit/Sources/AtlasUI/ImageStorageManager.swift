@@ -42,6 +42,29 @@ extension ImageStorageManagerProtocol {
         return UIImage(data: data)
     }
     
+    /// Replaces an image already stored at a relative path.
+    public func replaceImage(_ image: UIImage, at path: String, compressionQuality: CGFloat = 0.8) -> Bool {
+        guard let data = image.jpegData(compressionQuality: compressionQuality) else {
+            return false
+        }
+        
+        let filename = URL(fileURLWithPath: path).lastPathComponent
+        let fileURL = getImageURL(for: filename)
+        
+        try? FileManager.default.createDirectory(
+            at: fileURL.deletingLastPathComponent(),
+            withIntermediateDirectories: true
+        )
+        
+        do {
+            try data.write(to: fileURL, options: .atomic)
+            return true
+        } catch {
+            print("Error replacing image: \(error)")
+            return false
+        }
+    }
+    
     /// Deletes an image from the file system
     func deleteImage(at path: String) {
         let filename = URL(fileURLWithPath: path).lastPathComponent

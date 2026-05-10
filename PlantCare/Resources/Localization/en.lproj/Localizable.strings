@@ -4,9 +4,14 @@
 "dashboard.empty.state.subtitle" = "Add your first plant to start tracking its growth, watering schedule, and more.";
 "app.add.plant" = "Add Plant";
 "app.add.new.plant" = "Add New Plant";
+"app.edit.plant" = "Edit Plant";
 "app.add.photo" = "Add Photo";
 "app.nickname" = "Nickname";
 "app.insert.plant.nickname" = "Insert plant nickname";
+"app.save" = "Save";
+"app.delete" = "Delete";
+"app.cancel" = "Cancel";
+"app.delete.confirmation" = "Are you sure you want to delete?";
 "select.plant.title" = "Select Plant";
 "selected.plant.type" = "Selected Plant Type";
 "searchPlants" = "Search plants...";

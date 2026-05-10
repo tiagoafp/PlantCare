@@ -20,9 +20,14 @@ enum AppLocalization: String, TranslationProtocol {
     case dashboardEmptySubtitle = "dashboard.empty.state.subtitle"
     case addPlant = "app.add.plant"
     case addNewPlant = "app.add.new.plant"
+    case editPlant = "app.edit.plant"
     case addPhoto = "app.add.photo"
     case nickname = "app.nickname"
     case insertPlantNickname = "app.insert.plant.nickname"
+    case save = "app.save"
+    case delete = "app.delete"
+    case cancel = "app.cancel"
+    case deleteConfirmation = "app.delete.confirmation"
     
     // Select plant
     case selectPlantTitle = "select.plant.title"

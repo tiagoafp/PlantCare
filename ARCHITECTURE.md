@@ -50,7 +50,7 @@ The app follows a clean MVVM-style architecture with the following responsibilit
 - `PlantTypeSelectorRootView.swift`
   - Configures API dependencies (`TrefleAPI` and `PlantnetAPI`)
   - Hosts a nested navigation stack for search and selection flows
-  - Routes to `AddPlantRootView` when a species is selected
+  - Routes to `PlantFormRootView` when a species is selected
 - `PlantTypeSelectorView.swift`
   - Renders search, list, camera capture card, and loading states
   - Uses `.task`, `.searchable`, and `.sheet` for async flows and image capture
@@ -59,14 +59,14 @@ The app follows a clean MVVM-style architecture with the following responsibilit
   - Supports pagination and image-based identification
   - Manages navigation and sheet state through `NavigationPath`
 
-### Add Plant
+### Plant Form
 
-- `AddPlantRootView.swift`
-  - Builds `AddPlantViewModel` with initial input values
+- `PlantFormRootView.swift`
+  - Builds `PlantFormViewModel` with initial input values
   - Provides sheet and navigation destination handling
-- `AddPlantView.swift`
+- `PlantFormView.swift`
   - Renders the add-plant form fields and upload UI
-- `AddPlantViewModel.swift`
+- `PlantFormViewModel.swift`
   - Manages selected plant type, image upload, and nickname input
   - Tracks submit readiness and view state
 
@@ -97,7 +97,7 @@ The app follows a clean MVVM-style architecture with the following responsibilit
 
 ## Existing Patterns
 
-- Generic view components use protocols, e.g. `AddPlantViewModelProtocol`
+- Generic view components use protocols, e.g. `PlantFormViewModelProtocol`
 - `RootView` components keep navigation/routing separate from UI
 - `ViewModel.Input` structs are used for dependency injection
 - `NavigationPath` is used for type-safe stack navigation
@@ -127,8 +127,8 @@ PlantCareApp
        └─ DashboardView
        └─ PlantTypeSelectorRootView
             └─ PlantTypeSelectorView
-            └─ AddPlantRootView
-                 └─ AddPlantView
+            └─ PlantFormRootView
+                 └─ PlantFormView
 ```
 
 ```

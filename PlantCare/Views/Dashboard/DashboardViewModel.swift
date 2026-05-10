@@ -11,6 +11,7 @@ protocol DashboardViewModelProtocol: ObservableObject {
     func addPlant()
     func selectPlant(_ plant: DashboardListItemAdapter)
     func inject(_ modelContext: ModelContext)
+    func onDelete()
 }
 
 class DashboardViewModel: DashboardViewModelProtocol {
@@ -62,6 +63,12 @@ class DashboardViewModel: DashboardViewModelProtocol {
             print(error.localizedDescription)
             #endif
         }
+    }
+    
+    func onDelete() {
+        path.removeLast(path.count)
+        
+        loadList()
     }
 }
 

@@ -1,4 +1,4 @@
-enum AddPlantDestination: Hashable, Identifiable {
+enum PlantFormDestination: Hashable, Identifiable {
     case example
 
     var id: String {

@@ -1,6 +1,6 @@
 import AtlasUI
 
-struct AddPlantSepciesAdapter: AtlasDefaultCellDataProtocol {
+struct PlantFormSpeciesAdapter: AtlasDefaultCellDataProtocol {
     var data: TrefleListResponse.Species
     
     init(data: TrefleListResponse.Species) {

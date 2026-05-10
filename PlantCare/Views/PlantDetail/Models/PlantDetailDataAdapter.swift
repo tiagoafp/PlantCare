@@ -32,7 +32,7 @@ extension PlantDetailDataAdapter {
         )
     }
     
-    var typeField: AddPlantSepciesAdapter {
+    var typeField: PlantFormSpeciesAdapter {
         .init(data: plantRecord.plantType)
     }
 }

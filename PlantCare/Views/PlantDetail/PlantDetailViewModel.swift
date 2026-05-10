@@ -7,6 +7,7 @@ protocol PlantDetailViewModelProtocol: ObservableObject {
     var state: PlantDetailViewModel.State { get }
     
     func load(in context: ModelContext) async
+    func onEdit()
 }
 
 class PlantDetailViewModel: PlantDetailViewModelProtocol {
@@ -34,6 +35,12 @@ class PlantDetailViewModel: PlantDetailViewModelProtocol {
         
         self.state = .data(data)
     }
+    
+    func onEdit() {
+        if let plant {
+            input.navPath.wrappedValue.append(PlantDetailDestination.edit(plant))
+        }
+    }
 }
 
 extension PlantDetailViewModel {
@@ -46,5 +53,6 @@ extension PlantDetailViewModel {
     struct Input {
         let plantID: PersistentIdentifier
         let plantImageStorage: ImageStorageManagerProtocol
+        let navPath: Binding<NavigationPath>
     }
 }
