@@ -28,6 +28,10 @@ enum AppLocalization: String, TranslationProtocol {
     case delete = "app.delete"
     case cancel = "app.cancel"
     case deleteConfirmation = "app.delete.confirmation"
+    case logActivity = "app.log.activity"
+    case activityHistory = "app.activity.history"
+    case noActivityYet = "app.activity.empty.title"
+    case activityEmptySubtitle = "app.activity.empty.subtitle"
     
     // Select plant
     case selectPlantTitle = "select.plant.title"

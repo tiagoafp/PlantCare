@@ -22,6 +22,14 @@ struct PlantDetailView<ViewModel: PlantDetailViewModelProtocol>: View {
                         data: adapter.typeField,
                         selection: .notSelectable
                     )
+                    
+                    AtlasSectionView(title: .localized(key: .activityHistory)) {
+                        AtlasNoDataSectionView(
+                            image: Image(systemName: "calendar"),
+                            title: .localized(key: .noActivityYet),
+                            description: .localized(key: .activityEmptySubtitle)
+                        )
+                    }
                 }
                 .padding(20)
             }

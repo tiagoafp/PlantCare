@@ -9,6 +9,7 @@ public protocol AtlasPalette: Sendable {
     var textSecondary: Color { get }
     var textOnActionPrimary: Color { get }
     var bgPrimary: Color { get }
+    var bgSecondary: Color { get }
     var bgSurface: Color { get }
     var bgSoftAccent: Color { get }
 }

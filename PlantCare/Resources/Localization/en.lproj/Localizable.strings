@@ -12,6 +12,10 @@
 "app.delete" = "Delete";
 "app.cancel" = "Cancel";
 "app.delete.confirmation" = "Are you sure you want to delete?";
+"app.log.activity" = "Log Activity";
+"app.activity.history" = "Activity History";
+"app.activity.empty.title" = "No activity yet";
+"app.activity.empty.subtitle" = "Log your first care task to start the journey.";
 "select.plant.title" = "Select Plant";
 "selected.plant.type" = "Selected Plant Type";
 "searchPlants" = "Search plants...";

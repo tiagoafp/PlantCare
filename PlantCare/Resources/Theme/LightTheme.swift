@@ -15,9 +15,10 @@ struct LightTheme: AtlasPalette {
     let textSecondary = Color(r: 63, g: 74, b: 62)
 
     // MARK: - Backgrounds
-    let bgPrimary = Color(r: 250, g: 249, b: 254)           // #FAF9FE Soft Lavender White
-    let bgSurface = Color(r: 255, g: 255, b: 255)           // #FFFFFF Pure White
-    let bgSoftAccent = Color(r: 216, g: 243, b: 220)       // #D8F3DC Mint Soft
+    let bgPrimary = Color(r: 250, g: 249, b: 254)
+    let bgSecondary = Color(r: 244, g: 243, b: 248)
+    let bgSurface = Color(r: 255, g: 255, b: 255)
+    let bgSoftAccent = Color(r: 216, g: 243, b: 220)
 
     // MARK: - Functional / Care Actions
     let actionWater = Color(r: 30, g: 144, b: 255)          // #1E90FF Sky Blue

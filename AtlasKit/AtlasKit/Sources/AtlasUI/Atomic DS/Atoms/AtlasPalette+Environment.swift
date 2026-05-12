@@ -8,6 +8,7 @@ private struct DefaultAtlasPalette: AtlasPalette {
     let textSecondary: Color = .secondary
     let textOnActionPrimary: Color = .white
     let bgPrimary: Color = .white
+    let bgSecondary: Color = .secondary.opacity(0.05)
     let bgSurface: Color = .white
     let bgSoftAccent: Color = .blue.opacity(0.1)
 }
