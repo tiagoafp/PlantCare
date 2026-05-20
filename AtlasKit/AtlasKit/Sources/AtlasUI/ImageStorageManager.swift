@@ -31,7 +31,11 @@ extension ImageStorageManagerProtocol {
     }
     
     /// Loads an image from the file system using the relative path
-    public func loadImage(from path: String) -> UIImage? {
+    public func loadImage(from path: String?) -> UIImage? {
+        guard let path else {
+            return nil
+        }
+        
         let filename = URL(fileURLWithPath: path).lastPathComponent
         let fileURL = getImageURL(for: filename)
         

@@ -24,11 +24,21 @@ struct PlantDetailView<ViewModel: PlantDetailViewModelProtocol>: View {
                     )
                     
                     AtlasSectionView(title: .localized(key: .activityHistory)) {
-                        AtlasNoDataSectionView(
-                            image: Image(systemName: "calendar"),
-                            title: .localized(key: .noActivityYet),
-                            description: .localized(key: .activityEmptySubtitle)
-                        )
+                        ZStack {
+                            if adapter.activityRecords.isEmpty {
+                                AtlasNoDataSectionView(
+                                    image: Image(systemName: "calendar"),
+                                    title: .localized(key: .noActivityYet),
+                                    description: .localized(key: .activityEmptySubtitle)
+                                )
+                            } else {
+                                AtlasTimelineListView(
+                                    items: adapter.activityRecords,
+                                    fetchingMore: false,
+                                    onSelect: viewModel.onPlantActivity
+                                )
+                            }
+                        }
                     }
                 }
                 .padding(20)

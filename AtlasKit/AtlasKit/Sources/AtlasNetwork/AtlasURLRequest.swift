@@ -11,7 +11,7 @@ public class AtlasURLRequest {
         do {
             let response = try await URLSession.shared.data(for: request)
             
-            guard let httpResponse = response.1 as? HTTPURLResponse else {
+            guard let _ = response.1 as? HTTPURLResponse else {
                 return .init(result: .failure(.malformed))
             }
 

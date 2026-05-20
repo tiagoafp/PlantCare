@@ -7,7 +7,7 @@
 
 import UIKit
 
-public enum AtlasCellImageType {
+public enum AtlasCellImageType: Hashable {
     case local(UIImage)
     case remote(String)
 }

@@ -9,7 +9,7 @@ protocol DashboardViewModelProtocol: ObservableObject {
     var watering: Bool { get set }
     
     func addPlant()
-    func selectPlant(_ plant: DashboardListItemAdapter)
+    func selectPlant(_ plant: PlantCellDataAdapter)
     func inject(_ modelContext: ModelContext)
     func onDelete()
 }
@@ -32,7 +32,7 @@ class DashboardViewModel: DashboardViewModelProtocol {
         sheet = DashboardDestination.addPlant
     }
     
-    func selectPlant(_ plant: DashboardListItemAdapter) {
+    func selectPlant(_ plant: PlantCellDataAdapter) {
         path.append(DashboardDestination.detail(plant.id))
     }
     
@@ -50,10 +50,11 @@ class DashboardViewModel: DashboardViewModelProtocol {
                 return
             }
             
-            let list = plants.map { (plant: PlantRecord) -> DashboardListItemAdapter in
+            let list = plants.map { (plant: PlantRecord) -> PlantCellDataAdapter in
                 return .init(
                     plantRecord: plant,
-                    uiImage: input.imageManager.loadImage(from: plant.photo)
+                    uiImage: input.imageManager.loadImage(from: plant.photo),
+                    chevron: true
                 )
             }
             
@@ -75,7 +76,7 @@ class DashboardViewModel: DashboardViewModelProtocol {
 extension DashboardViewModel {
     enum State {
         case empty
-        case data([DashboardListItemAdapter])
+        case data([PlantCellDataAdapter])
     }
     
     struct Input {

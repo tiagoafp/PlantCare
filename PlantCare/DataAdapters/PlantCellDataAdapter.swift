@@ -9,20 +9,23 @@ import AtlasUI
 import SwiftData
 import UIKit
 
-struct DashboardListItemAdapter: AtlasDefaultCellDataProtocol {
+struct PlantCellDataAdapter: AtlasDefaultCellDataProtocol {
     var plantRecord: PlantRecord
     var uiImage: UIImage?
+    let chevron: Bool
     
     init(
         plantRecord: PlantRecord,
-        uiImage: UIImage?
+        uiImage: UIImage?,
+        chevron: Bool
     ) {
         self.plantRecord = plantRecord
         self.uiImage = uiImage
+        self.chevron = chevron
     }
 }
 
-extension DashboardListItemAdapter {
+extension PlantCellDataAdapter {
     var image: AtlasCellImageType? {
         guard let uiImage else { return nil }
         
@@ -32,6 +35,5 @@ extension DashboardListItemAdapter {
     var title: String { plantRecord.nickName }
     var subtitle: String { plantRecord.plantType.scientificName }
     var caption: String? { nil }
-    var chevron: Bool { true }
     var id: PersistentIdentifier { plantRecord.id }
 }

@@ -6,6 +6,7 @@ private struct DefaultAtlasPalette: AtlasPalette {
     let actionPrimarySoft: Color = .blue.opacity(0.2)
     let textPrimary: Color = .primary
     let textSecondary: Color = .secondary
+    let textTertiary: Color = .secondary.opacity(0.7)
     let textOnActionPrimary: Color = .white
     let bgPrimary: Color = .white
     let bgSecondary: Color = .secondary.opacity(0.05)

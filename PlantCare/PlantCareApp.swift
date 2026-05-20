@@ -8,7 +8,7 @@ struct PlantCareApp: App {
 
     init() {
         do {
-            container = try ModelContainer(for: AppDataBase.self, PlantRecord.self)
+            container = try ModelContainer(for: AppDataBase.self, PlantRecord.self, PlantActivityRecord.self)
             try AppDataBaseBootstrap.createRootIfNeeded(in: container.mainContext)
         } catch {
             fatalError("Unable to create plant database: \(error.localizedDescription)")

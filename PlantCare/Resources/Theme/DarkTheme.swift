@@ -11,6 +11,7 @@ struct DarkTheme: AtlasPalette {
     // MARK: - Text
     let textPrimary = Color(r: 241, g: 245, b: 249)
     let textSecondary = Color(r: 148, g: 163, b: 184)
+    let textTertiary = Color(r: 100, g: 116, b: 139)
     let textOnActionPrimary = Color.white
 
     // MARK: - Backgrounds

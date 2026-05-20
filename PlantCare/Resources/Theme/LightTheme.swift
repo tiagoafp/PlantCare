@@ -13,6 +13,7 @@ struct LightTheme: AtlasPalette {
     // MARK: - Text Colors
     let textPrimary = Color(r: 26, g: 27, b: 31)
     let textSecondary = Color(r: 63, g: 74, b: 62)
+    let textTertiary = Color(r: 111, g: 122, b: 109) // #6F7A6D
 
     // MARK: - Backgrounds
     let bgPrimary = Color(r: 250, g: 249, b: 254)

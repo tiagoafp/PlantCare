@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct AtlasListView<Item: AtlasDefaultCellDataProtocol>: View {
+public struct AtlasTimelineListView<Item: AtlasTimelineCellDataProtocol>: View {
     @Environment(\.atlasPalette) private var palette
     
     var items: [Item]
@@ -24,7 +24,7 @@ public struct AtlasListView<Item: AtlasDefaultCellDataProtocol>: View {
         ScrollView {
             LazyVStack(spacing: 16) {
                 ForEach(items) { item in
-                    AtlasDefaultCell(
+                    AtlasTimelineCell(
                         data: item,
                         selection: onSelect == nil ? .notSelectable : .selectable({
                             onSelect?(item)
@@ -41,7 +41,6 @@ public struct AtlasListView<Item: AtlasDefaultCellDataProtocol>: View {
                     ProgressView()
                 }
             }
-            .padding(.horizontal, 20)
             
         }
     }
