@@ -4,6 +4,7 @@ private struct DefaultAtlasPalette: AtlasPalette {
     let actionPrimary: Color = .blue
     let actionPrimaryStrong: Color = .blue
     let actionPrimarySoft: Color = .blue.opacity(0.2)
+    let actionDestructive: Color = .red
     let textPrimary: Color = .primary
     let textSecondary: Color = .secondary
     let textTertiary: Color = .secondary.opacity(0.7)

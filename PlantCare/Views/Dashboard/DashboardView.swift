@@ -28,8 +28,7 @@ struct DashboardView<ViewModel: DashboardViewModelProtocol>: View {
                 items: plants,
                 fetchingMore: false,
                 onSelect: viewModel.selectPlant
-            )
-                .padding(.vertical, 20)
+            ).padding(.vertical, 20)
         }
     }
 }

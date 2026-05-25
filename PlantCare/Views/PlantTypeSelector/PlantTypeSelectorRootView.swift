@@ -4,8 +4,11 @@ import AtlasUI
 struct PlantTypeSelectorRootView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel: PlantTypeSelectorViewModel
+    var onUpdate: () -> Void
     
-    init() {
+    init(onUpdate: @escaping () -> Void) {
+        self.onUpdate = onUpdate
+        
         let trefleAPI = TrefleAPI().setKey(key: AppSecrets.trefleAPIKey)
         let planetAPI = PlantnetAPI().setKey(key: AppSecrets.plantnetAPIKey)
         _viewModel = .init(
@@ -54,7 +57,8 @@ struct PlantTypeSelectorRootView: View {
         case .add(let image, let species):
             PlantFormRootView(
                 formType: .add(image: image, specie: species),
-                navPath: $viewModel.path
+                navPath: $viewModel.path,
+                onUpdate: onUpdate
             )
         }
     }

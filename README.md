@@ -1,5 +1,6 @@
 # TODO
-- add default nickname in case no other available
-- plant acticity detail view
-- plant activity edit view
+- See all activities
+- Reduce activities to 5 on plant detail
 - Preview to see my images full screen
+- Fix image uploader
+- Check updates when deleting activites

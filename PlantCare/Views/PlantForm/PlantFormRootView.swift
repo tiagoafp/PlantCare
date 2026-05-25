@@ -5,18 +5,21 @@ import AtlasUI
 struct PlantFormRootView: View {
     @Environment(\.modelContext) private var modelContext
     @StateObject var viewModel: PlantFormViewModel
-    @State var confirmDelete: Bool = false
     
     init(
+        depInjector: DependencyInjectorProtocol = DependencyInjector(),
         formType: PlantFormType,
-        navPath: Binding<NavigationPath>
+        navPath: Binding<NavigationPath>,
+        onUpdate: @escaping () -> Void,
     ) {
         _viewModel = .init(
             wrappedValue: PlantFormViewModel(
                 input: .init(
                     navPath: navPath,
                     formType: formType,
-                    imageStorage: ImageStorageManager.plant
+                    imageStorage: ImageStorageManager.plant,
+                    activityImageStorage: depInjector.activityImageManager,
+                    onUpdate: onUpdate
                 )
             )
         )
@@ -33,33 +36,12 @@ struct PlantFormRootView: View {
                 }
             )
         }
+        .onAppear(perform: {
+            viewModel.inject(modelContext: modelContext)
+        })
         .navigationTitle(
             Text(title)
         )
-        .toolbar {
-            switch viewModel.input.formType {
-            case .add:
-                EmptyView()
-            case .edit:
-                AtlasToolbarButton(image: .delete, action: {
-                    confirmDelete.toggle()
-                })
-            }
-        }
-        .alert(
-            .localized(key: .deleteConfirmation),
-            isPresented: $confirmDelete,
-            actions: {
-                Button(
-                    String.localized(key: .delete),
-                    role: .destructive) {
-                        viewModel.delete(context: modelContext)
-                    }
-                
-                Button(String.localized(key: .cancel), role: .cancel) {
-                    confirmDelete.toggle()
-                }
-            })
         .sheet(
             item: $viewModel.sheet,
             content: destination

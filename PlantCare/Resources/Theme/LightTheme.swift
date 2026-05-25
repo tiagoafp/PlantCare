@@ -9,6 +9,7 @@ struct LightTheme: AtlasPalette {
     let actionPrimary = Color(hex: "#006B27")
     let actionPrimaryStrong = Color(r: 45, g: 106, b: 79)    // #2D6A4F Emerald Deep
     let actionPrimarySoft = Color(r: 216, g: 243, b: 220)    // #D8F3DC Mint Soft
+    let actionDestructive = Color(r: 220, g: 38, b: 38)      // #DC2626 Red
 
     // MARK: - Text Colors
     let textPrimary = Color(r: 26, g: 27, b: 31)

@@ -4,6 +4,7 @@ import AtlasUI
 
 @MainActor
 protocol PlantActivityFormViewModelProtocol: ObservableObject {
+    var formType: PlantActivityFormType { get }
     var activityType: PlantActivityTypePickerAdapter { get set }
     var activityImage: UIImage? { get set }
     var activityDate: Date { get set }
@@ -19,6 +20,8 @@ protocol PlantActivityFormViewModelProtocol: ObservableObject {
 }
 
 class PlantActivityFormViewModel: PlantActivityFormViewModelProtocol {
+    var formType: PlantActivityFormType { input.formType }
+    
     static let defaultActivityType: PlantActivityType = .watering
     
     var plant: PlantRecord {
@@ -85,13 +88,14 @@ class PlantActivityFormViewModel: PlantActivityFormViewModelProtocol {
         }
         
         let recordedActivity = PlantActivityRecord(
-            plantID: plant.id.uuidString,
             type: activityType.activityType,
+            plant: plant,
             notes: activityNotes,
             photo: photo,
             date: activityDate
         )
-
+        
+        plant.activities.append(recordedActivity)
         context.insert(recordedActivity)
 
         do {

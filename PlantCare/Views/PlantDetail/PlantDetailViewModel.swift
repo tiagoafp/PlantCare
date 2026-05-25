@@ -11,6 +11,7 @@ protocol PlantDetailViewModelProtocol: ObservableObject {
     func addActivity()
     func reloadActivities(in context: ModelContext) async
     func onPlantActivity(activity: PlantActivityTimelineAdapter)
+    func delete(context: ModelContext)
 }
 
 class PlantDetailViewModel: PlantDetailViewModelProtocol {
@@ -29,20 +30,8 @@ class PlantDetailViewModel: PlantDetailViewModelProtocol {
             return
         }
 
-        let activityRecords: [PlantActivityRecord]
-        do {
-            let plantID = record.id.uuidString
-            let descriptor = FetchDescriptor<PlantActivityRecord>(
-                predicate: #Predicate { $0.plantID == plantID },
-                sortBy: [SortDescriptor(\.date, order: .reverse)]
-            )
-            activityRecords = try context.fetch(descriptor)
-        } catch {
-            #if DEBUG
-            print("Failed to fetch activity records: \(error)")
-            #endif
-            activityRecords = []
-        }
+        
+        let activityRecords = record.activities
 
         self.plant = record
         
@@ -83,6 +72,23 @@ class PlantDetailViewModel: PlantDetailViewModelProtocol {
         if let plant {
             input.navPath.wrappedValue.append(PlantDetailDestination.editActivity(plant, activity.activity))
         }
+    }
+    
+    func delete(context: ModelContext) {
+        guard let plant = context.model(for: input.plantID) as? PlantRecord else {
+            return
+        }
+        
+        do {
+            plant.activities.forEach { activity in
+                if let photoPath = activity.photo {
+                    input.activityImageStorage.deleteImage(at: photoPath)
+                }
+            }
+            
+            input.plantImageStorage.deleteImage(at: plant.photo)
+            context.delete(plant)
+        } catch {}
     }
 }
 

@@ -5,6 +5,7 @@ public protocol AtlasPalette: Sendable {
     var actionPrimary: Color { get }
     var actionPrimaryStrong: Color { get }
     var actionPrimarySoft: Color { get }
+    var actionDestructive: Color { get }
     var textPrimary: Color { get }
     var textSecondary: Color { get }
     var textTertiary: Color { get }

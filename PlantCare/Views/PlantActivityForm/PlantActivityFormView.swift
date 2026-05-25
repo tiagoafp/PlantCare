@@ -13,11 +13,19 @@ struct PlantActivityFormView<ViewModel: PlantActivityFormViewModelProtocol>: Vie
             LazyVStack(spacing: 24) {
                 AtlasDefaultCell(data: viewModel.selectedPLant, selection: .notSelectable)
                 
-                AtlasPickerCell(
-                    title: .localized(key: .activityType),
-                    options: viewModel.activities,
-                    selection: $viewModel.activityType
-                )
+                if case .add = viewModel.formType {
+                    AtlasPickerCell(
+                        title: .localized(key: .activityType),
+                        options: viewModel.activities,
+                        selection: $viewModel.activityType
+                    )
+                } else {
+                    AtlasDatePickerCell(
+                        title: .localized(key: .dateAndTime),
+                        date: $viewModel.activityDate
+                    )
+                }
+                
                 
                 if let photoTitle {
                     AtltasPhotoUploader(title: photoTitle, image: $viewModel.activityImage)

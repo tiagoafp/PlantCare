@@ -1,5 +1,6 @@
 import SwiftUI
 import AtlasNetwork
+import AtlasUI
 
 @MainActor
 protocol PlantTypeSelectorViewModelProtocol: ObservableObject {
@@ -12,7 +13,7 @@ protocol PlantTypeSelectorViewModelProtocol: ObservableObject {
     func onAppear() async
     func fetchMore() async
     func onSearch(search: String) async
-    func onImage(image: UIImage) async
+    func onImage(image: AtlasImageUploadWrapperPickerResult) async
     func onItemSelector(item: PlantTypeAdapter)
 }
 
@@ -36,7 +37,11 @@ final class PlantTypeSelectorViewModel: PlantTypeSelectorViewModelProtocol {
     }
     
     func onAppear() async {
-        await fetchList()
+        if search.isEmpty {
+            await fetchList()
+        } else {
+            await onSearch(search: search)
+        }
     }
     
     func fetchList() async {
@@ -138,18 +143,27 @@ final class PlantTypeSelectorViewModel: PlantTypeSelectorViewModelProtocol {
         }
     }
     
-    func onImage(image: UIImage) async {
-        self.dataImage = image.jpegData(compressionQuality: 1)
-        
-        let response = await input.plantnetAPI.identify(image: image)
-        
-        switch response {
-        case .success(let success):
-            if let result = success.results.first?.species.scientificNameWithoutAuthor {
-                self.search = result
+    func onImage(image: AtlasImageUploadWrapperPickerResult) async {
+        guard case .data(let array) = state else {
+            return
+        }
+
+        if case .image(let uIImage) = image {
+            self.state = .recoginizingImage(array)
+            self.dataImage = uIImage.jpegData(compressionQuality: 1)
+            
+            let response = await input.plantnetAPI.identify(image: uIImage)
+            
+            switch response {
+            case .success(let success):
+                self.state = .data(array)
+                if let result = success.results.first?.species.scientificNameWithoutAuthor {
+                    self.search = result
+                }
+            case .failure(let failure):
+                self.state = .data(array)
+                print(failure)
             }
-        case .failure(let failure):
-            print(failure)
         }
     }
     
@@ -169,6 +183,7 @@ extension PlantTypeSelectorViewModel {
     enum State {
         case loading
         case data([PlantTypeAdapter])
+        case recoginizingImage([PlantTypeAdapter])
         case searching([PlantTypeAdapter])
     }
 }

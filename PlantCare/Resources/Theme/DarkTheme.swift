@@ -7,6 +7,7 @@ struct DarkTheme: AtlasPalette {
     let actionPrimary = Color(r: 56, g: 189, b: 102)
     let actionPrimaryStrong = Color(r: 45, g: 106, b: 79)
     let actionPrimarySoft = Color(r: 20, g: 60, b: 40)
+    let actionDestructive = Color(r: 248, g: 113, b: 113)    // #F87171 Light Red
 
     // MARK: - Text
     let textPrimary = Color(r: 241, g: 245, b: 249)

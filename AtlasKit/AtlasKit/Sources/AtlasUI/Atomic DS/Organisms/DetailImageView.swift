@@ -22,6 +22,7 @@ public struct DetailImageView: View {
                 .scaledToFill()
                 .frame(height: 300)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
+                .clipped()
         case .remote(let path):
             CachedAsyncImage(url: URL(string: path)) { image in
                 image
@@ -29,6 +30,7 @@ public struct DetailImageView: View {
                     .scaledToFill()
                     .frame(height: 300)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .clipped()
             }
         }
     }

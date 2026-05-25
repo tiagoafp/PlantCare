@@ -48,8 +48,9 @@ extension AtltasPhotoUploader {
             Image(uiImage: image)
                 .resizable()
                 .scaledToFill()
-                .clipShape( RoundedRectangle(cornerRadius: 24))
                 .padding(1)
+                .frame(height: 250)
+                .clipShape(RoundedRectangle(cornerRadius: 24))
             
             AtlasImageUploadWrapper(
                 onResult: { result in
@@ -66,6 +67,8 @@ extension AtltasPhotoUploader {
                     )
                 }
             )
+            .frame(height: 250)
+            .clipped()
             .padding(20)
         }
     }
@@ -80,6 +83,7 @@ extension AtltasPhotoUploader {
                         .scaledToFill()
                         .clipShape( RoundedRectangle(cornerRadius: 24))
                         .padding(1)
+                        .frame(height: 250)
                     
                     PrimaryButton(
                         image: .pencil,

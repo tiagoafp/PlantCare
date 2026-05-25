@@ -11,9 +11,9 @@ enum PlantDetailDestination: Hashable, Identifiable {
         case .edit:
             return "edit"
         case .logActivity(let plant):
-            return "logActivity_\(plant.id.uuidString)"
+            return "logActivity_\(plant.id)"
         case .editActivity(_, let activity):
-            return "editActivity_\(activity.id.uuidString)"
+            return "editActivity_\(activity.id)"
         }
     }
 }

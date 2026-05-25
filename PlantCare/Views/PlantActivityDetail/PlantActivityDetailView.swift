@@ -26,6 +26,21 @@ struct PlantActivityDetailView<ViewModel: PlantActivityDetailViewModelProtocol>:
                             .foregroundStyle(palette.textPrimary)
                     }
                     .padding(.top, 20)
+                    
+                    if let photo = adapter.activity.photo {
+                        Image(uiImage: photo)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(height: 300)
+                            .clipShape(RoundedRectangle(cornerRadius: 24))
+                    }
+                    
+                    AtlasDefaultCell(data: adapter.dateCell, selection: .notSelectable)
+                    AtlasDefaultCell(data: adapter.timeCell, selection: .notSelectable)
+                    
+                    if let notesCell = adapter.notesCell {
+                        AtlasDefaultCell(data: notesCell, selection: .notSelectable)
+                    }
                 }.padding(20)
             }
         }

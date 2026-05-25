@@ -70,7 +70,9 @@ extension ImageStorageManagerProtocol {
     }
     
     /// Deletes an image from the file system
-    func deleteImage(at path: String) {
+    public func deleteImage(at path: String?) {
+        guard let path else { return }
+        
         let filename = URL(fileURLWithPath: path).lastPathComponent
         let fileURL = getImageURL(for: filename)
         

@@ -60,7 +60,7 @@ struct DashboardRootView: View {
     func destination(destination: DashboardDestination) -> some View {
         switch destination {
         case .addPlant:
-            PlantTypeSelectorRootView()
+            PlantTypeSelectorRootView(onUpdate: viewModel.onPlatAdded)
         case .detail(let plantID):
             PlantDetailRootView(
                 plantID: plantID,

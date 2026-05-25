@@ -27,6 +27,9 @@
 "app.activity.notes.placeholder" = "Add notes about this activity";
 "app.notes" = "Notes";
 "app.notes.optional" = "Notes (Optional)";
+"app.date" = "Date";
+"app.time" = "Time";
+"app.date.and.time" = "Date & Time";
 "app.activity.details.placeholder" = "Add details about this activity...";
 "activity.type.water" = "Water";
 "activity.watered" = "Watered";

@@ -25,6 +25,9 @@
 "app.activity.notes.placeholder" = "Añade notas sobre esta actividad";
 "app.notes" = "Notas";
 "app.notes.optional" = "Notas (Opcional)";
+"app.date" = "Fecha";
+"app.time" = "Hora";
+"app.date.and.time" = "Fecha y hora";
 "app.activity.details.placeholder" = "Anade detalles sobre esta actividad...";
 "activity.type.water" = "Regar";
 "activity.watered" = "Regada";

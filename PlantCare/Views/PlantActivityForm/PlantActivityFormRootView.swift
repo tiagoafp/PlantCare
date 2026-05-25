@@ -8,14 +8,17 @@ struct PlantActivityFormRootView: View {
     @StateObject private var viewModel: PlantActivityFormViewModel
     var depInjector: DependencyInjectorProtocol
     var onUpdate: () -> Void
+    var navPath: Binding<NavigationPath>?
     
     init(
         depInjector: DependencyInjectorProtocol = DependencyInjector(),
         formType: PlantActivityFormType,
+        navPath: Binding<NavigationPath>?,
         onUpdate: @escaping () -> Void
     ) {
         self.onUpdate = onUpdate
         self.depInjector = depInjector
+        self.navPath = navPath
         _viewModel = .init(
             wrappedValue: PlantActivityFormViewModel(
                 input: .init(
@@ -27,25 +30,37 @@ struct PlantActivityFormRootView: View {
             )
         )
     }
-
+    
     var body: some View {
-        NavigationStack {
-            PlantActivityFormView(viewModel: viewModel)
-                .toolbar(content: {
-                    AtlasToolbarButton(image: .close, action: {
-                        dismiss()
-                    })
-                })
-                .atlasBackground()
-                .atlasBottomAction {
-                    AtlasBottomActionButton(
-                        title: bottomTitle,
-                        action: saveActivity
-                    )
-                }
+        if let navPath {
+            formview()
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationTitle(Text.localized(key: .logActivity))
+        } else {
+            NavigationStack {
+                formview()
+                    .navigationBarTitleDisplayMode(.inline)
+                    .navigationTitle(Text.localized(key: .logActivity))
+            }
+            
         }
+    }
+    
+    @ViewBuilder
+    private func formview() -> some View {
+        PlantActivityFormView(viewModel: viewModel)
+            .toolbar(content: {
+                AtlasToolbarButton(image: .close, action: {
+                    dismiss()
+                })
+            })
+            .atlasBackground()
+            .atlasBottomAction {
+                AtlasBottomActionButton(
+                    title: bottomTitle,
+                    action: saveActivity
+                )
+            }
     }
 
     private func saveActivity() {

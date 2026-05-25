@@ -3,10 +3,13 @@ import SwiftUI
 import AtlasUI
 
 struct PlantDetailRootView: View {
+    @Environment(\.atlasPalette) var palette
     @Environment(\.modelContext) private var modelContext
     @StateObject private var viewModel: PlantDetailViewModel
     var onDelete: () -> Void
     var depInjector: DependencyInjectorProtocol
+    let navPath: Binding<NavigationPath>
+    @State var confirmDelete: Bool = false
 
     init(
         plantID: PersistentIdentifier,
@@ -16,6 +19,7 @@ struct PlantDetailRootView: View {
     ) {
         self.onDelete = onDelete
         self.depInjector = depInjector
+        self.navPath = navPath
         
         _viewModel = .init(
             wrappedValue: PlantDetailViewModel(
@@ -38,6 +42,16 @@ struct PlantDetailRootView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     AtlasToolbarButton(
+                        image: .delete,
+                        color: palette.actionDestructive,
+                        action: {
+                            confirmDelete = true
+                        }
+                    )
+                }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    AtlasToolbarButton(
                         image: .edit,
                         action: viewModel.onEdit
                     )
@@ -56,6 +70,20 @@ struct PlantDetailRootView: View {
                     action: viewModel.addActivity
                 )
             })
+            .alert(
+                .localized(key: .deleteConfirmation),
+                isPresented: $confirmDelete,
+                actions: {
+                    Button(
+                        String.localized(key: .delete),
+                        role: .destructive) {
+                            viewModel.delete(context: modelContext)
+                        }
+                    
+                    Button(String.localized(key: .cancel), role: .cancel) {
+                        confirmDelete.toggle()
+                    }
+                })
             .sheet(item: $viewModel.sheet, content: destination)
     }
     
@@ -68,12 +96,17 @@ struct PlantDetailRootView: View {
                     plant: plant,
                     onDelete: onDelete
                 ),
-                navPath: viewModel.input.navPath
+                navPath: viewModel.input.navPath,
+                onUpdate: {
+                    Task{
+                        await viewModel.load(in: modelContext)
+                    }
+                }
             )
         case .logActivity(let plant):
             PlantActivityFormRootView(
                 formType: .add(plant: plant),
-                onUpdate: {
+                navPath: nil, onUpdate: {
                     Task {
                         await viewModel.load(in: modelContext)
                     }
@@ -83,6 +116,7 @@ struct PlantDetailRootView: View {
             PlantActivityDetailRootView(
                 activity: activity,
                 plant: plant,
+                navPath: navPath,
                 onUpdate: {
                     Task {
                         await viewModel.load(in: modelContext)

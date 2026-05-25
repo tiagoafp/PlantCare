@@ -13,12 +13,12 @@ protocol PlantFormViewModelProtocol: ObservableObject {
     func onAppear() async
     
     func onMainAction(context: ModelContext)
-    func delete(context: ModelContext)
 }
 
 final class PlantFormViewModel: PlantFormViewModelProtocol {
     @Published var state: State
     var input: Input
+    var modelContext: ModelContext?
     @Published var sheet: PlantFormDestination?
     @Published var image: UIImage?  {
         didSet {
@@ -50,13 +50,42 @@ final class PlantFormViewModel: PlantFormViewModelProtocol {
         self.nickname = ""
         self.canSubmit = false
         
-        if case .add(let data, _) = input.formType, let data {
-            self.image = UIImage(data: data)
+        if case .add(let data, let type) = input.formType {
+            nickname = type.scientificName
+            
+            if let data {
+                self.image = UIImage(data: data)
+            }
         }
         
         if case .edit(let plant, _) = input.formType {
             self.image = input.imageStorage.loadImage(from: plant.photo)
             self.nickname = plant.nickName
+        }
+    }
+    
+    func inject(modelContext: ModelContext) {
+        if self.modelContext != nil {
+            return
+        }
+        
+        self.modelContext = modelContext
+        
+        if case .add(_, let type) = input.formType {
+            let descriptor = FetchDescriptor<PlantRecord>(
+                predicate: #Predicate { plant in
+                    plant.nickName == type.scientificName
+                }
+            )
+
+            do {
+                let count = try modelContext.fetchCount(descriptor)
+                if count > 0 {
+                    nickname = type.scientificName + " \(count)"
+                }
+            } catch {
+                
+            }
         }
     }
     
@@ -96,6 +125,7 @@ final class PlantFormViewModel: PlantFormViewModelProtocol {
 
         do {
             try context.save()
+            input.onUpdate()
             input.navPath.wrappedValue.removeLast()
         } catch {
             handleError(error: error)
@@ -114,16 +144,10 @@ final class PlantFormViewModel: PlantFormViewModelProtocol {
         
         do {
             try context.save()
+            input.onUpdate()
             input.navPath.wrappedValue.removeLast()
         } catch {
             handleError(error: error)
-        }
-    }
-    
-    func delete(context: ModelContext) {
-        if case .edit(let plant, let onDelete) = input.formType {
-            context.delete(plant)
-            onDelete()
         }
     }
     
@@ -143,5 +167,7 @@ extension PlantFormViewModel {
         var navPath: Binding<NavigationPath>
         let formType: PlantFormType
         var imageStorage: ImageStorageManagerProtocol
+        var activityImageStorage: ImageStorageManagerProtocol
+        var onUpdate: () -> Void
     }
 }

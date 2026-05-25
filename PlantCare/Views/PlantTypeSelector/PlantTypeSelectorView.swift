@@ -8,16 +8,21 @@ struct PlantTypeSelectorView<ViewModel: PlantTypeSelectorViewModelProtocol>: Vie
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
     }
-
+    
     var body: some View {
         ZStack {
             switch viewModel.state {
             case .loading:
                 ProgressView()
-            case .data(let items), .searching(let items):
+            case .data(let items), .searching(let items), .recoginizingImage(let items):
                 VStack {
-                    takePhotoCard()
-                        .padding(.horizontal, 20)
+                    if case .recoginizingImage = viewModel.state {
+                        loadingPhotoCard()
+                            .padding(.horizontal, 20)
+                    } else {
+                        takePhotoCard()
+                            .padding(.horizontal, 20)
+                    }
                     
                     AtlasListView(
                         items: items,
@@ -55,10 +60,17 @@ struct PlantTypeSelectorView<ViewModel: PlantTypeSelectorViewModelProtocol>: Vie
 extension PlantTypeSelectorView {
     @ViewBuilder
     func takePhotoCard() -> some View {
-        AtlasImageUploadWrapper(onResult: { _ in
-            
-        }) {
+        AtlasImageUploadWrapper(
+            onResult: { result in
+                Task {
+                    await viewModel.onImage(image: result)
+                }
+            }
+        ) {
             ZStack {
+                RoundedRectangle(cornerRadius: 16)
+                    .foregroundStyle(palette.actionPrimary)
+                
                 HStack(spacing: 16) {
                     ZStack {
                         Image
@@ -87,11 +99,19 @@ extension PlantTypeSelectorView {
                     Spacer()
                 }
                 .padding(20)
-                .background {
-                    RoundedRectangle(cornerRadius: 16)
-                        .foregroundStyle(palette.actionPrimary)
-                }
             }
-        }
+            .frame(height: 140)
         }
     }
+    
+    @ViewBuilder
+    func loadingPhotoCard() -> some View {
+        ZStack(alignment: .center) {
+            RoundedRectangle(cornerRadius: 16)
+                .foregroundStyle(palette.actionPrimary)
+            
+            ProgressView().tint(palette.textOnActionPrimary)
+        }
+        .frame(height: 140)
+    }
+}

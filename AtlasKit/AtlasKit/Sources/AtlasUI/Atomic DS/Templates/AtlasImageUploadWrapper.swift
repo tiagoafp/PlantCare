@@ -8,10 +8,10 @@ public struct AtlasImageUploadWrapper<Content: View>: View {
     
     var content: () -> Content
     @State var showOptions: Bool = false
-    let onResult: (PickerResult) -> Void
+    let onResult: (AtlasImageUploadWrapperPickerResult) -> Void
     
     public init(
-        onResult: @escaping (PickerResult) -> Void,
+        onResult: @escaping (AtlasImageUploadWrapperPickerResult) -> Void,
         content: @escaping () -> Content
     ) {
         self.content = content
@@ -63,8 +63,6 @@ public struct AtlasImageUploadWrapper<Content: View>: View {
 }
 
 
-extension AtlasImageUploadWrapper {
-    public enum PickerResult {
-        case image(UIImage)
-    }
+public enum AtlasImageUploadWrapperPickerResult {
+    case image(UIImage)
 }

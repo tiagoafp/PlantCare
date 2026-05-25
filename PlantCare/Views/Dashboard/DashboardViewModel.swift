@@ -12,6 +12,8 @@ protocol DashboardViewModelProtocol: ObservableObject {
     func selectPlant(_ plant: PlantCellDataAdapter)
     func inject(_ modelContext: ModelContext)
     func onDelete()
+    
+    func onPlatAdded()
 }
 
 class DashboardViewModel: DashboardViewModelProtocol {
@@ -58,7 +60,11 @@ class DashboardViewModel: DashboardViewModelProtocol {
                 )
             }
             
-            self.state = .data(list)
+            if list.isEmpty {
+                self.state = .empty
+            } else {
+                self.state = .data(list)
+            }
         } catch {
             #if DEBUG
             print(error.localizedDescription)
@@ -69,6 +75,11 @@ class DashboardViewModel: DashboardViewModelProtocol {
     func onDelete() {
         path.removeLast(path.count)
         
+        loadList()
+    }
+    
+    func onPlatAdded() {
+        sheet = nil
         loadList()
     }
 }
