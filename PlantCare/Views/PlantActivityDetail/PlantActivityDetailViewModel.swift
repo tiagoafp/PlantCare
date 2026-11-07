@@ -16,6 +16,8 @@ final class PlantActivityDetailViewModel: PlantActivityDetailViewModelProtocol {
     @Published var state: State = .loading
     let input: Input
     var dismiss: DismissAction?
+    
+    var activityID: UUID { input.activityId }
 
     init(input: Input) {
         self.input = input
@@ -31,14 +33,17 @@ final class PlantActivityDetailViewModel: PlantActivityDetailViewModelProtocol {
     }
     
     func loadFromDataBase(in context: ModelContext) {
-        guard let updatedActivity = context.model(for: input.activity.id) as? PlantActivityRecord else {
+        guard let activity = try? input.plantActivityRepository.fetchActivity(
+            id: activityID,
+            in: context
+        ) else {
             return
         }
         
         self.state = .data(
             .init(
-                plant: input.plant,
-                activity: updatedActivity,
+                plant: activity.plant,
+                activity: activity,
                 plantImageManager: input.plantImageManager,
                 activityImageManager: input.activityImageManager
             )
@@ -46,7 +51,12 @@ final class PlantActivityDetailViewModel: PlantActivityDetailViewModelProtocol {
     }
     
     func onEdit() {
-        input.navPath.wrappedValue.append(PlantActivityDetailDestination.edit(input.plant, input.activity))
+        input.navPath.wrappedValue.append(
+            PlantActivityDetailDestination.edit(
+                plantId: input.plantId,
+                activityId: input.activityId
+            )
+        )
     }
     
     func onUpdated(in context: ModelContext) {
@@ -54,14 +64,15 @@ final class PlantActivityDetailViewModel: PlantActivityDetailViewModelProtocol {
     }
     
     func onDelete(in context: ModelContext) {
-        guard let updatedActivity = context.model(for: input.activity.id) as? PlantActivityRecord else {
+        guard let updatedActivity = try? input.plantActivityRepository.fetchActivity(
+            id: activityID,
+            in: context
+        ) else {
             return
         }
-        
-        context.delete(updatedActivity)
-        
+
         do {
-            try context.save()
+            try input.plantActivityRepository.delete(updatedActivity, in: context)
             input.onUpdate()
             self.dismiss?()
         } catch {}
@@ -77,8 +88,9 @@ extension PlantActivityDetailViewModel {
     struct Input {
         let plantImageManager: ImageStorageManagerProtocol
         let activityImageManager: ImageStorageManagerProtocol
-        let activity: PlantActivityRecord
-        let plant: PlantRecord
+        let plantActivityRepository: PlantActivityRepositoryProtocol
+        let activityId: UUID
+        var plantId: UUID
         let navPath: Binding<NavigationPath>
         let onUpdate: () -> Void
     }

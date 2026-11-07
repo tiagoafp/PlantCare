@@ -12,7 +12,7 @@ struct PlantDetailRootView: View {
     @State var confirmDelete: Bool = false
 
     init(
-        plantID: PersistentIdentifier,
+        plantID: UUID,
         navPath: Binding<NavigationPath>,
         depInjector: DependencyInjectorProtocol = DependencyInjector(),
         onDelete: @escaping () -> Void
@@ -27,6 +27,8 @@ struct PlantDetailRootView: View {
                     plantID: plantID,
                     plantImageStorage: depInjector.plantImageManager,
                     activityImageStorage: depInjector.activityImageManager,
+                    plantRepository: depInjector.plantRepository,
+                    plantActivityRepository: depInjector.plantActivityRepository,
                     navPath: navPath
                 )
             )
@@ -92,6 +94,7 @@ struct PlantDetailRootView: View {
         switch destination {
         case .edit(let plant):
             PlantFormRootView(
+                depInjector: depInjector,
                 formType: .edit(
                     plant: plant,
                     onDelete: onDelete
@@ -105,7 +108,8 @@ struct PlantDetailRootView: View {
             )
         case .logActivity(let plant):
             PlantActivityFormRootView(
-                formType: .add(plant: plant),
+                depInjector: depInjector,
+                formType: .add(plantId: plant.plantID),
                 navPath: nil, onUpdate: {
                     Task {
                         await viewModel.load(in: modelContext)
@@ -114,14 +118,21 @@ struct PlantDetailRootView: View {
             )
         case .editActivity(let plant, let activity):
             PlantActivityDetailRootView(
-                activity: activity,
-                plant: plant,
+                depInjector: depInjector,
+                activityId: activity.activityID,
+                plantId: plant.plantID,
                 navPath: navPath,
                 onUpdate: {
                     Task {
                         await viewModel.load(in: modelContext)
                     }
                 }
+            )
+        case .viewAllActivites(let plantID):
+            PlantActivitiesListRootView(
+                plantID: plantID,
+                navPath: navPath,
+                depInjector: depInjector
             )
         }
     }

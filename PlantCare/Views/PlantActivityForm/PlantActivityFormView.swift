@@ -3,47 +3,50 @@ import AtlasUI
 
 struct PlantActivityFormView<ViewModel: PlantActivityFormViewModelProtocol>: View {
     @ObservedObject var viewModel: ViewModel
-
+    
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
     }
-
+    
     var body: some View {
-        ScrollView {
-            LazyVStack(spacing: 24) {
-                AtlasDefaultCell(data: viewModel.selectedPLant, selection: .notSelectable)
-                
-                if case .add = viewModel.formType {
-                    AtlasPickerCell(
-                        title: .localized(key: .activityType),
-                        options: viewModel.activities,
-                        selection: $viewModel.activityType
-                    )
-                } else {
-                    AtlasDatePickerCell(
-                        title: .localized(key: .dateAndTime),
-                        date: $viewModel.activityDate
-                    )
+        ScrollViewReader { proxy in
+            ScrollView {
+                LazyVStack(spacing: 24) {
+                    if let selectedPlant = viewModel.selectedPlant {
+                        AtlasDefaultCell(data: selectedPlant, selection: .notSelectable)
+                    }
+                    if case .add = viewModel.formType {
+                        AtlasPickerCell(
+                            title: .localized(key: .activityType),
+                            options: viewModel.activities,
+                            selection: $viewModel.activityType
+                        )
+                    } else {
+                        AtlasDatePickerCell(
+                            title: .localized(key: .dateAndTime),
+                            date: $viewModel.activityDate
+                        )
+                    }
+                    
+                    
+                    if let photoTitle {
+                        AtltasPhotoUploader(title: photoTitle, image: $viewModel.activityImage)
+                    }
+                    
+                    if let notesTitle {
+                        AtlasTextAreaCell(
+                            title: notesTitle,
+                            placeholder: .localized(key: .activityDetailsPlaceholder),
+                            text: $viewModel.activityNotes
+                        )
+                    }
+                    
                 }
-                
-                
-                if let photoTitle {
-                    AtltasPhotoUploader(title: photoTitle, image: $viewModel.activityImage)
-                }
-                
-                if let notesTitle {
-                    AtlasTextAreaCell(
-                        title: notesTitle,
-                        placeholder: .localized(key: .activityDetailsPlaceholder),
-                        text: $viewModel.activityNotes
-                    )
-                }
-                
+                .padding(20)
+                .onChange(of: viewModel.activityType, { _, newValue in
+                    viewModel.updateConfi(activityType: newValue.activityType)
+                })
             }
-            .padding(20)
-            .onChange(of: viewModel.activityType, { _, newValue in
-                viewModel.updateConfi(activityType: newValue.activityType)
-            })
         }
     }
     

@@ -25,6 +25,8 @@ struct PlantActivityFormRootView: View {
                     formType: formType,
                     imageManager: depInjector.plantImageManager,
                     activityImageManager: depInjector.activityImageManager,
+                    plantRepository: depInjector.plantRepository,
+                    plantActivityRepository: depInjector.plantActivityRepository,
                     onUpdate: onUpdate
                 )
             )
@@ -49,6 +51,9 @@ struct PlantActivityFormRootView: View {
     @ViewBuilder
     private func formview() -> some View {
         PlantActivityFormView(viewModel: viewModel)
+            .task {
+                await viewModel.onViewAppear(in: modelContext)
+            }
             .toolbar(content: {
                 AtlasToolbarButton(image: .close, action: {
                     dismiss()

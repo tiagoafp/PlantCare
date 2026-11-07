@@ -35,7 +35,7 @@ class DashboardViewModel: DashboardViewModelProtocol {
     }
     
     func selectPlant(_ plant: PlantCellDataAdapter) {
-        path.append(DashboardDestination.detail(plant.id))
+        path.append(DashboardDestination.detail(plant.plantRecord.plantID))
     }
     
     func inject(_ modelContext: ModelContext) {
@@ -45,12 +45,12 @@ class DashboardViewModel: DashboardViewModelProtocol {
     }
     
     func loadList() {
-        let descriptor = FetchDescriptor<PlantRecord>()
-        
         do {
-            guard let plants = try modelContext?.fetch(descriptor) else {
+            guard let modelContext else {
                 return
             }
+
+            let plants = try input.plantRepository.fetchPlants(in: modelContext)
             
             let list = plants.map { (plant: PlantRecord) -> PlantCellDataAdapter in
                 return .init(
@@ -92,5 +92,6 @@ extension DashboardViewModel {
     
     struct Input {
         let imageManager: ImageStorageManagerProtocol
+        let plantRepository: PlantRepositoryProtocol
     }
 }

@@ -10,22 +10,26 @@ struct PlantActivityDetailRootView: View {
     var onUpdate: () -> Void
     @State private var confirmDelete: Bool = false
     var navPath: Binding<NavigationPath>
+    var depInjector: DependencyInjectorProtocol
 
     init(
-        activity: PlantActivityRecord,
-        plant: PlantRecord,
+        depInjector: DependencyInjectorProtocol = DependencyInjector(),
+        activityId: UUID,
+        plantId: UUID,
         navPath: Binding<NavigationPath>,
         onUpdate: @escaping () -> Void
     ) {
         self.onUpdate = onUpdate
         self.navPath = navPath
+        self.depInjector = depInjector
         _viewModel = .init(
             wrappedValue: PlantActivityDetailViewModel(
                 input: .init(
-                    plantImageManager: ImageStorageManager.plant,
-                    activityImageManager: ImageStorageManager.activities,
-                    activity: activity,
-                    plant: plant,
+                    plantImageManager: depInjector.plantImageManager,
+                    activityImageManager: depInjector.activityImageManager,
+                    plantActivityRepository: depInjector.plantActivityRepository,
+                    activityId: activityId,
+                    plantId: plantId,
                     navPath: navPath,
                     onUpdate: onUpdate
                 )
@@ -83,7 +87,8 @@ struct PlantActivityDetailRootView: View {
         switch destination {
         case .edit(let plant, let activity):
             PlantActivityFormRootView(
-                formType: .edit(plant: plant, activity: activity),
+                depInjector: depInjector,
+                formType: .edit(plantId: plant, activityId: activity),
                 navPath: navPath,
                 onUpdate: {
                     viewModel.onUpdated(in: modelContext)

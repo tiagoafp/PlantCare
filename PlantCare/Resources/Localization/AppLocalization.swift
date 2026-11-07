@@ -31,6 +31,7 @@ enum AppLocalization: String, TranslationProtocol {
     case register = "app.register"
     case delete = "app.delete"
     case cancel = "app.cancel"
+    case seeAll = "app.see.all"
     case deleteConfirmation = "app.delete.confirmation"
     case logActivity = "app.log.activity"
     case activity = "app.activity"

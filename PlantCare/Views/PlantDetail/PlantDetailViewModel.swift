@@ -12,6 +12,7 @@ protocol PlantDetailViewModelProtocol: ObservableObject {
     func reloadActivities(in context: ModelContext) async
     func onPlantActivity(activity: PlantActivityTimelineAdapter)
     func delete(context: ModelContext)
+    func viewAllActivities()
 }
 
 class PlantDetailViewModel: PlantDetailViewModelProtocol {
@@ -19,19 +20,27 @@ class PlantDetailViewModel: PlantDetailViewModelProtocol {
     @Published private(set) var plant: PlantRecord?
     @Published var sheet: PlantDetailDestination?
     let input: Input
+    
+    var plantID: UUID {
+        input.plantID
+    }
 
     init(input: Input) {
         self.input = input
     }
 
     func load(in context: ModelContext) async {
-        guard let record = context.model(for: input.plantID) as? PlantRecord else {
+        guard let record = try? input.plantRepository.fetchPlant(id: plantID, in: context),
+              let activities = try? input.plantActivityRepository.fetchActivities(
+                plantID: plantID,
+                in: context
+              ) else {
             self.state = .notFound
             return
         }
 
         
-        let activityRecords = record.activities
+        let activityRecords = activities
 
         self.plant = record
         
@@ -75,7 +84,8 @@ class PlantDetailViewModel: PlantDetailViewModelProtocol {
     }
     
     func delete(context: ModelContext) {
-        guard let plant = context.model(for: input.plantID) as? PlantRecord else {
+        guard let plant = try? input.plantRepository.fetchPlant(id: plantID, in: context) else {
+            self.state = .notFound
             return
         }
         
@@ -87,8 +97,16 @@ class PlantDetailViewModel: PlantDetailViewModelProtocol {
             }
             
             input.plantImageStorage.deleteImage(at: plant.photo)
-            context.delete(plant)
+            try input.plantRepository.delete(plant, in: context)
+            input.navPath.wrappedValue.removeLast()
         } catch {}
+    }
+    
+    func viewAllActivities() {
+        
+        self.input.navPath.wrappedValue.append(
+            PlantDetailDestination.viewAllActivites(plantId: input.plantID)
+        )
     }
 }
 
@@ -100,9 +118,11 @@ extension PlantDetailViewModel {
     }
 
     struct Input {
-        let plantID: PersistentIdentifier
+        let plantID: UUID
         let plantImageStorage: ImageStorageManagerProtocol
         let activityImageStorage: ImageStorageManagerProtocol
+        let plantRepository: PlantRepositoryProtocol
+        let plantActivityRepository: PlantActivityRepositoryProtocol
         let navPath: Binding<NavigationPath>
     }
 }

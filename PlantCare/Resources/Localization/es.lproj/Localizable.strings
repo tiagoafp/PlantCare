@@ -13,6 +13,7 @@
 "app.register" = "Registrar";
 "app.delete" = "Eliminar";
 "app.cancel" = "Cancelar";
+"app.see.all" = "Ver todo";
 "app.delete.confirmation" = "¿Seguro que quieres eliminar?";
 "app.log.activity" = "Registrar actividad";
 "app.activity" = "Actividad";

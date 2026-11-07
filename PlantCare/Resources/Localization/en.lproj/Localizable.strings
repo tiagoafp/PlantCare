@@ -15,6 +15,7 @@
 "app.register" = "Register";
 "app.delete" = "Delete";
 "app.cancel" = "Cancel";
+"app.see.all" = "See All";
 "app.delete.confirmation" = "Are you sure you want to delete?";
 "app.log.activity" = "Log activity";
 "app.activity" = "Activity";

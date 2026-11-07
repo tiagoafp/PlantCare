@@ -5,6 +5,7 @@ enum PlantDetailDestination: Hashable, Identifiable {
     case edit(PlantRecord)
     case logActivity(PlantRecord)
     case editActivity(PlantRecord, PlantActivityRecord)
+    case viewAllActivites(plantId: UUID)
     
     var id: String {
         switch self {
@@ -14,6 +15,8 @@ enum PlantDetailDestination: Hashable, Identifiable {
             return "logActivity_\(plant.id)"
         case .editActivity(_, let activity):
             return "editActivity_\(activity.id)"
+        case .viewAllActivites(plantId: let id):
+            return "viewAllActivites_\(id)"
         }
     }
 }

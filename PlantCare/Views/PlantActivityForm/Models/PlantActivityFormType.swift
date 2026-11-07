@@ -5,7 +5,9 @@
 //  Created by Tiago Pereira on 14/5/26.
 //
 
+import Foundation
+
 enum PlantActivityFormType {
-    case add(plant: PlantRecord)
-    case edit(plant: PlantRecord, activity: PlantActivityRecord)
+    case add(plantId: UUID)
+    case edit(plantId: UUID, activityId: UUID)
 }

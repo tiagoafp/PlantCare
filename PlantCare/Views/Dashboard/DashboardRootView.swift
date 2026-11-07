@@ -4,12 +4,15 @@ import AtlasUI
 struct DashboardRootView: View {
     @StateObject var viewModel: DashboardViewModel
     @Environment(\.modelContext) private var modelContext
+    private let depInjector: DependencyInjectorProtocol
    
-    init() {
+    init(depInjector: DependencyInjectorProtocol = DependencyInjector()) {
+        self.depInjector = depInjector
         _viewModel = .init(
             wrappedValue: DashboardViewModel(
                 input: .init(
-                    imageManager: ImageStorageManager.plant
+                    imageManager: depInjector.plantImageManager,
+                    plantRepository: depInjector.plantRepository
                 )
             )
         )
@@ -60,11 +63,15 @@ struct DashboardRootView: View {
     func destination(destination: DashboardDestination) -> some View {
         switch destination {
         case .addPlant:
-            PlantTypeSelectorRootView(onUpdate: viewModel.onPlatAdded)
+            PlantTypeSelectorRootView(
+                depInjector: depInjector,
+                onUpdate: viewModel.onPlatAdded
+            )
         case .detail(let plantID):
             PlantDetailRootView(
                 plantID: plantID,
                 navPath: $viewModel.path,
+                depInjector: depInjector,
                 onDelete: viewModel.onDelete
             )
         }

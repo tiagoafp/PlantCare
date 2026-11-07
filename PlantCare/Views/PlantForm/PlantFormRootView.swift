@@ -17,8 +17,9 @@ struct PlantFormRootView: View {
                 input: .init(
                     navPath: navPath,
                     formType: formType,
-                    imageStorage: ImageStorageManager.plant,
+                    imageStorage: depInjector.plantImageManager,
                     activityImageStorage: depInjector.activityImageManager,
+                    plantRepository: depInjector.plantRepository,
                     onUpdate: onUpdate
                 )
             )

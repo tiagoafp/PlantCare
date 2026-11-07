@@ -7,6 +7,7 @@ public struct AtlasTextAreaCell: View {
     private let placeholder: String
     private let minHeight: CGFloat
     @Binding private var text: String
+    @State var writting: Bool = false
     
     public init(
         title: Text? = nil,
@@ -22,35 +23,47 @@ public struct AtlasTextAreaCell: View {
     
     public var body: some View {
         AtlasBaseCell(title: title) {
-            ZStack(alignment: .topLeading) {
-                TextEditor(text: $text)
-                    .font(.callout.weight(.regular))
-                    .foregroundStyle(palette.textPrimary)
-                    .scrollContentBackground(.hidden)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 10)
-                    .frame(minHeight: minHeight)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background {
-                        RoundedRectangle(cornerRadius: 16)
-                            .foregroundStyle(palette.bgSurface)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 0) {
+                    Rectangle().frame(height: 0)
+                    
+                    if text.isEmpty {
+                        Text(placeholder)
+                            .font(.callout.weight(.regular))
+                            .foregroundStyle(palette.textSecondary)
+                    } else {
+                        Text(text)
+                            .multilineTextAlignment(.leading)
+                            .font(.callout.weight(.regular))
+                            .foregroundStyle(palette.textPrimary)
                     }
+                    
+                    Spacer()
+                }
+                .frame(minHeight: minHeight)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 10)
+            }
+            .frame(minHeight: minHeight, maxHeight: 400)
+            .onTapGesture {
+                writting = true
+            }
+            .background {
+                RoundedRectangle(cornerRadius: 16)
+                    .foregroundStyle(palette.bgSurface)
                     .shadow(
                         color: .black.opacity(0.04),
                         radius: 6,
                         x: 0,
                         y: 2
                     )
-                
-                if text.isEmpty {
-                    Text(placeholder)
-                        .font(.callout.weight(.regular))
-                        .foregroundStyle(palette.textSecondary)
-                        .padding(.horizontal, 18)
-                        .padding(.vertical, 18)
-                        .allowsHitTesting(false)
-                }
             }
+            .sheet(isPresented: $writting, content: {
+                AtlasWritterView(
+                    placeholder: placeholder,
+                    text: text
+                )
+            })
         }
     }
 }

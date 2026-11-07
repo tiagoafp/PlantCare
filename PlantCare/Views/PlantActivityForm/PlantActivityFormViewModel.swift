@@ -11,20 +11,18 @@ protocol PlantActivityFormViewModelProtocol: ObservableObject {
     var activityNotes: String { get set }
     var state: PlantActivityFormViewModel.State { get }
     
-    var selectedPLant: PlantCellDataAdapter { get }
+    var selectedPlant: PlantCellDataAdapter? { get }
     var activities: [PlantActivityTypePickerAdapter] { get }
     var formConfig: PlantActivityFormConfiguration { get }
+    
+    func onViewAppear(in context: ModelContext) async
     
     func save(in context: ModelContext) -> Bool
     func updateConfi(activityType: PlantActivityType)
 }
 
 class PlantActivityFormViewModel: PlantActivityFormViewModelProtocol {
-    var formType: PlantActivityFormType { input.formType }
-    
-    static let defaultActivityType: PlantActivityType = .watering
-    
-    var plant: PlantRecord {
+    var plantId: UUID {
         switch input.formType {
         case .add(let plant):
             return plant
@@ -32,21 +30,21 @@ class PlantActivityFormViewModel: PlantActivityFormViewModelProtocol {
             return plant
         }
     }
+    
+    var formType: PlantActivityFormType { input.formType }
+    
+    static let defaultActivityType: PlantActivityType = .watering
+    
+    
     @Published var activityType: PlantActivityTypePickerAdapter
     @Published var activityDate: Date
     @Published var activityNotes: String
     @Published var state: State
     @Published var activityImage: UIImage?
-    
     @Published var formConfig: PlantActivityFormConfiguration
+    var context: ModelContext?
 
-    var selectedPLant: PlantCellDataAdapter {
-        .init(
-            plantRecord: plant,
-            uiImage: input.imageManager.loadImage(from: plant.photo),
-            chevron: false
-        )
-    }
+    @Published var selectedPlant: PlantCellDataAdapter?
     
     var activities: [PlantActivityTypePickerAdapter] {
         PlantActivityType.allCases.map { .init(activityType: $0) }
@@ -56,8 +54,27 @@ class PlantActivityFormViewModel: PlantActivityFormViewModelProtocol {
 
     init(input: Input) {
         self.input = input
-        self.state = .data
+        self.activityType = .init(activityType: PlantActivityFormViewModel.defaultActivityType)
+        self.activityDate = .now
+        self.activityNotes = ""
+        self.state = .loading
+        self.activityImage = nil
+        self.formConfig = .init(plantActivityType: PlantActivityFormViewModel.defaultActivityType)
+    }
+    
+    func onViewAppear(in context: ModelContext) async {
+        if self.context != nil { return }
         
+        defer { self.context = context }
+        
+        if let plant = try? input.plantRepository.fetchPlant(id: plantId, in: context) {
+            self.selectedPlant = PlantCellDataAdapter(
+                plantRecord: plant,
+                uiImage: input.imageManager.loadImage(from: plant.photo),
+                chevron: false
+            )
+        }
+
         switch input.formType {
         case .add:
             self.formConfig = .init(plantActivityType: PlantActivityFormViewModel.defaultActivityType)
@@ -66,7 +83,15 @@ class PlantActivityFormViewModel: PlantActivityFormViewModelProtocol {
             self.activityImage = nil
             self.activityDate = .now
             self.activityNotes = ""
-        case .edit(let plant, let activity):
+        case .edit(_, let activityId):
+            guard let activity = try? input.plantActivityRepository.fetchActivity(
+                id: activityId,
+                in: context
+            ) else {
+                self.state = .loading
+                return
+            }
+
             self.formConfig = .init(plantActivityType: activity.type)
             
             self.activityType = .init(activityType: activity.type)
@@ -74,6 +99,8 @@ class PlantActivityFormViewModel: PlantActivityFormViewModelProtocol {
             self.activityDate = activity.date
             self.activityNotes = activity.notes ?? ""
         }
+
+        self.state = .data
     }
     
     func updateConfi(activityType: PlantActivityType) {
@@ -81,6 +108,10 @@ class PlantActivityFormViewModel: PlantActivityFormViewModelProtocol {
     }
 
     func create(in context: ModelContext) -> Bool {
+        guard let plant = try? input.plantRepository.fetchPlant(id: plantId, in: context) else {
+            return false
+        }
+
         var photo: String?
         
         if let activityImage {
@@ -96,10 +127,9 @@ class PlantActivityFormViewModel: PlantActivityFormViewModelProtocol {
         )
         
         plant.activities.append(recordedActivity)
-        context.insert(recordedActivity)
 
         do {
-            try context.save()
+            try input.plantActivityRepository.insert(recordedActivity, in: context)
             input.onUpdate()
             return true
         } catch {
@@ -127,7 +157,7 @@ class PlantActivityFormViewModel: PlantActivityFormViewModelProtocol {
         activity.type = activityType.activityType
         
         do {
-            try context.save()
+            try input.plantActivityRepository.save(in: context)
             input.onUpdate()
             return true
         } catch {
@@ -140,7 +170,14 @@ class PlantActivityFormViewModel: PlantActivityFormViewModelProtocol {
         switch input.formType {
         case .add:
             return create(in: context)
-        case .edit(_, let activity):
+        case .edit(_, let activityId):
+            guard let activity = try? input.plantActivityRepository.fetchActivity(
+                id: activityId,
+                in: context
+            ) else {
+                return false
+            }
+
             return update(activity: activity, in: context)
         }
     }
@@ -154,6 +191,7 @@ class PlantActivityFormViewModel: PlantActivityFormViewModelProtocol {
 
 extension PlantActivityFormViewModel {
     enum State {
+        case loading
         case data
     }
 
@@ -161,6 +199,8 @@ extension PlantActivityFormViewModel {
         let formType: PlantActivityFormType
         let imageManager: ImageStorageManagerProtocol
         let activityImageManager: ImageStorageManagerProtocol
+        let plantRepository: PlantRepositoryProtocol
+        let plantActivityRepository: PlantActivityRepositoryProtocol
         let onUpdate: () -> Void
     }
 }

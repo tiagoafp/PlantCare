@@ -10,6 +10,8 @@ import AtlasUI
 protocol DependencyInjectorProtocol {
     var plantImageManager: ImageStorageManagerProtocol { get }
     var activityImageManager: ImageStorageManagerProtocol { get }
+    var plantRepository: PlantRepositoryProtocol { get }
+    var plantActivityRepository: PlantActivityRepositoryProtocol { get }
 }
 
 struct DependencyInjector: DependencyInjectorProtocol {
@@ -19,5 +21,13 @@ struct DependencyInjector: DependencyInjectorProtocol {
     
     var activityImageManager: ImageStorageManagerProtocol {
         ImageStorageManager.activities
+    }
+
+    var plantRepository: PlantRepositoryProtocol {
+        PlantRepository()
+    }
+
+    var plantActivityRepository: PlantActivityRepositoryProtocol {
+        PlantActivityRepository()
     }
 }

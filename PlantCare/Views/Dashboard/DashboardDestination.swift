@@ -3,7 +3,7 @@ import SwiftData
 
 enum DashboardDestination: Hashable, Identifiable {
     case addPlant
-    case detail(PersistentIdentifier)
+    case detail(UUID)
     
     var id: String {
         switch self {

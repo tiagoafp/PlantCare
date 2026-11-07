@@ -10,12 +10,12 @@ import SwiftUI
 public struct AtlasSectionView<Content: View>: View {
     @Environment(\.atlasPalette) var theme
     var title: String?
-    var viewAll: ViewAll?
+    var viewAll: AtlasSectionViewViewAll?
     var content: () -> Content
     
     public init(
         title: String? = nil,
-        viewAll: ViewAll? = nil,
+        viewAll: AtlasSectionViewViewAll? = nil,
         content: @escaping() -> Content
     ) {
         self.title = title
@@ -54,10 +54,13 @@ public struct AtlasSectionView<Content: View>: View {
     }
 }
 
-extension AtlasSectionView {
-    public struct ViewAll {
-        let text: String
-        let onAction: () -> Void
+public struct AtlasSectionViewViewAll {
+    let text: String
+    let onAction: () -> Void
+    
+    public init(text: String, onAction: @escaping () -> Void) {
+        self.text = text
+        self.onAction = onAction
     }
 }
 

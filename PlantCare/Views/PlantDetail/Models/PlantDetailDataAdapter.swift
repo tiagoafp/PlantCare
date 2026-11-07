@@ -12,15 +12,17 @@ struct PlantDetailDataAdapter: Hashable {
     private let image: UIImage
     private let plantRecord: PlantRecord
     let activityRecords: [PlantActivityTimelineAdapter]
+    let hasMoreActivities: Bool
 
     init?(imageManager: ImageStorageManagerProtocol, plantRecord: PlantRecord, activityRecords: [PlantActivityTimelineAdapter]) {
         guard let image = imageManager.loadImage(from: plantRecord.photo) else {
             return nil
         }
 
+        self.hasMoreActivities = activityRecords.count > 5
         self.image = image
         self.plantRecord = plantRecord
-        self.activityRecords = activityRecords
+        self.activityRecords = Array(activityRecords.prefix(5))
     }
 }
 

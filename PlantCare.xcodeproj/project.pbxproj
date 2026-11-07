@@ -10,10 +10,12 @@
 		156300122F9D4F5800AB8DDC /* AtlasCore in Frameworks */ = {isa = PBXBuildFile; productRef = 156300112F9D4F5800AB8DDC /* AtlasCore */; };
 		156300142F9D4F5800AB8DDC /* AtlasNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 156300132F9D4F5800AB8DDC /* AtlasNetwork */; };
 		156300162F9D4F5800AB8DDC /* AtlasUI in Frameworks */ = {isa = PBXBuildFile; productRef = 156300152F9D4F5800AB8DDC /* AtlasUI */; };
+		2769415E2FD1D6BA002590B9 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2769415D2FD1D6BA002590B9 /* README.md */; };
 		B4BDC6092DF5F00100301EFC /* Mockable in Frameworks */ = {isa = PBXBuildFile; productRef = B4BDC6082DF5F00100301EFC /* Mockable */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2769415D2FD1D6BA002590B9 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B4C546162DD7A13F00FA55BE /* PlantCare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlantCare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -43,6 +45,7 @@
 		B4C5460D2DD7A13F00FA55BE = {
 			isa = PBXGroup;
 			children = (
+				2769415D2FD1D6BA002590B9 /* README.md */,
 				B4C546182DD7A13F00FA55BE /* PlantCare */,
 				B4C546172DD7A13F00FA55BE /* Products */,
 			);
@@ -129,6 +132,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2769415E2FD1D6BA002590B9 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

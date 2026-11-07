@@ -4,9 +4,14 @@ import AtlasUI
 struct PlantTypeSelectorRootView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel: PlantTypeSelectorViewModel
+    private let depInjector: DependencyInjectorProtocol
     var onUpdate: () -> Void
     
-    init(onUpdate: @escaping () -> Void) {
+    init(
+        depInjector: DependencyInjectorProtocol = DependencyInjector(),
+        onUpdate: @escaping () -> Void
+    ) {
+        self.depInjector = depInjector
         self.onUpdate = onUpdate
         
         let trefleAPI = TrefleAPI().setKey(key: AppSecrets.trefleAPIKey)
@@ -56,6 +61,7 @@ struct PlantTypeSelectorRootView: View {
         switch destination {
         case .add(let image, let species):
             PlantFormRootView(
+                depInjector: depInjector,
                 formType: .add(image: image, specie: species),
                 navPath: $viewModel.path,
                 onUpdate: onUpdate

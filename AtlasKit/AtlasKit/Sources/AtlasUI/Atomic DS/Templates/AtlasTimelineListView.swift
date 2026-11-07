@@ -21,27 +21,24 @@ public struct AtlasTimelineListView<Item: AtlasTimelineCellDataProtocol>: View {
     }
     
     public var body: some View {
-        ScrollView {
-            LazyVStack(spacing: 16) {
-                ForEach(items) { item in
-                    AtlasTimelineCell(
-                        data: item,
-                        selection: onSelect == nil ? .notSelectable : .selectable({
-                            onSelect?(item)
-                        })
-                    )
-                        .onAppear(perform: {
-                            if item.id == items.last?.id {
-                                onLast?()
-                            }
-                        })
-                }
-                
-                if fetchingMore {
-                    ProgressView()
-                }
+        LazyVStack(spacing: 16) {
+            ForEach(items) { item in
+                AtlasTimelineCell(
+                    data: item,
+                    selection: onSelect == nil ? .notSelectable : .selectable({
+                        onSelect?(item)
+                    })
+                )
+                .onAppear(perform: {
+                    if item.id == items.last?.id {
+                        onLast?()
+                    }
+                })
             }
             
+            if fetchingMore {
+                ProgressView()
+            }
         }
     }
 }

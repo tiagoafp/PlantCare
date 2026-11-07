@@ -72,14 +72,11 @@ final class PlantFormViewModel: PlantFormViewModelProtocol {
         self.modelContext = modelContext
         
         if case .add(_, let type) = input.formType {
-            let descriptor = FetchDescriptor<PlantRecord>(
-                predicate: #Predicate { plant in
-                    plant.nickName == type.scientificName
-                }
-            )
-
             do {
-                let count = try modelContext.fetchCount(descriptor)
+                let count = try input.plantRepository.countPlants(
+                    nickName: type.scientificName,
+                    in: modelContext
+                )
                 if count > 0 {
                     nickname = type.scientificName + " \(count)"
                 }
@@ -121,10 +118,8 @@ final class PlantFormViewModel: PlantFormViewModelProtocol {
             plantType: type
         )
 
-        context.insert(record)
-
         do {
-            try context.save()
+            try input.plantRepository.insert(record, in: context)
             input.onUpdate()
             input.navPath.wrappedValue.removeLast()
         } catch {
@@ -143,7 +138,7 @@ final class PlantFormViewModel: PlantFormViewModelProtocol {
         plant.nickName = nickname
         
         do {
-            try context.save()
+            try input.plantRepository.save(in: context)
             input.onUpdate()
             input.navPath.wrappedValue.removeLast()
         } catch {
@@ -168,6 +163,7 @@ extension PlantFormViewModel {
         let formType: PlantFormType
         var imageStorage: ImageStorageManagerProtocol
         var activityImageStorage: ImageStorageManagerProtocol
+        var plantRepository: PlantRepositoryProtocol
         var onUpdate: () -> Void
     }
 }

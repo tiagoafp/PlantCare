@@ -23,7 +23,15 @@ struct PlantDetailView<ViewModel: PlantDetailViewModelProtocol>: View {
                         selection: .notSelectable
                     )
                     
-                    AtlasSectionView(title: .localized(key: .activityHistory)) {
+                    AtlasSectionView(
+                        title: .localized(key: .activityHistory),
+                        viewAll: adapter.hasMoreActivities ?
+                            .init(
+                                text: .localized(key: .seeAll),
+                                onAction: viewModel.viewAllActivities
+                            )
+                        : nil
+                    ) {
                         ZStack {
                             if adapter.activityRecords.isEmpty {
                                 AtlasNoDataSectionView(
@@ -41,7 +49,7 @@ struct PlantDetailView<ViewModel: PlantDetailViewModelProtocol>: View {
                         }
                     }
                 }
-                .padding(20)
+                .padding(.horizontal, 20)
             }
         }
     }
